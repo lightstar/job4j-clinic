@@ -1,6 +1,7 @@
 package ru.lightstar.clinic.pet;
 
 import ru.lightstar.clinic.exception.NameException;
+import ru.lightstar.clinic.io.Output;
 
 /**
  * Cat-dog, mystical creature.
@@ -21,7 +22,7 @@ public class CatDog implements Pet {
     private final Dog dog;
 
     /**
-     * Constructs <code>CatDog</code> object.
+     * Constructs <code>CatDog</code> object from given cat and dog objects.
      *
      * @param cat inner cat.
      * @param dog inner dog.
@@ -29,6 +30,18 @@ public class CatDog implements Pet {
     public CatDog(final Cat cat, final Dog dog) {
         this.cat = cat;
         this.dog = dog;
+    }
+
+    /**
+     * Constructs <code>CatDog</code> object.
+     * @param name cat-dog's name. Must be in format '&lt;cat_name&gt;_&lt;dog_name&gt;'.
+     * @param output output used for sounds.
+     * @throws NameException thrown when given name doesn't fit correct format.
+     */
+    public CatDog(final String name, final Output output) throws NameException {
+        String[] nameArray = this.splitName(name);
+        this.cat = new Cat(nameArray[0], output);
+        this.dog = new Dog(nameArray[1], output);
     }
 
     /**
@@ -80,12 +93,23 @@ public class CatDog implements Pet {
      */
     @Override
     public void setName(String name) throws NameException {
-        String[] nameArray = name.split("-");
-        if (nameArray.length != 2) {
-            throw new NameException(String.format("Wrong cat-dog's name: %s", name));
-        }
+        String[] nameArray = this.splitName(name);
         this.cat.setName(nameArray[0]);
         this.dog.setName(nameArray[1]);
     }
 
+    /**
+     * Split given name to corresponding cat and dog name.
+     *
+     * @param name cat-dog's name. Must be in format '&lt;cat_name&gt;_&lt;dog_name&gt;'.
+     * @return string array with 2 elements: cat and dog names respectively.
+     * @throws NameException thrown when given name can't be split.
+     */
+    private String[] splitName(String name) throws NameException {
+        String[] nameArray = name.split("-");
+        if (nameArray.length != 2) {
+            throw new NameException(String.format("Wrong cat-dog's name: %s", name));
+        }
+        return nameArray;
+    }
 }

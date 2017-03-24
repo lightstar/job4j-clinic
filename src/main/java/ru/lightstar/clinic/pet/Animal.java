@@ -24,6 +24,7 @@ public abstract class Animal implements Pet {
      * Constructs <code>Animal</code> object.
      *
      * @param name animal's name.
+     * @param output output used for sounds.
      */
     public Animal(final String name, final Output output) {
         this.name = name;

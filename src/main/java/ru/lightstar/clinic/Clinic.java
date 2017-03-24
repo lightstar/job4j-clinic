@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Clinic {
 
     /**
-     * Client's array.
+     * Array of clients.
      */
     private final Client[] clients;
 
@@ -57,16 +57,6 @@ public class Clinic {
      * @return client's array.
      */
     public Client[] getClients() {
-        return Arrays.copyOf(clients, clients.length);
-    }
-
-    /**
-     * Search clients by pet's name.
-     *
-     * @param name pet's name.
-     * @return array of found clients.
-     */
-    public Client[] findClientsByPetName(final String name) {
-        return new Client[]{};
+        return Arrays.copyOf(this.clients, this.clients.length);
     }
 }
