@@ -1,5 +1,7 @@
 package ru.lightstar.clinic.pet;
 
+import ru.lightstar.clinic.io.Output;
+
 /**
  * Dog.
  *
@@ -13,8 +15,8 @@ public class Dog extends Animal {;
      *
      * @param name dog's name.
      */
-    public Dog(final String name) {
-        super(name);
+    public Dog(final String name, final Output output) {
+        super(name, output);
     }
 
     /**
@@ -22,7 +24,7 @@ public class Dog extends Animal {;
      */
     @Override
     public void makeSound() {
-        System.out.println("Gav, gav!");
+        this.output.println("Gav, gav!");
     }
 
     /**

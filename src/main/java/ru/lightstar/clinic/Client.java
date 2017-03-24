@@ -13,12 +13,12 @@ public class Client {
     /**
      * Client's name.
      */
-    private final String name;
+    private String name;
 
     /**
      * Client's pet.
      */
-    private final Pet pet;
+    private Pet pet;
 
     /**
      * Constructs <code>Client</code> object.
@@ -28,6 +28,42 @@ public class Client {
      */
     public Client(String name, Pet pet) {
         this.name = name;
+        this.pet = pet;
+    }
+
+    /**
+     * Get client's name
+     *
+     * @return client's name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set client's name.
+     *
+     * @param name new client's name.
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * Get client's pet.
+     *
+     * @return client's pet.
+     */
+    public Pet getPet() {
+        return pet;
+    }
+
+    /**
+     * Set client's pet.
+     *
+     * @param pet new client's pet.
+     */
+    public void setPet(Pet pet) {
         this.pet = pet;
     }
 }

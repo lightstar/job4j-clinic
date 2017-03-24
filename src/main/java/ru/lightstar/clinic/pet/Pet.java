@@ -1,5 +1,7 @@
 package ru.lightstar.clinic.pet;
 
+import ru.lightstar.clinic.exception.NameException;
+
 /**
  * Describes pet behavior.
  *
@@ -24,4 +26,11 @@ public interface Pet {
      * @return pet name.
      */
     String getName();
+
+    /**
+     * Set pet's name.
+     *
+     * @param name new pet's name.
+     */
+    void setName(final String name) throws NameException;
 }

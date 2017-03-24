@@ -1,5 +1,7 @@
 package ru.lightstar.clinic.pet;
 
+import ru.lightstar.clinic.io.Output;
+
 /**
  * Abstract <code>Animal</code>.
  *
@@ -11,15 +13,21 @@ public abstract class Animal implements Pet {
     /**
      * Animal's name.
      */
-    private final String name;
+    private String name;
+
+    /**
+     * Output used for sounds.
+     */
+    protected final Output output;
 
     /**
      * Constructs <code>Animal</code> object.
      *
      * @param name animal's name.
      */
-    public Animal(final String name) {
+    public Animal(final String name, final Output output) {
         this.name = name;
+        this.output = output;
     }
 
     /**
@@ -28,5 +36,13 @@ public abstract class Animal implements Pet {
     @Override
     public String getName() {
         return name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

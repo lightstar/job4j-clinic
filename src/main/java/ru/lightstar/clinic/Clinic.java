@@ -1,5 +1,7 @@
 package ru.lightstar.clinic;
 
+import java.util.Arrays;
+
 /**
  * Pet's clinic.
  *
@@ -29,6 +31,33 @@ public class Clinic {
      */
     public void addClient(final int position, final Client client) {
         this.clients[position] = client;
+    }
+
+    /**
+     * Delete client at given position.
+     *
+     * @param position client's position.
+     */
+    public void deleteClient(final int position) {
+        this.clients[position] = null;
+    }
+
+    /**
+     * Get size of clinic (number of positions).
+     *
+     * @return clinic's size.
+     */
+    public int getSize() {
+        return this.clients.length;
+    }
+
+    /**
+     * Get copy of client's array.
+     *
+     * @return client's array.
+     */
+    public Client[] getClients() {
+        return Arrays.copyOf(clients, clients.length);
     }
 
     /**

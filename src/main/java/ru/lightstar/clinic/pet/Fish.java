@@ -3,19 +3,19 @@ package ru.lightstar.clinic.pet;
 import ru.lightstar.clinic.io.Output;
 
 /**
- * Cat.
+ * Fish.
  *
  * @author LightStar
  * @since 0.0.1
  */
-public class Cat extends Animal {
+public class Fish extends Animal {
 
     /**
-     * Constructs <code>Cat</code> object.
+     * Constructs <code>Fish</code> object.
      *
-     * @param name cat's name.
+     * @param name fish's name.
      */
-    public Cat(final String name, final Output output) {
+    public Fish(final String name, final Output output) {
         super(name, output);
     }
 
@@ -24,7 +24,7 @@ public class Cat extends Animal {
      */
     @Override
     public void makeSound() {
-        this.output.println("Mew, mew!");
+        this.output.println("<silence>");
     }
 
     /**
@@ -32,5 +32,6 @@ public class Cat extends Animal {
      */
     @Override
     public void doAction() {
+
     }
 }
