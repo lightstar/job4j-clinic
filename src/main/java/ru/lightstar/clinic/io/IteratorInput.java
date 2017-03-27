@@ -19,7 +19,8 @@ public class IteratorInput implements Input {
      *
      * @param iterator iterator.
      */
-    public IteratorInput(Iterator<String> iterator) {
+    public IteratorInput(final Iterator<String> iterator) {
+        super();
         this.iterator = iterator;
     }
 
@@ -35,7 +36,7 @@ public class IteratorInput implements Input {
      * {@inheritDoc}
      */
     @Override
-    public String ask(Output output, String question) {
+    public String ask(final Output output, final String question) {
         output.println(question);
         return this.iterator.next();
     }

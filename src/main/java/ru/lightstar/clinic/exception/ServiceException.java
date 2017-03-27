@@ -13,7 +13,7 @@ public class ServiceException extends Exception {
      *
      * @param message description of error.
      */
-    public ServiceException(String message) {
+    public ServiceException(final String message) {
         super(message);
     }
 }

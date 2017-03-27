@@ -18,6 +18,7 @@ public class Console implements Input, Output {
      * Constructs <code>Console</code> object.
      */
     public Console() {
+        super();
         this.scanner = new Scanner(System.in);
     }
 
@@ -33,7 +34,7 @@ public class Console implements Input, Output {
      * {@inheritDoc}
      */
     @Override
-    public String ask(Output output, String question) {
+    public String ask(final Output output, final String question) {
         output.println(question);
         return this.scanner.next();
     }
@@ -42,7 +43,7 @@ public class Console implements Input, Output {
      * {@inheritDoc}
      */
     @Override
-    public void println(String line) {
+    public void println(final String line) {
         System.out.println(line);
     }
 

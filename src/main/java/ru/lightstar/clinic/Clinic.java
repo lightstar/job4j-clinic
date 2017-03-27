@@ -20,6 +20,7 @@ public class Clinic {
      * @param size clinic's size.
      */
     public Clinic(final int size) {
+        super();
         this.clients = new Client[size];
     }
 

@@ -1,6 +1,7 @@
 package ru.lightstar.clinic.pet;
 
 import ru.lightstar.clinic.exception.NameException;
+import ru.lightstar.clinic.io.Console;
 import ru.lightstar.clinic.io.Output;
 
 /**
@@ -27,7 +28,15 @@ public class PetFactory {
      * @param output output used when creating pets.
      */
     public PetFactory(final Output output) {
+        super();
         this.output = output;
+    }
+
+    /**
+     * Constructs <code>PetFactory</code> object using {@link ru.lightstar.clinic.io.Console} output.
+     */
+    public PetFactory() {
+        this(new Console());
     }
 
     /**

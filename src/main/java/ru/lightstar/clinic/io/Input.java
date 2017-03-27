@@ -3,6 +3,8 @@ package ru.lightstar.clinic.io;
 /**
  * User input interface
  *
+ * @author LightStar
+ * @since 0.0.1
  */
 public interface Input {
     /**

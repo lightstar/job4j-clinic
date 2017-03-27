@@ -28,6 +28,7 @@ public class CatDog implements Pet {
      * @param dog inner dog.
      */
     public CatDog(final Cat cat, final Dog dog) {
+        super();
         this.cat = cat;
         this.dog = dog;
     }
@@ -50,7 +51,7 @@ public class CatDog implements Pet {
      * @return inner cat.
      */
     public Cat getCat() {
-        return cat;
+        return this.cat;
     }
 
     /**
@@ -59,7 +60,7 @@ public class CatDog implements Pet {
      * @return inner dog.
      */
     public Dog getDog() {
-        return dog;
+        return this.dog;
     }
 
     /**
@@ -92,7 +93,7 @@ public class CatDog implements Pet {
      * {@inheritDoc}
      */
     @Override
-    public void setName(String name) throws NameException {
+    public void setName(final String name) throws NameException {
         String[] nameArray = this.splitName(name);
         this.cat.setName(nameArray[0]);
         this.dog.setName(nameArray[1]);
@@ -105,7 +106,7 @@ public class CatDog implements Pet {
      * @return string array with 2 elements: cat and dog names respectively.
      * @throws NameException thrown when given name can't be split.
      */
-    private String[] splitName(String name) throws NameException {
+    private String[] splitName(final String name) throws NameException {
         String[] nameArray = name.split("-");
         if (nameArray.length != 2) {
             throw new NameException(String.format("Wrong cat-dog's name: %s", name));

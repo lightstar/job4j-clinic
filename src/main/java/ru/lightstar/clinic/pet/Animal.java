@@ -27,6 +27,7 @@ public abstract class Animal implements Pet {
      * @param output output used for sounds.
      */
     public Animal(final String name, final Output output) {
+        super();
         this.name = name;
         this.output = output;
     }
@@ -36,14 +37,14 @@ public abstract class Animal implements Pet {
      */
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 }

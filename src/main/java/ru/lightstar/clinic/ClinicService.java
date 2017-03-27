@@ -2,6 +2,7 @@ package ru.lightstar.clinic;
 
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
+import ru.lightstar.clinic.io.Console;
 import ru.lightstar.clinic.io.Output;
 import ru.lightstar.clinic.pet.PetFactory;
 import ru.lightstar.clinic.pet.Pet;
@@ -27,14 +28,24 @@ public class ClinicService {
     private final PetFactory petFactory;
 
     /**
-     * Constructs <code>ClinicService</code> object
+     * Constructs <code>ClinicService</code> object.
      *
      * @param clinic clinic object.
      * @param output output object used for pet creation.
      */
     public ClinicService(final Clinic clinic, final Output output) {
+        super();
         this.clinic = clinic;
         this.petFactory = new PetFactory(output);
+    }
+
+    /**
+     * Constructs <code>ClinicService</code> object using {@link ru.lightstar.clinic.io.Console} output.
+     *
+     * @param clinic clinic object.
+     */
+    public ClinicService(final Clinic clinic) {
+        this(clinic, new Console());
     }
 
     /**
@@ -47,7 +58,7 @@ public class ClinicService {
         int count = 0;
 
         for (final Client client : this.clinic.getClients()) {
-            if (client.getPet().getName().equals(name)) {
+            if (client != null && client.getPet() != Pet.NONE && client.getPet().getName().equals(name)) {
                 count++;
             }
         }
@@ -66,7 +77,7 @@ public class ClinicService {
         int resultIndex = 0;
 
         for (final Client client : this.clinic.getClients()) {
-            if (client.getPet().getName().equals(name)) {
+            if (client != null && client.getPet() != Pet.NONE && client.getPet().getName().equals(name)) {
                 resultClients[resultIndex++] = client;
             }
         }
@@ -86,7 +97,7 @@ public class ClinicService {
         int resultPosition = -1;
 
         for (int position = 0; position < allClients.length; position++) {
-            if (allClients[position].getName().equals(name)) {
+            if (allClients[position] != null && allClients[position].getName().equals(name)) {
                 resultPosition = position;
                 break;
             }
@@ -151,7 +162,7 @@ public class ClinicService {
             throw new ServiceException("Position is busy");
         }
 
-        Client client = new Client(name, Pet.NONE);
+        final Client client = new Client(name, Pet.NONE);
         this.clinic.addClient(position, client);
 
         return client;
@@ -160,28 +171,25 @@ public class ClinicService {
     /**
      * Set client's pet.
      *
-     * @param position client's position.
+     * @param name client's name.
      * @param petType pet's type.
      * @param petName pet's name.
+     * @return created pet.
      * @throws ServiceException thrown if client can't be found or pet's type is wrong.
      * @throws NameException thrown if pet's name is wrong.
      */
-    public void setClientPet(final int position, final String petType, final String petName)
+    public Pet setClientPet(final String name, final String petType, final String petName)
             throws ServiceException, NameException {
 
-        final Client[] allClients = this.clinic.getClients();
-
-        this.checkPositionBounds(position);
-
-        if (allClients[position] == null) {
-            throw new ServiceException("No client in position");
-        }
+        final Client client = this.findClientByName(name);
 
         this.checkPetType(petType);
         this.checkPetName(petName);
 
         final Pet pet = this.petFactory.create(petType, petName);
-        allClients[position].setPet(pet);
+        client.setPet(pet);
+
+        return pet;
     }
 
     /**
@@ -262,7 +270,7 @@ public class ClinicService {
      * @throws ServiceException thrown if position is out of bounds.
      */
     private void checkPositionBounds(final int position) throws ServiceException {
-        if (position < 0 || position > this.clinic.getSize()) {
+        if (position < 0 || position >= this.clinic.getSize()) {
             throw new ServiceException("Position is out of bounds");
         }
     }
@@ -279,7 +287,7 @@ public class ClinicService {
         }
 
         for (final Client client : this.clinic.getClients()) {
-            if (client.getName().equals(name)) {
+            if (client != null && client.getName().equals(name)) {
                 throw new NameException("Client's name is not unique");
             }
         }
@@ -291,7 +299,7 @@ public class ClinicService {
      * @param petType pet's type.
      * @throws ServiceException thrown if type is unknown.
      */
-    private void checkPetType(String petType) throws ServiceException {
+    private void checkPetType(final String petType) throws ServiceException {
         if (!Arrays.asList(PetFactory.TYPES).contains(petType)) {
             throw new ServiceException("Unknown pet type");
         }

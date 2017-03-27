@@ -12,7 +12,7 @@ public class DummyOutput implements Output {
      * {@inheritDoc}
      */
     @Override
-    public void println(String line) {
+    public void println(final String line) {
     }
 
     /**

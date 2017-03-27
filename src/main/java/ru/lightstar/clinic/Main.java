@@ -13,8 +13,8 @@ public class Main {
      *
      * @param args not used.
      */
-    public static void main(String[] args) {
-        ClinicRunner clinicRunner = new ClinicRunner();
+    public static void main(final String[] args) {
+        final ClinicRunner clinicRunner = new ClinicRunner();
         clinicRunner.run();
     }
 }

@@ -36,5 +36,5 @@ public interface Pet {
      *
      * @param name new pet's name.
      */
-    void setName(final String name) throws NameException;
+    void setName(String name) throws NameException;
 }

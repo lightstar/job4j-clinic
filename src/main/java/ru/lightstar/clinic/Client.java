@@ -26,7 +26,8 @@ public class Client {
      * @param name client's name.
      * @param pet client's pet.
      */
-    public Client(String name, Pet pet) {
+    public Client(final String name, final Pet pet) {
+        super();
         this.name = name;
         this.pet = pet;
     }
@@ -37,7 +38,7 @@ public class Client {
      * @return client's name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -55,7 +56,7 @@ public class Client {
      * @return client's pet.
      */
     public Pet getPet() {
-        return pet;
+        return this.pet;
     }
 
     /**
@@ -63,7 +64,7 @@ public class Client {
      *
      * @param pet new client's pet.
      */
-    public void setPet(Pet pet) {
+    public void setPet(final Pet pet) {
         this.pet = pet;
     }
 }

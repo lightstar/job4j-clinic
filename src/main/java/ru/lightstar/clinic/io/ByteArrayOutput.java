@@ -25,6 +25,7 @@ public class ByteArrayOutput implements Output {
      * Constructs <code>ByteArrayOutput</code> object.
      */
     public ByteArrayOutput() {
+        super();
         this.byteArrayOutputStream = new ByteArrayOutputStream();
         this.byteArrayPrintStream = new PrintStream(this.byteArrayOutputStream);
     }
@@ -43,15 +44,15 @@ public class ByteArrayOutput implements Output {
      */
     @Override
     public String toString() {
-        return byteArrayOutputStream.toString();
+        return this.byteArrayOutputStream.toString();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void println(String line) {
-        byteArrayPrintStream.println(line);
+    public void println(final String line) {
+        this.byteArrayPrintStream.println(line);
     }
 
     /**
@@ -59,6 +60,6 @@ public class ByteArrayOutput implements Output {
      */
     @Override
     public void close() {
-        byteArrayPrintStream.close();
+        this.byteArrayPrintStream.close();
     }
 }

@@ -12,6 +12,7 @@ class None implements Pet {
      * Constructs <code>None</code> object.
      */
     None() {
+        super();
     }
 
     /**
@@ -40,6 +41,6 @@ class None implements Pet {
      * {@inheritDoc}
      */
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
     }
 }

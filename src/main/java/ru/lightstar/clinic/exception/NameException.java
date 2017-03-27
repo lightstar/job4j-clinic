@@ -13,7 +13,7 @@ public class NameException extends Exception {
      *
      * @param message description of error.
      */
-    public NameException(String message) {
+    public NameException(final String message) {
         super(message);
     }
 }
