@@ -241,32 +241,32 @@ public class ClinicServiceTest {
     }
 
     /**
-     * Test correctness of <code>deletePet</code> method.
+     * Test correctness of <code>deleteClientPet</code> method.
      */
     @Test
     public void whenDeletePetThenItDeletes() throws NameException, ServiceException {
         final Client client = this.clinicService.addClient(0, "Vova");
         this.clinicService.setClientPet("Vova", "cat", "Murka");
-        this.clinicService.deletePet("Vova");
+        this.clinicService.deleteClientPet("Vova");
 
         assertThat(client.getPet(), is(Pet.NONE));
     }
 
     /**
-     * Test that <code>deletePet</code> method throws exception on attempt to delete pet from non-existent client.
+     * Test that <code>deleteClientPet</code> method throws exception on attempt to delete pet from non-existent client.
      */
     @Test(expected = ServiceException.class)
     public void whenDeletePetFromNonExistentClientThenException() throws NameException, ServiceException {
-        this.clinicService.deletePet("Vova");
+        this.clinicService.deleteClientPet("Vova");
     }
 
     /**
-     * Test that <code>deletePet</code> method throws exception on attempt to delete non-existent pet.
+     * Test that <code>deleteClientPet</code> method throws exception on attempt to delete non-existent pet.
      */
     @Test(expected = ServiceException.class)
     public void whenDeleteNonExistentPetThenException() throws NameException, ServiceException {
         this.clinicService.addClient(0, "Vova");
-        this.clinicService.deletePet("Vova");
+        this.clinicService.deleteClientPet("Vova");
     }
 
     /**

@@ -25,7 +25,7 @@ public class ClientTest {
      * Constructs <code>ClientTest</code> object.
      */
     public ClientTest() {
-        this.client = new Client("Vova", new Dog("Bobik", new DummyOutput()));
+        this.client = new Client("Vova", new Dog("Bobik", new DummyOutput()), 0);
     }
 
     /**
@@ -48,10 +48,18 @@ public class ClientTest {
     }
 
     /**
+     * Test correctness of <code>getPosition</code> method.
+     */
+    @Test
+    public void whenGetPositionThenResult() {
+        assertThat(this.client.getPosition(), is(0));
+    }
+
+    /**
      * Test correctness of <code>toString</code> method.
      */
     @Test
     public void whenToStringThenResult() {
-        assertThat(this.client.toString(), is("Vova with dog 'Bobik'"));
+        assertThat(this.client.toString(), is("1. Vova with dog 'Bobik'"));
     }
 }

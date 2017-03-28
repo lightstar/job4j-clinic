@@ -21,15 +21,21 @@ public class Client {
     private Pet pet;
 
     /**
-     * Constructs <code>Client</code> object.
-     *
-     * @param name client's name.
-     * @param pet client's pet.
+     * Client's position.
      */
-    public Client(final String name, final Pet pet) {
+    private final int position;
+
+    /**
+     * Constructs <code>Client</code> object.
+     *  @param name client's name.
+     * @param pet client's pet.
+     * @param position client's position.
+     */
+    public Client(final String name, final Pet pet, final int position) {
         super();
         this.name = name;
         this.pet = pet;
+        this.position = position;
     }
 
     /**
@@ -69,14 +75,23 @@ public class Client {
     }
 
     /**
+     * Get client's position.
+     *
+     * @return client's position.
+     */
+    public int getPosition() {
+        return this.position;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public String toString() {
         if (this.getPet() == Pet.NONE) {
-            return String.format("%s with no pet", this.getName());
+            return String.format("%d. %s with no pet", this.getPosition() + 1, this.getName());
         } else {
-            return String.format("%s with %s", this.getName(), this.getPet().toString());
+            return String.format("%d. %s with %s", this.getPosition() + 1, this.getName(), this.getPet().toString());
         }
     }
 }

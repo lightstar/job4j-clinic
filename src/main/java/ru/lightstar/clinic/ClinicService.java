@@ -68,6 +68,15 @@ public class ClinicService {
     }
 
     /**
+     * Get all known pet types from pet factory.
+     *
+     * @return array of all known pet types.
+     */
+    public String[] getKnownPetTypes() {
+        return this.petFactory.getKnownTypes();
+    }
+
+    /**
      * Get this service's input.
      *
      * @return input.
@@ -199,7 +208,7 @@ public class ClinicService {
             throw new ServiceException("Position is busy");
         }
 
-        final Client client = new Client(name, Pet.NONE);
+        final Client client = new Client(name, Pet.NONE, position);
         this.clinic.addClient(position, client);
 
         return client;
@@ -232,19 +241,19 @@ public class ClinicService {
     /**
      * Update client's name.
      *
-     * @param oldName client's old name.
+     * @param name client's old name.
      * @param newName new name.
      * @throws ServiceException thrown if client can't be found.
      * @throws NameException thrown if new name is wrong.
      */
-    public void updateClientName(final String oldName, final String newName) throws ServiceException, NameException {
-        if (oldName.equals(newName)) {
+    public void updateClientName(final String name, final String newName) throws ServiceException, NameException {
+        if (name.equals(newName)) {
             throw new NameException("New name is the same as previous");
         }
 
         this.checkClientName(newName);
 
-        final Client client = this.findClientByName(oldName);
+        final Client client = this.findClientByName(name);
         client.setName(newName);
     }
 
@@ -289,7 +298,7 @@ public class ClinicService {
      * @param name client's name.
      * @throws ServiceException thrown if client can't be found or he doesn't has pet.
      */
-    public void deletePet(final String name) throws ServiceException {
+    public void deleteClientPet(final String name) throws ServiceException {
         final int position = this.findClientPositionByName(name);
         final Client client = this.getClientByPosition(position);
 

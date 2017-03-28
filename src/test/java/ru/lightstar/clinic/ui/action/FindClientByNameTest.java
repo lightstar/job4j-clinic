@@ -6,22 +6,23 @@ import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
- * <code>AddClient</code> action tests.
+ * <code>FindClientByName</code> class tests.
  *
  * @author LightStar
  * @since 0.0.1
  */
-public class AddClientTest extends ActionTest {
+public class FindClientByNameTest extends ActionTest {
 
     /**
-     * Constructs <code>AddClientTest</code> object.
+     * Constructs <code>FindClientByNameTest</code> object.
      */
-    public AddClientTest() throws NameException, ServiceException {
+    public FindClientByNameTest() throws NameException, ServiceException {
         super();
     }
 
@@ -30,7 +31,7 @@ public class AddClientTest extends ActionTest {
      */
     @Override
     protected Action createAction() {
-        return new AddClient(this.clinicService);
+        return new FindClientByName(this.clinicService);
     }
 
     /**
@@ -38,7 +39,7 @@ public class AddClientTest extends ActionTest {
      */
     @Test
     public void whenGetNameThenResult() {
-        assertThat(this.action.getName(), is("add"));
+        assertThat(this.action.getName(), is("find"));
     }
 
     /**
@@ -46,7 +47,7 @@ public class AddClientTest extends ActionTest {
      */
     @Test
     public void whenGetDescriptionThenResult() {
-        assertThat(this.action.getDescription(), is("Add new client"));
+        assertThat(this.action.getDescription(), is("Find client by name"));
     }
 
     /**
@@ -54,15 +55,13 @@ public class AddClientTest extends ActionTest {
      */
     @Test
     public void whenRunThenResult() throws ActionException, ServiceException {
-        this.input.setIterator(Arrays.asList("Vova", "3").iterator());
+        this.input.setIterator(Collections.singletonList("Vasya").iterator());
         this.action.run();
 
         assertThat(this.output.toString(), is(this.helper.joinLines(new String[]{
                 "Client's name:",
-                "Client's position:",
-                "Client added."
+                "1. Vasya with no pet."
         })));
-        assertThat(this.clinicService.getClientByPosition(2).getName(), is("Vova"));
     }
 
     /**
@@ -70,7 +69,7 @@ public class AddClientTest extends ActionTest {
      */
     @Test(expected = ActionException.class)
     public void whenRunWithIncorrectInputThenException() throws ActionException {
-        this.input.setIterator(Arrays.asList("Vova", "a").iterator());
+        this.input.setIterator(Collections.singletonList("Vova").iterator());
         this.action.run();
     }
 }

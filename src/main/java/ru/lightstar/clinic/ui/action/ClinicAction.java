@@ -107,4 +107,28 @@ public abstract class ClinicAction implements Action {
             throw new ActionException("Client's position must be a number");
         }
     }
+
+    /**
+     * Ask user of pet type. Question will contain all available pet types.
+     *
+     * @return user's answer.
+     */
+    protected String askPetType() throws ActionException {
+        final StringBuilder questionBuilder = new StringBuilder();
+        questionBuilder.append("Pet's type (");
+
+        boolean isFirst = true;
+        for (String petType : this.clinicService.getKnownPetTypes()) {
+            if (isFirst) {
+                isFirst = false;
+            } else {
+                questionBuilder.append(", ");
+            }
+            questionBuilder.append(petType);
+        }
+
+        questionBuilder.append("):");
+
+        return this.ask(questionBuilder.toString());
+    }
 }

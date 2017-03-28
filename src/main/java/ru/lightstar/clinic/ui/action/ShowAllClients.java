@@ -34,7 +34,7 @@ public class ShowAllClients extends ClinicAction {
             if (client == null) {
                 this.getOutput().println(String.format("%d. VACANT.", i + 1));
             } else {
-                this.getOutput().println(String.format("%d. %s.", i + 1, client));
+                this.getOutput().println(String.format("%s.", client));
             }
         }
     }

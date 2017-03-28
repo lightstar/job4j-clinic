@@ -7,9 +7,7 @@ import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.Output;
 import ru.lightstar.clinic.pet.*;
 import ru.lightstar.clinic.ui.Menu;
-import ru.lightstar.clinic.ui.action.AddClient;
-import ru.lightstar.clinic.ui.action.Exit;
-import ru.lightstar.clinic.ui.action.ShowAllClients;
+import ru.lightstar.clinic.ui.action.*;
 
 /**
  * Console runner for pet's clinic.
@@ -45,7 +43,14 @@ public class ClinicRunner {
         this.menu = new Menu(input, output);
 
         this.menu.addAction(new ShowAllClients(this.clinicService));
+        this.menu.addAction(new FindClientsByPetName(this.clinicService));
+        this.menu.addAction(new FindClientByName(this.clinicService));
         this.menu.addAction(new AddClient(this.clinicService));
+        this.menu.addAction(new SetClientPet(this.clinicService));
+        this.menu.addAction(new UpdateClientName(this.clinicService));
+        this.menu.addAction(new UpdateClientPetName(this.clinicService));
+        this.menu.addAction(new DeleteClient(this.clinicService));
+        this.menu.addAction(new DeleteClientPet(this.clinicService));
         this.menu.addAction(new Exit(this.clinicService.getOutput()));
     }
 

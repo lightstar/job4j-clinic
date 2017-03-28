@@ -6,20 +6,20 @@ import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 
 /**
- * Action to add new client.
+ * Action to set client's pet.
  *
  * @author LightStar
  * @since 0.0.1
  */
-public class AddClient extends ClinicAction {
+public class SetClientPet extends ClinicAction {
 
     /**
-     * Constructs <code>AddClient</code> object.
+     * Constructs <code>SetClientPet</code> object.
      *
      * @param clinicService clinic service operated by action.
      */
-    public AddClient(final ClinicService clinicService) {
-        super("add", "Add new client",clinicService);
+    public SetClientPet(final ClinicService clinicService) {
+        super("setPet", "Set client's pet", clinicService);
     }
 
     /**
@@ -28,14 +28,15 @@ public class AddClient extends ClinicAction {
     @Override
     public void run() throws ActionException {
         final String name = this.ask("Client's name:");
-        final int position = this.askPosition();
+        final String petType = this.askPetType();
+        final String petName = this.ask("Pet's name:");
 
         try {
-            this.getClinicService().addClient(position, name);
+            this.getClinicService().setClientPet(name, petType, petName);
         } catch (ServiceException | NameException e) {
             throw new ActionException(String.format("%s.", e.getMessage()));
         }
 
-        this.getOutput().println("Client added.");
+        this.getOutput().println("Pet was set.");
     }
 }

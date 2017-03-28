@@ -37,7 +37,7 @@ public class ClinicTest {
      */
     @Test
     public void whenAddClientThatHeAdds() {
-        final Client client = new Client("Vasya", new Cat("Murka", new DummyOutput()));
+        final Client client = new Client("Vasya", new Cat("Murka", new DummyOutput()), 0);
         clinic.addClient(1, client);
         assertThat(clinic.getClients()[1], is(client));
     }
@@ -47,7 +47,7 @@ public class ClinicTest {
      */
     @Test
     public void whenDeleteClientThatHeDeletes() {
-        final Client client = new Client("Vasya", new Cat("Murka", new DummyOutput()));
+        final Client client = new Client("Vasya", new Cat("Murka", new DummyOutput()), 0);
         this.clinic.addClient(1, client);
         this.clinic.deleteClient(1);
         assertThat(this.clinic.getClients()[1], is(nullValue()));

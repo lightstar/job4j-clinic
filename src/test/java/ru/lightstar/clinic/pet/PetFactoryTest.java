@@ -4,10 +4,9 @@ import org.junit.Test;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.io.DummyOutput;
 
-import java.util.Collections;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * <code>PetFactory</code> class tests.
