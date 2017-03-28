@@ -4,6 +4,8 @@ import org.junit.Test;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.io.DummyOutput;
 
+import java.util.Collections;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
@@ -44,5 +46,22 @@ public class PetFactoryTest {
     @Test(expected = IllegalArgumentException.class)
     public void whenUnknownTypeThenException() throws NameException {
         this.petFactory.create("unknown", "Unknown");
+    }
+
+    /**
+     * Test correctness of <code>isKnownType</code> method.
+     */
+    @Test
+    public void whenIsKnownTypeThenResult() {
+        assertThat(this.petFactory.isKnownType("cat-dog"), is(true));
+        assertThat(this.petFactory.isKnownType("unknown"), is(false));
+    }
+
+    /**
+     * Test correctness of <code>getKnownTypes</code> method.
+     */
+    @Test
+    public void whenGetKnownTypesThenResult() {
+        assertThat(this.petFactory.getKnownTypes(), is(new String[]{"cat-dog"}));
     }
 }

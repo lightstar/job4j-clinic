@@ -337,7 +337,7 @@ public class ClinicService {
      * @throws ServiceException thrown if type is unknown.
      */
     private void checkPetType(final String petType) throws ServiceException {
-        if (!Arrays.asList(PetFactory.TYPES).contains(petType)) {
+        if (!this.petFactory.isKnownType(petType)) {
             throw new ServiceException("Unknown pet type");
         }
     }

@@ -16,15 +16,13 @@ import java.util.Map;
 public class PetFactory {
 
     /**
-     * All pet types known by this factory.
-     */
-    public final static String[] TYPES = new String[]{Bird.TYPE, Cat.TYPE, Dog.TYPE, Fish.TYPE, CatDog.TYPE};
-
-    /**
      * Output used when creating pets.
      */
     private final Output output;
 
+    /**
+     * Map of all known pet classes with type as a key.
+     */
     private final Map<String, Class<? extends Pet>> knownPets;
 
     /**
@@ -38,6 +36,11 @@ public class PetFactory {
         this.knownPets = new LinkedHashMap<>();
     }
 
+    /**
+     * Add new pet class.
+     *
+     * @param petClass pet class.
+     */
     public void addPet(Class<? extends Pet> petClass) {
         try {
             String type = (String) petClass.getField("TYPE").get(null);
@@ -48,9 +51,29 @@ public class PetFactory {
     }
 
     /**
+     * Check if given pet type is known to this factory.
+     *
+     * @param type pet type.
+     * @return true if given type is known and false otherwise.
+     */
+    public boolean isKnownType(String type) {
+        return this.knownPets.containsKey(type);
+    }
+
+    /**
+     * Get array of all known pet types.
+     *
+     * @return array of all known pet types.
+     */
+    public String[] getKnownTypes() {
+        final String[] knownTypes = new String[this.knownPets.size()];
+        return this.knownPets.keySet().toArray(knownTypes);
+    }
+
+    /**
      * Create <code>Pet</code> object using provided type and name.
      *
-     * @param type pet's type. Must be one of {@link #TYPES}
+     * @param type pet's type.
      * @param name pet's name.
      * @return created pet.
      * @throws NameException thrown when pet's name is wrong.
@@ -63,13 +86,13 @@ public class PetFactory {
         try {
             return this.knownPets.get(type).getConstructor(String.class, Output.class).newInstance(name, this.output);
         } catch(InvocationTargetException e) {
-            if (e.getTargetException().getClass() == NameException.class) {
+            if (e.getTargetException() instanceof NameException) {
                 throw (NameException) e.getTargetException();
             } else {
-                throw new IllegalArgumentException("Wrong pet class. Its constructor must throw just NameException.");
+                throw new IllegalStateException("Wrong pet class. Its constructor must throw just NameException.");
             }
         } catch(Exception e) {
-            throw new IllegalArgumentException("Wrong pet class. Its constructor must take String and Output args.");
+            throw new IllegalStateException("Wrong pet class. Its constructor must take String and Output args.");
         }
     }
 }
