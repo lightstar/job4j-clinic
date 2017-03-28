@@ -1,7 +1,6 @@
 package ru.lightstar.clinic;
 
 import ru.lightstar.clinic.io.Console;
-import ru.lightstar.clinic.pet.Bird;
 
 /**
  * Entry point for <code>ClinicRunner</code> runner.

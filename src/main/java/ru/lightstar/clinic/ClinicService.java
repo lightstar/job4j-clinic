@@ -2,12 +2,9 @@ package ru.lightstar.clinic;
 
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
-import ru.lightstar.clinic.io.Console;
 import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.Output;
 import ru.lightstar.clinic.pet.*;
-
-import java.util.Arrays;
 
 /**
  * Clinic service object used to perform various operations on it.

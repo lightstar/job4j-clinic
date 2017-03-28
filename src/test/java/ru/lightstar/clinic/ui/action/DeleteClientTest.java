@@ -4,14 +4,12 @@ import org.junit.Test;
 import ru.lightstar.clinic.exception.ActionException;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
-import ru.lightstar.clinic.pet.Pet;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * <code>DeleteClient</code> class tests.

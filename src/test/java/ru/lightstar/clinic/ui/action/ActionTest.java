@@ -7,7 +7,6 @@ import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 import ru.lightstar.clinic.io.ByteArrayOutput;
 import ru.lightstar.clinic.io.IteratorInput;
-import ru.lightstar.clinic.pet.*;
 
 /**
  * Base class for all actions tests.

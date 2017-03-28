@@ -5,7 +5,6 @@ import ru.lightstar.clinic.exception.ExitException;
 import ru.lightstar.clinic.exception.MenuException;
 import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.Output;
-import ru.lightstar.clinic.pet.*;
 import ru.lightstar.clinic.ui.Menu;
 import ru.lightstar.clinic.ui.action.*;
 
