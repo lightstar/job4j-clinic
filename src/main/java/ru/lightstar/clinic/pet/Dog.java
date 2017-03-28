@@ -11,12 +11,17 @@ import ru.lightstar.clinic.io.Output;
 public class Dog extends Animal {;
 
     /**
+     * Dog's type string.
+     */
+    public final static String TYPE = "dog";
+
+    /**
      * Constructs <code>Dog</code> object.
      *
      * @param name dog's name.
      */
     public Dog(final String name, final Output output) {
-        super(name, output);
+        super(TYPE, name, output);
     }
 
     /**

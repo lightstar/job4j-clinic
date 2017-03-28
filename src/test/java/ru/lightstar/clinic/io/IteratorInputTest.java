@@ -3,6 +3,7 @@ package ru.lightstar.clinic.io;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -20,16 +21,23 @@ public class IteratorInputTest {
      */
     @Test
     public void whenNextThenResult() {
-        final ArrayList<String> input = new ArrayList<>();
-        input.add("Hello");
-        input.add("World!");
-        final IteratorInput iteratorInput = new IteratorInput(input.iterator());
+        final IteratorInput iteratorInput = new IteratorInput(Arrays.asList("Hello", "World!").iterator());
 
-        final String resultHello = iteratorInput.next();
-        final String resultWorld = iteratorInput.next();
+        assertThat(iteratorInput.next(), is("Hello"));
+        assertThat(iteratorInput.next(), is("World!"));
+    }
 
-        assertThat(resultHello, is("Hello"));
-        assertThat(resultWorld, is("World!"));
+    /**
+     * Test correctness of <code>setIterator</code> method.
+     */
+    @Test
+    public void whenSetIteratorThenResult() {
+        final IteratorInput iteratorInput = new IteratorInput();
+
+        iteratorInput.setIterator(Arrays.asList("Hello", "World!").iterator());
+
+        assertThat(iteratorInput.next(), is("Hello"));
+        assertThat(iteratorInput.next(), is("World!"));
     }
 
     /**

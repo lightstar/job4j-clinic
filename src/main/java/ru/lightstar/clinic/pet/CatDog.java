@@ -12,6 +12,11 @@ import ru.lightstar.clinic.io.Output;
 public class CatDog implements Pet {
 
     /**
+     * Cat-dog's type string.
+     */
+    public final static String TYPE = "cat-dog";
+
+    /**
      * Inner <code>Cat</code> object.
      */
     private final Cat cat;
@@ -85,6 +90,14 @@ public class CatDog implements Pet {
      * {@inheritDoc}
      */
     @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getName() {
         return String.format("%s-%s", this.cat.getName(), this.dog.getName());
     }
@@ -97,6 +110,14 @@ public class CatDog implements Pet {
         String[] nameArray = this.splitName(name);
         this.cat.setName(nameArray[0]);
         this.dog.setName(nameArray[1]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format("%s '%s'", this.getType(), this.getName());
     }
 
     /**

@@ -4,8 +4,10 @@ import org.junit.Test;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 import ru.lightstar.clinic.io.DummyOutput;
-import ru.lightstar.clinic.pet.Cat;
-import ru.lightstar.clinic.pet.Pet;
+import ru.lightstar.clinic.io.Input;
+import ru.lightstar.clinic.io.IteratorInput;
+import ru.lightstar.clinic.io.Output;
+import ru.lightstar.clinic.pet.*;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -24,6 +26,16 @@ public class ClinicServiceTest {
     private final static int CLINIC_SIZE = 10;
 
     /**
+     * <code>Input</code> object used in clinic service.
+     */
+    private final Input input;
+
+    /**
+     * <code>Output</code> object used in clinic service.
+     */
+    private final Output output;
+
+    /**
      * <code>Clinic</code> object used in all tests.
      */
     private final Clinic clinic;
@@ -37,8 +49,36 @@ public class ClinicServiceTest {
      * Constructs <code>ClinicServiceTest</code> object.
      */
     public ClinicServiceTest() {
+        this.input = new IteratorInput();
+        this.output = new DummyOutput();
         this.clinic = new Clinic(CLINIC_SIZE);
-        this.clinicService = new ClinicService(this.clinic, new DummyOutput());
+        this.clinicService = new ClinicService(this.input, this.output, this.clinic);
+    }
+
+    /**
+     * Test correctness of <code>getAllClients</code> method.
+     */
+    @Test
+    public void whenGetAllClientsThenResult() throws NameException, ServiceException {
+        final Client[] allClients = new Client[CLINIC_SIZE];
+        allClients[0] = this.clinicService.addClient(0, "Vova");
+        assertThat(this.clinicService.getAllClients(), is(allClients));
+    }
+
+    /**
+     * Test correctness of <code>getInput</code> method.
+     */
+    @Test
+    public void whenGetInputThenResult() {
+        assertThat(this.clinicService.getInput(), is(this.input));
+    }
+
+    /**
+     * Test correctness of <code>getOutput</code> method.
+     */
+    @Test
+    public void whenGetOutputThenResult() {
+        assertThat(this.clinicService.getOutput(), is(this.output));
     }
 
     /**

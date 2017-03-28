@@ -9,6 +9,7 @@ import ru.lightstar.clinic.exception.NameException;
  * @since 0.0.1
  */
 public interface Pet {
+
     /**
      * Pet object used instead of null. Indicates that there is really no pet at all.
      */
@@ -25,9 +26,16 @@ public interface Pet {
     void doAction();
 
     /**
+     * Get pet's type.
+     *
+     * @return pet's type.
+     */
+    String getType();
+
+    /**
      * Get pet's name.
      *
-     * @return pet name.
+     * @return pet's name.
      */
     String getName();
 

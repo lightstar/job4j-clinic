@@ -2,7 +2,6 @@ package ru.lightstar.clinic.pet;
 
 import org.junit.Test;
 import ru.lightstar.clinic.io.ByteArrayOutput;
-import ru.lightstar.clinic.io.DummyOutput;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -16,16 +15,30 @@ import static org.junit.Assert.assertThat;
 public class DogTest {
 
     /**
+     * <code>ByteArrayOutput</code> used for test of dog's output.
+     */
+    final ByteArrayOutput byteArrayOutput;
+
+    /**
+     * <code>Dog</code> object used in all tests.
+     */
+    final Dog dog;
+
+    /**
+     * Constructs <code>CatTest</code> object.
+     */
+    public DogTest() {
+        this.byteArrayOutput = new ByteArrayOutput();
+        this.dog = new Dog("Rex", this.byteArrayOutput);
+    }
+
+    /**
      * Test correctness of <code>makeSound</code> method.
      */
     @Test
     public void whenMakeSoundThenGavGav() {
-        final ByteArrayOutput byteArrayOutput = new ByteArrayOutput();
-        final Dog dog = new Dog("Rex", byteArrayOutput);
-
-        dog.makeSound();
-
-        assertThat(byteArrayOutput.toString(), is(String.format("Gav, gav!%n")));
+        this.dog.makeSound();
+        assertThat(this.byteArrayOutput.toString(), is(String.format("Gav, gav!%n")));
     }
 
     /**
@@ -33,11 +46,23 @@ public class DogTest {
      */
     @Test
     public void whenSetNameThenItChanges() {
-        final DummyOutput dummyOutput = new DummyOutput();
-        final Dog dog = new Dog("Rex", dummyOutput);
+        this.dog.setName("Bobik");
+        assertThat(this.dog.getName(), is("Bobik"));
+    }
 
-        dog.setName("Bobik");
+    /**
+     * Test correctness of <code>getType</code> method.
+     */
+    @Test
+    public void whenGetTypeThenDog() {
+        assertThat(this.dog.getType(), is("dog"));
+    }
 
-        assertThat(dog.getName(), is("Bobik"));
+    /**
+     * Test correctness of <code>toString</code> method.
+     */
+    @Test
+    public void whenToStringThenResult() {
+        assertThat(this.dog.toString(), is("dog 'Rex'"));
     }
 }

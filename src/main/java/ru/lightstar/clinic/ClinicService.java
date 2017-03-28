@@ -3,9 +3,9 @@ package ru.lightstar.clinic;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 import ru.lightstar.clinic.io.Console;
+import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.Output;
-import ru.lightstar.clinic.pet.PetFactory;
-import ru.lightstar.clinic.pet.Pet;
+import ru.lightstar.clinic.pet.*;
 
 import java.util.Arrays;
 
@@ -16,6 +16,16 @@ import java.util.Arrays;
  * @since 0.0.1
  */
 public class ClinicService {
+
+    /**
+     * <code>Input</code> object used for this service.
+     */
+    private final Input input;
+
+    /**
+     * <code>Output</code> object used for this service.
+     */
+    private final Output output;
 
     /**
      * Clinic manipulated by this service.
@@ -30,22 +40,49 @@ public class ClinicService {
     /**
      * Constructs <code>ClinicService</code> object.
      *
+     * @param input input object used for this service.
+     * @param output output object used for this service.
      * @param clinic clinic object.
-     * @param output output object used for pet creation.
      */
-    public ClinicService(final Clinic clinic, final Output output) {
+    public ClinicService(final Input input, final Output output, final Clinic clinic) {
         super();
+        this.input = input;
+        this.output = output;
         this.clinic = clinic;
+
         this.petFactory = new PetFactory(output);
+        this.petFactory.addPet(Bird.class);
+        this.petFactory.addPet(Fish.class);
+        this.petFactory.addPet(Cat.class);
+        this.petFactory.addPet(Dog.class);
+        this.petFactory.addPet(CatDog.class);
     }
 
     /**
-     * Constructs <code>ClinicService</code> object using {@link ru.lightstar.clinic.io.Console} output.
+     * Get array of all clients in clinic. Unoccupied positions will contain null.
      *
-     * @param clinic clinic object.
+     * @return array of all clients in clinic.
      */
-    public ClinicService(final Clinic clinic) {
-        this(clinic, new Console());
+    public Client[] getAllClients() {
+        return this.clinic.getClients();
+    }
+
+    /**
+     * Get this service's input.
+     *
+     * @return input.
+     */
+    public Input getInput() {
+        return this.input;
+    }
+
+    /**
+     * Get this service's output.
+     *
+     * @return output.
+     */
+    public Output getOutput() {
+        return this.output;
     }
 
     /**

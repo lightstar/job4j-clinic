@@ -2,7 +2,6 @@ package ru.lightstar.clinic.pet;
 
 import org.junit.Test;
 import ru.lightstar.clinic.io.ByteArrayOutput;
-import ru.lightstar.clinic.io.DummyOutput;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -16,16 +15,30 @@ import static org.junit.Assert.assertThat;
 public class CatTest {
 
     /**
+     * <code>ByteArrayOutput</code> used for test of cat's output.
+     */
+    final ByteArrayOutput byteArrayOutput;
+
+    /**
+     * <code>Cat</code> object used in all tests.
+     */
+    final Cat cat;
+
+    /**
+     * Constructs <code>CatTest</code> object.
+     */
+    public CatTest() {
+        this.byteArrayOutput = new ByteArrayOutput();
+        this.cat = new Cat("Murka", this.byteArrayOutput);
+    }
+
+    /**
      * Test correctness of <code>makeSound</code> method.
      */
     @Test
     public void whenMakeSoundThenMewMew() {
-        final ByteArrayOutput byteArrayOutput = new ByteArrayOutput();
-        final Cat cat = new Cat("Murka", byteArrayOutput);
-
-        cat.makeSound();
-
-        assertThat(byteArrayOutput.toString(), is(String.format("Mew, mew!%n")));
+        this.cat.makeSound();
+        assertThat(this.byteArrayOutput.toString(), is(String.format("Mew, mew!%n")));
     }
 
     /**
@@ -33,11 +46,23 @@ public class CatTest {
      */
     @Test
     public void whenSetNameThenItChanges() {
-        final DummyOutput dummyOutput = new DummyOutput();
-        final Cat cat = new Cat("Murka", dummyOutput);
+        this.cat.setName("Barsik");
+        assertThat(this.cat.getName(), is("Barsik"));
+    }
 
-        cat.setName("Barsik");
+    /**
+     * Test correctness of <code>getType</code> method.
+     */
+    @Test
+    public void whenGetTypeThenCat() {
+        assertThat(this.cat.getType(), is("cat"));
+    }
 
-        assertThat(cat.getName(), is("Barsik"));
+    /**
+     * Test correctness of <code>toString</code> method.
+     */
+    @Test
+    public void whenToStringThenResult() {
+        assertThat(this.cat.toString(), is("cat 'Murka'"));
     }
 }

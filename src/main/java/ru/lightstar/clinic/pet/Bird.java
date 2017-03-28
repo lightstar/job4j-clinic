@@ -9,13 +9,19 @@ import ru.lightstar.clinic.io.Output;
  * @since 0.0.1
  */
 public class Bird extends Animal {
+
+    /**
+     * Bird's type string.
+     */
+    public final static String TYPE = "bird";
+
     /**
      * Constructs <code>Bird</code> object.
      *
      * @param name bird's name.
      */
     public Bird(final String name, final Output output) {
-        super(name, output);
+        super(TYPE, name, output);
     }
 
     /**
@@ -31,6 +37,5 @@ public class Bird extends Animal {
      */
     @Override
     public void doAction() {
-
     }
 }

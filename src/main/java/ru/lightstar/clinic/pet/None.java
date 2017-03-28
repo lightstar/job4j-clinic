@@ -33,6 +33,14 @@ class None implements Pet {
      * {@inheritDoc}
      */
     @Override
+    public String getType() {
+        return "";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getName() {
         return "";
     }

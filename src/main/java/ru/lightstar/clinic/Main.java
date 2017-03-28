@@ -1,5 +1,8 @@
 package ru.lightstar.clinic;
 
+import ru.lightstar.clinic.io.Console;
+import ru.lightstar.clinic.pet.Bird;
+
 /**
  * Entry point for <code>ClinicRunner</code> runner.
  *
@@ -13,8 +16,9 @@ public class Main {
      *
      * @param args not used.
      */
-    public static void main(final String[] args) {
-        final ClinicRunner clinicRunner = new ClinicRunner();
+    public static void main(final String[] args) throws NoSuchFieldException, IllegalAccessException {
+        final Console console = new Console();
+        final ClinicRunner clinicRunner = new ClinicRunner(console, console);
         clinicRunner.run();
     }
 }

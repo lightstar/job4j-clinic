@@ -1,9 +1,15 @@
 package ru.lightstar.clinic;
 
-import ru.lightstar.clinic.io.Console;
-import ru.lightstar.clinic.pet.Cat;
-import ru.lightstar.clinic.pet.CatDog;
-import ru.lightstar.clinic.pet.Dog;
+import ru.lightstar.clinic.exception.ActionException;
+import ru.lightstar.clinic.exception.ExitException;
+import ru.lightstar.clinic.exception.MenuException;
+import ru.lightstar.clinic.io.Input;
+import ru.lightstar.clinic.io.Output;
+import ru.lightstar.clinic.pet.*;
+import ru.lightstar.clinic.ui.Menu;
+import ru.lightstar.clinic.ui.action.AddClient;
+import ru.lightstar.clinic.ui.action.Exit;
+import ru.lightstar.clinic.ui.action.ShowAllClients;
 
 /**
  * Console runner for pet's clinic.
@@ -14,20 +20,60 @@ import ru.lightstar.clinic.pet.Dog;
 public class ClinicRunner {
 
     /**
-     * Run.
+     * Clinic size.
+     */
+    public final static int CLINIC_SIZE = 10;
+
+    /**
+     * Clinic service.
+     */
+    private final ClinicService clinicService;
+
+    /**
+     * User menu.
+     */
+    private final Menu menu;
+
+    /**
+     * Constructs <code>ClinicRunner</code> object.
+     *
+     * @param input <code>Input</code> object used for user input.
+     * @param output <code>Output</code> object used for output.
+     */
+    public ClinicRunner(final Input input, final Output output) {
+        this.clinicService = new ClinicService(input, output, new Clinic(CLINIC_SIZE));
+        this.menu = new Menu(input, output);
+
+        this.menu.addAction(new ShowAllClients(this.clinicService));
+        this.menu.addAction(new AddClient(this.clinicService));
+        this.menu.addAction(new Exit(this.clinicService.getOutput()));
+    }
+
+    /**
+     * Run this runner.
      */
     public void run() {
-        final Clinic clinic = new Clinic(10);
-        final Console console = new Console();
+        while(true) {
+            this.menu.show();
 
-        clinic.addClient(0, new Client("Brown", new Cat("Diggy", console)));
-        clinic.addClient(1, new Client("Nick", new Dog("Sparky", console)));
+            try {
+                this.menu.run();
+            } catch(ExitException e) {
+                break;
+            } catch (MenuException | ActionException e) {
+                this.getOutput().println(e.getMessage());
+            }
 
-        clinic.addClient(
-                2, new Client("Ann",
-                    new CatDog(
-                        new Cat("Tom", console), new Dog("Piccy", console)
-                    )
-        ));
+            this.getOutput().println("");
+        }
+    }
+
+    /**
+     * Get output object.
+     *
+     * @return <code>Output</code> object.
+     */
+    private Output getOutput() {
+        return this.clinicService.getOutput();
     }
 }

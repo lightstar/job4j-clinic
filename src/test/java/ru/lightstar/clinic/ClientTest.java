@@ -34,7 +34,7 @@ public class ClientTest {
     @Test
     public void whenSetNameThenItChanges() {
         this.client.setName("Vanya");
-        assertThat(client.getName(), is("Vanya"));
+        assertThat(this.client.getName(), is("Vanya"));
     }
 
     /**
@@ -43,7 +43,15 @@ public class ClientTest {
     @Test
     public void whenSetPetThenItChanges() {
         this.client.setPet(new Cat("Murka", new DummyOutput()));
-        assertThat(client.getPet(), instanceOf(Cat.class));
-        assertThat(client.getPet().getName(), is("Murka"));
+        assertThat(this.client.getPet(), instanceOf(Cat.class));
+        assertThat(this.client.getPet().getName(), is("Murka"));
+    }
+
+    /**
+     * Test correctness of <code>toString</code> method.
+     */
+    @Test
+    public void whenToStringThenResult() {
+        assertThat(this.client.toString(), is("Vova with dog 'Bobik'"));
     }
 }

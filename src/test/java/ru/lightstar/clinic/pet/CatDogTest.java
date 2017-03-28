@@ -3,7 +3,6 @@ package ru.lightstar.clinic.pet;
 import org.junit.Test;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.io.ByteArrayOutput;
-import ru.lightstar.clinic.io.DummyOutput;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -15,16 +14,31 @@ import static org.junit.Assert.assertThat;
  * @since 0.0.1
  */
 public class CatDogTest {
+    /**
+     * <code>ByteArrayOutput</code> used for test of cat-dog's output.
+     */
+    final ByteArrayOutput byteArrayOutput;
+
+    /**
+     * <code>CatDog</code> object used in all tests.
+     */
+    final CatDog catDog;
+
+    /**
+     * Constructs <code>CatDog</code> object.
+     */
+    public CatDogTest() {
+        this.byteArrayOutput = new ByteArrayOutput();
+        this.catDog = new CatDog(new Cat("Tom", this.byteArrayOutput),
+                new Dog("Rex", this.byteArrayOutput));
+    }
 
     /**
      * Test correctness of cat-dog's name generation.
      */
     @Test
     public void whenCatDogCreatedThenItHasExpectedName() {
-        final DummyOutput dummyOutput = new DummyOutput();
-        final CatDog catDog = new CatDog(new Cat("Tom", dummyOutput), new Dog("Rex", dummyOutput));
-
-        assertThat(catDog.getName(), is("Tom-Rex"));
+        assertThat(this.catDog.getName(), is("Tom-Rex"));
     }
 
     /**
@@ -32,10 +46,7 @@ public class CatDogTest {
      */
     @Test(expected = NameException.class)
     public void whenSetCatDogNameWithoutHyphenThenException() throws NameException {
-        final DummyOutput dummyOutput = new DummyOutput();
-        final CatDog catDog = new CatDog(new Cat("Tom", dummyOutput), new Dog("Rex", dummyOutput));
-
-        catDog.setName("Murka");
+        this.catDog.setName("Murka");
     }
 
     /**
@@ -43,14 +54,10 @@ public class CatDogTest {
      */
     @Test
     public void whenSetCatDogNameThenItChanges() throws NameException {
-        final DummyOutput dummyOutput = new DummyOutput();
-        final CatDog catDog = new CatDog(new Cat("Tom", dummyOutput), new Dog("Rex", dummyOutput));
-
-        catDog.setName("Murka-Bobik");
-
-        assertThat(catDog.getName(), is("Murka-Bobik"));
-        assertThat(catDog.getCat().getName(), is("Murka"));
-        assertThat(catDog.getDog().getName(), is("Bobik"));
+        this.catDog.setName("Murka-Bobik");
+        assertThat(this.catDog.getName(), is("Murka-Bobik"));
+        assertThat(this.catDog.getCat().getName(), is("Murka"));
+        assertThat(this.catDog.getDog().getName(), is("Bobik"));
     }
 
     /**
@@ -58,11 +65,23 @@ public class CatDogTest {
      */
     @Test
     public void whenMakeSoundThenMewMewGavGav() {
-        final ByteArrayOutput byteArrayOutput = new ByteArrayOutput();
-        final CatDog catDog = new CatDog(new Cat("Tom", byteArrayOutput), new Dog("Rex", byteArrayOutput));
+        this.catDog.makeSound();
+        assertThat(this.byteArrayOutput.toString(), is(String.format("Mew, mew!%nGav, gav!%n")));
+    }
 
-        catDog.makeSound();
+    /**
+     * Test correctness of <code>getType</code> method.
+     */
+    @Test
+    public void whenGetTypeThenCatDog() {
+        assertThat(this.catDog.getType(), is("cat-dog"));
+    }
 
-        assertThat(byteArrayOutput.toString(), is(String.format("Mew, mew!%nGav, gav!%n")));
+    /**
+     * Test correctness of <code>toString</code> method.
+     */
+    @Test
+    public void whenToStringThenResult() {
+        assertThat(this.catDog.toString(), is("cat-dog 'Tom-Rex'"));
     }
 }

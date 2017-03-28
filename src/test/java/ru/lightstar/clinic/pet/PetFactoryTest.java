@@ -25,6 +25,7 @@ public class PetFactoryTest {
      */
     public PetFactoryTest() {
         this.petFactory = new PetFactory(new DummyOutput());
+        this.petFactory.addPet(CatDog.class);
     }
 
     /**

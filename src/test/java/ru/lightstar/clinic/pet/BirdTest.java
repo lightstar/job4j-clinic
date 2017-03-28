@@ -2,10 +2,9 @@ package ru.lightstar.clinic.pet;
 
 import org.junit.Test;
 import ru.lightstar.clinic.io.ByteArrayOutput;
-import ru.lightstar.clinic.io.DummyOutput;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * <code>Bird</code> class tests.
@@ -16,16 +15,30 @@ import static org.junit.Assert.*;
 public class BirdTest {
 
     /**
+     * <code>ByteArrayOutput</code> used for test of bird's output.
+     */
+    final ByteArrayOutput byteArrayOutput;
+
+    /**
+     * <code>Bird</code> object used in all tests.
+     */
+    final Bird bird;
+
+    /**
+     * Constructs <code>BirdTest</code> object.
+     */
+    public BirdTest() {
+        this.byteArrayOutput = new ByteArrayOutput();
+        this.bird = new Bird("Beauty", this.byteArrayOutput);
+    }
+
+    /**
      * Test correctness of <code>makeSound</code> method.
      */
     @Test
     public void whenMakeSoundThenChirpChirp() {
-        final ByteArrayOutput byteArrayOutput = new ByteArrayOutput();
-        final Bird bird = new Bird("Beauty", byteArrayOutput);
-
-        bird.makeSound();
-
-        assertThat(byteArrayOutput.toString(), is(String.format("Chirp, chirp!%n")));
+        this.bird.makeSound();
+        assertThat(this.byteArrayOutput.toString(), is(String.format("Chirp, chirp!%n")));
 
     }
 
@@ -34,11 +47,23 @@ public class BirdTest {
      */
     @Test
     public void whenSetNameThenItChanges() {
-        final DummyOutput dummyOutput = new DummyOutput();
-        final Bird bird = new Bird("Beauty", dummyOutput);
+        this.bird.setName("VeryBeauty");
+        assertThat(this.bird.getName(), is("VeryBeauty"));
+    }
 
-        bird.setName("VeryBeauty");
+    /**
+     * Test correctness of <code>getType</code> method.
+     */
+    @Test
+    public void whenGetTypeThenBird() {
+        assertThat(this.bird.getType(), is("bird"));
+    }
 
-        assertThat(bird.getName(), is("VeryBeauty"));
+    /**
+     * Test correctness of <code>toString</code> method.
+     */
+    @Test
+    public void whenToStringThenResult() {
+        assertThat(this.bird.toString(), is("bird 'Beauty'"));
     }
 }

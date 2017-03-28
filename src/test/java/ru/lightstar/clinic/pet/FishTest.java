@@ -2,7 +2,6 @@ package ru.lightstar.clinic.pet;
 
 import org.junit.Test;
 import ru.lightstar.clinic.io.ByteArrayOutput;
-import ru.lightstar.clinic.io.DummyOutput;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -16,16 +15,30 @@ import static org.junit.Assert.assertThat;
 public class FishTest {
 
     /**
+     * <code>ByteArrayOutput</code> used for test of fish's output.
+     */
+    final ByteArrayOutput byteArrayOutput;
+
+    /**
+     * <code>Fish</code> object used in all tests.
+     */
+    final Fish fish;
+
+    /**
+     * Constructs <code>CatTest</code> object.
+     */
+    public FishTest() {
+        this.byteArrayOutput = new ByteArrayOutput();
+        this.fish = new Fish("Beauty", this.byteArrayOutput);
+    }
+
+    /**
      * Test correctness of <code>makeSound</code> method.
      */
     @Test
     public void whenMakeSoundThenSilence() {
-        final ByteArrayOutput byteArrayOutput = new ByteArrayOutput();
-        final Fish fish = new Fish("Beauty", byteArrayOutput);
-
-        fish.makeSound();
-
-        assertThat(byteArrayOutput.toString(), is(String.format("<silence>%n")));
+        this.fish.makeSound();
+        assertThat(this.byteArrayOutput.toString(), is(String.format("<silence>%n")));
     }
 
     /**
@@ -33,11 +46,23 @@ public class FishTest {
      */
     @Test
     public void whenSetNameThenItChanges() {
-        final DummyOutput dummyOutput = new DummyOutput();
-        final Fish fish = new Fish("Beauty", dummyOutput);
+        this.fish.setName("VeryBeauty");
+        assertThat(this.fish.getName(), is("VeryBeauty"));
+    }
 
-        fish.setName("VeryBeauty");
+    /**
+     * Test correctness of <code>getType</code> method.
+     */
+    @Test
+    public void whenGetTypeThenFish() {
+        assertThat(this.fish.getType(), is("fish"));
+    }
 
-        assertThat(fish.getName(), is("VeryBeauty"));
+    /**
+     * Test correctness of <code>toString</code> method.
+     */
+    @Test
+    public void whenToStringThenResult() {
+        assertThat(this.fish.toString(), is("fish 'Beauty'"));
     }
 }

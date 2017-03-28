@@ -9,6 +9,7 @@ import java.util.Scanner;
  * @since 0.0.1
  */
 public class Console implements Input, Output {
+
     /**
      * Console scanner.
      */

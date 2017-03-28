@@ -67,4 +67,16 @@ public class Client {
     public void setPet(final Pet pet) {
         this.pet = pet;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        if (this.getPet() == Pet.NONE) {
+            return String.format("%s with no pet", this.getName());
+        } else {
+            return String.format("%s with %s", this.getName(), this.getPet().toString());
+        }
+    }
 }

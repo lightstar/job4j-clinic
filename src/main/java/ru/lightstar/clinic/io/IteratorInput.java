@@ -1,5 +1,6 @@
 package ru.lightstar.clinic.io;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -9,10 +10,11 @@ import java.util.Iterator;
  * @since 0.0.1
  */
 public class IteratorInput implements Input {
+
     /**
      * Inner iterator.
      */
-    private final Iterator<String> iterator;
+    private Iterator<String> iterator;
 
     /**
      * Constructs <code>IteratorInput</code> object.
@@ -21,6 +23,22 @@ public class IteratorInput implements Input {
      */
     public IteratorInput(final Iterator<String> iterator) {
         super();
+        this.iterator = iterator;
+    }
+
+    /**
+     * Constructs <code>IteratorInput</code> object with empty iterator.
+     */
+    public IteratorInput() {
+        this(Collections.emptyIterator());
+    }
+
+    /**
+     * Set new iterator object.
+     *
+     * @param iterator iterator.
+     */
+    public void setIterator(Iterator<String> iterator) {
         this.iterator = iterator;
     }
 

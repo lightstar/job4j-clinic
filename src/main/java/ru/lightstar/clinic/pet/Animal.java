@@ -11,6 +11,11 @@ import ru.lightstar.clinic.io.Output;
 public abstract class Animal implements Pet {
 
     /**
+     * Animal's type.
+     */
+    private final String type;
+
+    /**
      * Animal's name.
      */
     private String name;
@@ -23,13 +28,23 @@ public abstract class Animal implements Pet {
     /**
      * Constructs <code>Animal</code> object.
      *
+     * @param type animal's type.
      * @param name animal's name.
      * @param output output used for sounds.
      */
-    public Animal(final String name, final Output output) {
+    public Animal(final String type, final String name, final Output output) {
         super();
+        this.type = type;
         this.name = name;
         this.output = output;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getType() {
+        return this.type;
     }
 
     /**
@@ -46,5 +61,13 @@ public abstract class Animal implements Pet {
     @Override
     public void setName(final String name) {
         this.name = name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format("%s '%s'", this.getType(), this.getName());
     }
 }

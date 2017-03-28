@@ -7,6 +7,7 @@ package ru.lightstar.clinic.io;
  * @since 0.0.1
  */
 public interface Input {
+
     /**
      * Get next string from input.
      *
