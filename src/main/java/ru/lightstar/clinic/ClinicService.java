@@ -290,6 +290,22 @@ public class ClinicService {
     }
 
     /**
+     * Ask client's pet to make sound.
+     *
+     * @param name client's name.
+     * @throws ServiceException thrown if client can't be found or doesn't have pet.
+     */
+    public void askPetMakeSound(final String name) throws ServiceException {
+        final Client client = this.findClientByName(name);
+
+        if (client.getPet() == Pet.NONE) {
+            throw new ServiceException("Client doesn't have pet");
+        }
+
+        client.getPet().makeSound();
+    }
+
+    /**
      * Delete client's pet.
      *
      * @param name client's name.

@@ -50,6 +50,7 @@ public class ClinicRunner {
         this.menu.addAction(new UpdateClientPetName(this.clinicService));
         this.menu.addAction(new DeleteClient(this.clinicService));
         this.menu.addAction(new DeleteClientPet(this.clinicService));
+        this.menu.addAction(new PetMakeSound(this.clinicService));
         this.menu.addAction(new Exit(this.clinicService.getOutput()));
     }
 
@@ -68,8 +69,18 @@ public class ClinicRunner {
                 this.getOutput().println(e.getMessage());
             }
 
-            this.getOutput().println("");
+            this.getOutput().println("Press 'Enter' to continue...");
+            this.getInput().waitEnter();
         }
+    }
+
+    /**
+     * Get input object.
+     *
+     * @return <code>Input</code> object.
+     */
+    private Input getInput() {
+        return this.clinicService.getInput();
     }
 
     /**

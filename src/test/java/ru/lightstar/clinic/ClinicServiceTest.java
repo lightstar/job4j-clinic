@@ -3,10 +3,7 @@ package ru.lightstar.clinic;
 import org.junit.Test;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
-import ru.lightstar.clinic.io.DummyOutput;
-import ru.lightstar.clinic.io.Input;
-import ru.lightstar.clinic.io.IteratorInput;
-import ru.lightstar.clinic.io.Output;
+import ru.lightstar.clinic.io.*;
 import ru.lightstar.clinic.pet.*;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -50,7 +47,7 @@ public class ClinicServiceTest {
      */
     public ClinicServiceTest() {
         this.input = new IteratorInput();
-        this.output = new DummyOutput();
+        this.output = new ByteArrayOutput();
         this.clinic = new Clinic(CLINIC_SIZE);
         this.clinicService = new ClinicService(this.input, this.output, this.clinic);
     }
@@ -370,6 +367,36 @@ public class ClinicServiceTest {
         final Client client = this.clinicService.addClient(5, "Vasya");
 
         assertThat(this.clinicService.findClientByName("Vasya"), is(client));
+    }
+
+    /**
+     * Test correctness of <code>askPetMakeSound</code> method.
+     */
+    @Test
+    public void whenAskPetMakeSoundThenResult() throws NameException, ServiceException {
+        this.clinicService.addClient(5, "Vasya");
+        this.clinicService.setClientPet("Vasya", "cat", "Murka");
+
+        this.clinicService.askPetMakeSound("Vasya");
+
+        assertThat(this.output.toString(), is(String.format("Mew, mew!%n")));
+    }
+
+    /**
+     * Test that <code>askPetMakeSound</code> throws exception for non-existent client's name.
+     */
+    @Test(expected = ServiceException.class)
+    public void whenAskPetMakeSoundByNonExistentNameThenException() throws ServiceException {
+        this.clinicService.askPetMakeSound("Vasya");
+    }
+
+    /**
+     * Test that <code>askPetMakeSound</code> throws exception for non-existent client's pet.
+     */
+    @Test(expected = ServiceException.class)
+    public void whenAskNonExistentPetMakeSoundThenException() throws NameException, ServiceException {
+        this.clinicService.addClient(5, "Vasya");
+        this.clinicService.askPetMakeSound("Vasya");
     }
 
     /**

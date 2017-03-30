@@ -16,6 +16,11 @@ public interface Input {
     String next();
 
     /**
+     * Wait for user to press 'Enter' key.
+     */
+    void waitEnter();
+
+    /**
      * Ask user a question and get answer.
      *
      * @param output output for question.

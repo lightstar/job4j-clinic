@@ -54,6 +54,13 @@ public class IteratorInput implements Input {
      * {@inheritDoc}
      */
     @Override
+    public void waitEnter() {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String ask(final Output output, final String question) {
         output.println(question);
         return this.iterator.next();

@@ -1,5 +1,6 @@
 package ru.lightstar.clinic.io;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -29,6 +30,19 @@ public class Console implements Input, Output {
     @Override
     public String next() {
         return this.scanner.next();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void waitEnter() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            throw new IllegalStateException("I/O error", e);
+        }
     }
 
     /**
