@@ -31,12 +31,4 @@ public class Fish extends Animal {
     public void makeSound() {
         this.output.println("<silence>");
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doAction() {
-
-    }
 }

@@ -31,11 +31,4 @@ public class Dog extends Animal {;
     public void makeSound() {
         this.output.println("Gav, gav!");
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doAction() {
-    }
 }

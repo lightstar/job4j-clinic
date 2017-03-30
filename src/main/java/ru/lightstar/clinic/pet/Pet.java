@@ -21,11 +21,6 @@ public interface Pet {
     void makeSound();
 
     /**
-     * Do some action.
-     */
-    void doAction();
-
-    /**
      * Get pet's type.
      *
      * @return pet's type.

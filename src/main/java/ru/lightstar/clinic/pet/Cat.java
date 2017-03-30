@@ -31,11 +31,4 @@ public class Cat extends Animal {
     public void makeSound() {
         this.output.println("Mew, mew!");
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doAction() {
-    }
 }

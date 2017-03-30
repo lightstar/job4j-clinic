@@ -26,13 +26,6 @@ class None implements Pet {
      * {@inheritDoc}
      */
     @Override
-    public void doAction() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getType() {
         return "";
     }

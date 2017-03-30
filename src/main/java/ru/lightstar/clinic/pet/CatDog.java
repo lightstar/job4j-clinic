@@ -81,15 +81,6 @@ public class CatDog implements Pet {
      * {@inheritDoc}
      */
     @Override
-    public void doAction() {
-        this.cat.doAction();
-        this.dog.doAction();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getType() {
         return TYPE;
     }

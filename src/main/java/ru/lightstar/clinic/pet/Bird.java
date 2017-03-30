@@ -31,11 +31,4 @@ public class Bird extends Animal {
     public void makeSound() {
         this.output.println("Chirp, chirp!");
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doAction() {
-    }
 }
