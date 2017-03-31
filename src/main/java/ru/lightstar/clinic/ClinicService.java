@@ -185,6 +185,22 @@ public class ClinicService {
     }
 
     /**
+     * Get client's pet.
+     *
+     * @param name client's name.
+     * @throws ServiceException thrown if client can't be found or doesn't have pet.
+     */
+    public Pet getClientPet(final String name) throws ServiceException {
+        final Client client = this.findClientByName(name);
+
+        if (client.getPet() == Pet.NONE) {
+            throw new ServiceException("Client doesn't have pet");
+        }
+
+        return client.getPet();
+    }
+
+    /**
      * Add new client.
      *
      * @param position position for client.
@@ -263,19 +279,15 @@ public class ClinicService {
      * @throws NameException thrown if new name is wrong.
      */
     public void updateClientPetName(final String name, final String petName) throws ServiceException, NameException {
-        final Client client = this.findClientByName(name);
+        final Pet pet = this.getClientPet(name);
 
-        if (client.getPet() == Pet.NONE) {
-            throw new ServiceException("Client doesn't have pet");
-        }
-
-        if (client.getPet().getName().equals(petName)) {
+        if (pet.getName().equals(petName)) {
             throw new NameException("New name is the same as previous");
         }
 
         this.checkPetName(petName);
 
-        client.getPet().setName(petName);
+        pet.setName(petName);
     }
 
     /**
@@ -296,13 +308,8 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found or doesn't have pet.
      */
     public void askPetMakeSound(final String name) throws ServiceException {
-        final Client client = this.findClientByName(name);
-
-        if (client.getPet() == Pet.NONE) {
-            throw new ServiceException("Client doesn't have pet");
-        }
-
-        client.getPet().makeSound();
+        final Pet pet = this.getClientPet(name);
+        pet.makeSound();
     }
 
     /**
@@ -312,8 +319,7 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found or he doesn't has pet.
      */
     public void deleteClientPet(final String name) throws ServiceException {
-        final int position = this.findClientPositionByName(name);
-        final Client client = this.getClientByPosition(position);
+        final Client client = this.findClientByName(name);
 
         if (client.getPet() == Pet.NONE) {
             throw new ServiceException("Client doesn't have pet");

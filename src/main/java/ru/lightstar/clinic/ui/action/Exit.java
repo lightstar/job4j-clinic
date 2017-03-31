@@ -1,6 +1,6 @@
 package ru.lightstar.clinic.ui.action;
 
-import ru.lightstar.clinic.exception.ExitException;
+import ru.lightstar.clinic.exception.ReturnException;
 import ru.lightstar.clinic.io.Output;
 
 /**
@@ -9,20 +9,15 @@ import ru.lightstar.clinic.io.Output;
  * @author LightStar
  * @since 0.0.1
  */
-public class Exit implements Action {
-
-    /**
-     * <code>Output</code> object used by this action.
-     */
-    private final Output output;
+public class Exit extends Return {
 
     /**
      * Constructs <code>Exit</code> object.
      *
      * @param output <code>Output</code> object used by this action.
      */
-    public Exit(final Output output) {
-        this.output = output;
+    public Exit(Output output) {
+        super(output);
     }
 
     /**
@@ -45,8 +40,8 @@ public class Exit implements Action {
      * {@inheritDoc}
      */
     @Override
-    public void run() throws ExitException {
-        this.output.println("Bye, bye!");
-        throw new ExitException();
+    public void run() throws ReturnException {
+        this.getOutput().println("Bye, bye!");
+        throw new ReturnException();
     }
 }

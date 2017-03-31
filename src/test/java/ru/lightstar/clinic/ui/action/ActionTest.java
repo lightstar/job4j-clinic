@@ -2,6 +2,7 @@ package ru.lightstar.clinic.ui.action;
 
 import ru.lightstar.clinic.Clinic;
 import ru.lightstar.clinic.ClinicService;
+import ru.lightstar.clinic.DrugService;
 import ru.lightstar.clinic.IoTestHelper;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
@@ -42,6 +43,11 @@ public abstract class ActionTest {
     protected final ClinicService clinicService;
 
     /**
+     * <code>DrugService</code> object used in action tests.
+     */
+    protected final DrugService drugService;
+
+    /**
      * IO helper object used in action tests.
      */
     protected final IoTestHelper helper;
@@ -60,12 +66,17 @@ public abstract class ActionTest {
         this.input = new IteratorInput();
         this.clinic = new Clinic(CLINIC_SIZE);
         this.clinicService = new ClinicService(this.input, this.output, this.clinic);
+        this.drugService = new DrugService(this.clinic);
         this.helper = new IoTestHelper();
         this.action = this.createAction();
 
         this.clinicService.addClient(0, "Vasya");
         this.clinicService.addClient(1, "Masha");
         this.clinicService.setClientPet("Masha", "cat", "Murka");
+
+        this.drugService.addDrug("aspirin");
+        this.drugService.addDrug("aspirin");
+        this.drugService.addDrug("glucose");
     }
 
     /**

@@ -1,12 +1,10 @@
 package ru.lightstar.clinic;
 
-import ru.lightstar.clinic.exception.ActionException;
-import ru.lightstar.clinic.exception.ExitException;
-import ru.lightstar.clinic.exception.MenuException;
 import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.Output;
 import ru.lightstar.clinic.ui.Menu;
 import ru.lightstar.clinic.ui.action.*;
+import ru.lightstar.clinic.ui.action.drug.*;
 
 /**
  * Console runner for pet's clinic.
@@ -22,14 +20,9 @@ public class ClinicRunner {
     public final static int CLINIC_SIZE = 10;
 
     /**
-     * Clinic service.
+     * User's main menu.
      */
-    private final ClinicService clinicService;
-
-    /**
-     * User menu.
-     */
-    private final Menu menu;
+    private final Menu mainMenu;
 
     /**
      * Constructs <code>ClinicRunner</code> object.
@@ -38,57 +31,35 @@ public class ClinicRunner {
      * @param output <code>Output</code> object used for output.
      */
     public ClinicRunner(final Input input, final Output output) {
-        this.clinicService = new ClinicService(input, output, new Clinic(CLINIC_SIZE));
-        this.menu = new Menu(input, output);
+        final Clinic clinic = new Clinic(CLINIC_SIZE);
+        final ClinicService clinicService = new ClinicService(input, output, clinic);
+        final DrugService drugService = new DrugService(clinic);
 
-        this.menu.addAction(new ShowAllClients(this.clinicService));
-        this.menu.addAction(new FindClientsByPetName(this.clinicService));
-        this.menu.addAction(new FindClientByName(this.clinicService));
-        this.menu.addAction(new AddClient(this.clinicService));
-        this.menu.addAction(new SetClientPet(this.clinicService));
-        this.menu.addAction(new UpdateClientName(this.clinicService));
-        this.menu.addAction(new UpdateClientPetName(this.clinicService));
-        this.menu.addAction(new DeleteClient(this.clinicService));
-        this.menu.addAction(new DeleteClientPet(this.clinicService));
-        this.menu.addAction(new PetMakeSound(this.clinicService));
-        this.menu.addAction(new Exit(this.clinicService.getOutput()));
+        final Menu drugMenu = new Menu("drug","Drug operations", input, output);
+        drugMenu.addAction(new ShowAllDrugs(clinicService, drugService));
+        drugMenu.addAction(new AddDrug(clinicService, drugService));
+        drugMenu.addAction(new GiveDrugToClientPet(clinicService, drugService));
+        drugMenu.addAction(new Return(output));
+
+        this.mainMenu = new Menu("main", "Main menu", input, output);
+        this.mainMenu.addAction(new ShowAllClients(clinicService));
+        this.mainMenu.addAction(new FindClientsByPetName(clinicService));
+        this.mainMenu.addAction(new FindClientByName(clinicService));
+        this.mainMenu.addAction(new AddClient(clinicService));
+        this.mainMenu.addAction(new SetClientPet(clinicService));
+        this.mainMenu.addAction(new UpdateClientName(clinicService));
+        this.mainMenu.addAction(new UpdateClientPetName(clinicService));
+        this.mainMenu.addAction(new DeleteClient(clinicService));
+        this.mainMenu.addAction(new DeleteClientPet(clinicService));
+        this.mainMenu.addAction(new PetMakeSound(clinicService));
+        this.mainMenu.addAction(drugMenu);
+        this.mainMenu.addAction(new Exit(output));
     }
 
     /**
      * Run this runner.
      */
     public void run() {
-        while(true) {
-            this.menu.show();
-
-            try {
-                this.menu.run();
-            } catch(ExitException e) {
-                break;
-            } catch (MenuException | ActionException e) {
-                this.getOutput().println(e.getMessage());
-            }
-
-            this.getOutput().println("Press 'Enter' to continue...");
-            this.getInput().waitEnter();
-        }
-    }
-
-    /**
-     * Get input object.
-     *
-     * @return <code>Input</code> object.
-     */
-    private Input getInput() {
-        return this.clinicService.getInput();
-    }
-
-    /**
-     * Get output object.
-     *
-     * @return <code>Output</code> object.
-     */
-    private Output getOutput() {
-        return this.clinicService.getOutput();
+        this.mainMenu.run();
     }
 }

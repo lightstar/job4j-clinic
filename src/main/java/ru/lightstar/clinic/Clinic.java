@@ -1,5 +1,7 @@
 package ru.lightstar.clinic;
 
+import ru.lightstar.clinic.list.DrugList;
+
 import java.util.Arrays;
 
 /**
@@ -16,12 +18,18 @@ public class Clinic {
     private final Client[] clients;
 
     /**
+     * Clinic's drug list.
+     */
+    private final DrugList drugList;
+
+    /**
      * Constructs clinic with specified size.
      * @param size clinic's size.
      */
     public Clinic(final int size) {
         super();
         this.clients = new Client[size];
+        this.drugList = new DrugList();
     }
 
     /**
@@ -59,5 +67,14 @@ public class Clinic {
      */
     public Client[] getClients() {
         return Arrays.copyOf(this.clients, this.clients.length);
+    }
+
+    /**
+     * Get clinic's drug list.
+     *
+     * @return drug list.
+     */
+    public DrugList getDrugList() {
+        return this.drugList;
     }
 }

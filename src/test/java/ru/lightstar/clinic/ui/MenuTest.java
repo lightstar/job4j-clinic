@@ -7,9 +7,12 @@ import ru.lightstar.clinic.exception.MenuException;
 import ru.lightstar.clinic.io.ByteArrayOutput;
 import ru.lightstar.clinic.io.IteratorInput;
 import ru.lightstar.clinic.ui.action.Action;
+import ru.lightstar.clinic.ui.action.Return;
 
+import java.util.Arrays;
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -20,6 +23,16 @@ import static org.junit.Assert.assertThat;
  * @since 0.0.1
  */
 public class MenuTest {
+
+    /**
+     * Name of test menu.
+     */
+    private final static String TEST_MENU_NAME = "test";
+
+    /**
+     * Description of test menu.
+     */
+    private final static String TEST_MENU_DESCRIPTION = "Test menu";
 
     /**
      * Name of action used in tests.
@@ -68,7 +81,7 @@ public class MenuTest {
         this.helper = new IoTestHelper();
         this.input = new IteratorInput();
         this.output = new ByteArrayOutput();
-        this.menu = new Menu(input, output);
+        this.menu = new Menu(TEST_MENU_NAME, TEST_MENU_DESCRIPTION, input, output);
         this.action = new Action() {
             @Override
             public String getName() {
@@ -85,6 +98,24 @@ public class MenuTest {
                 MenuTest.this.output.println(TEST_ACTION_RUN_STRING);
             }
         };
+        this.menu.addAction(this.action);
+        this.menu.addAction(new Return(this.output));
+    }
+
+    /**
+     * Test correctness of <code>getName</code> method.
+     */
+    @Test
+    public void whenGetNameThenResult() {
+        assertThat(this.menu.getName(), is(TEST_MENU_NAME));
+    }
+
+    /**
+     * Test correctness of <code>getDescription</code> method.
+     */
+    @Test
+    public void whenGetDescriptionThenResult() {
+        assertThat(this.menu.getDescription(), is(TEST_MENU_DESCRIPTION));
     }
 
     /**
@@ -92,8 +123,8 @@ public class MenuTest {
      */
     @Test
     public void whenAddActionThenItAdds() {
-        this.menu.addAction(this.action);
-        assertThat(this.menu.getActions(), is(Collections.singletonMap(TEST_ACTION_NAME, this.action)));
+        assertThat(this.menu.getActions().get(TEST_ACTION_NAME), is(this.action));
+        assertThat(this.menu.getActions().get("return"), instanceOf(Return.class));
     }
 
     /**
@@ -101,29 +132,26 @@ public class MenuTest {
      */
     @Test
     public void whenShowTheItShows() {
-        this.menu.addAction(this.action);
-
         this.menu.show();
 
         assertThat(this.output.toString(),
                 is(this.helper.joinLines(new String[]{
-                        "Menu:",
-                        "-----",
+                        "Test menu:",
+                        "----------",
                         String.format("%s (%s).", TEST_ACTION_DESCRIPTION, TEST_ACTION_NAME),
+                        "Return back (return).",
                         ""
                 }))
         );
     }
 
     /**
-     * Test correctness of <code>run</code> method.
+     * Test correctness of <code>runAction</code> method.
      */
     @Test
-    public void whenRunThenItRuns() throws Exception {
-        this.menu.addAction(this.action);
-
-        this.input.setIterator(Collections.singletonList(this.action.getName()).iterator());
-        this.menu.run();
+    public void whenRunActionThenItRuns() throws ActionException, MenuException {
+        this.input.setIterator(Collections.singletonList(TEST_ACTION_NAME).iterator());
+        this.menu.runAction();
 
         assertThat(this.output.toString(), is(this.helper.joinLines(new String[]{
                 "Choose action:",
@@ -132,13 +160,45 @@ public class MenuTest {
     }
 
     /**
-     * Test that method <code>rune</code> throws exception for unknown user action.
+     * Test that method <code>runAction</code> throws exception for unknown user action.
      */
     @Test(expected = MenuException.class)
-    public void whenWrongActionThenException() throws Exception {
-        this.menu.addAction(this.action);
+    public void whenWrongActionThenException() throws ActionException, MenuException {
+        this.input.setIterator(Collections.singletonList("unknown").iterator());
+        this.menu.runAction();
+    }
 
-        this.input.setIterator(Collections.singletonList("Unknown").iterator());
+    /**
+     * Test correctness of <code>run</code> method.
+     */
+    @Test
+    public void whenRunThenItRuns() {
+        this.input.setIterator(Arrays.asList(new String[]{
+                TEST_ACTION_NAME,
+                "return"
+        }).iterator());
+
         this.menu.run();
+
+        assertThat(this.output.toString(), is(this.helper.joinLines(new String[]{
+                "Test menu:",
+                "----------",
+                String.format("%s (%s).", TEST_ACTION_DESCRIPTION, TEST_ACTION_NAME),
+                "Return back (return).",
+                "",
+                "Choose action:",
+
+                TEST_ACTION_RUN_STRING,
+                "Press 'Enter' to continue...",
+
+                "Test menu:",
+                "----------",
+                String.format("%s (%s).", TEST_ACTION_DESCRIPTION, TEST_ACTION_NAME),
+                "Return back (return).",
+                "",
+                "Choose action:",
+
+                "Returning back."
+        })));
     }
 }

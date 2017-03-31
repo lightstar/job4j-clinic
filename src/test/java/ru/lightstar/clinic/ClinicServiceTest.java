@@ -370,6 +370,44 @@ public class ClinicServiceTest {
     }
 
     /**
+     * Test that <code>findClientByName</code> method throws exception for non-existent client's name.
+     */
+    @Test(expected = ServiceException.class)
+    public void whenFindClientByNonExistentNameThenException() throws NameException, ServiceException {
+        this.clinicService.addClient(1, "Vova");
+        this.clinicService.addClient(5, "Vasya");
+        this.clinicService.findClientByName("Masha");
+    }
+
+    /**
+     * Test correctness of <code>getClientPet</code> method.
+     */
+    @Test
+    public void whenGetClientPetThenResult() throws NameException, ServiceException {
+        this.clinicService.addClient(1, "Vova");
+        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka");
+
+        assertThat(this.clinicService.getClientPet("Vova"), is(pet));
+    }
+
+    /**
+     * Test that <code>getClientPet</code> method throws exception is client not exists.
+     */
+    @Test(expected = ServiceException.class)
+    public void whenGetClientPetByNonExistentNameThenException() throws NameException, ServiceException {
+        this.clinicService.getClientPet("Vova");
+    }
+
+    /**
+     * Test that <code>getClientPet</code> throws exception if client doesn't have pet.
+     */
+    @Test(expected = ServiceException.class)
+    public void whenGetClientPetAndClientHasNoPetThenException() throws NameException, ServiceException {
+        this.clinicService.addClient(1, "Vova");
+        this.clinicService.getClientPet("Vova");
+    }
+
+    /**
      * Test correctness of <code>askPetMakeSound</code> method.
      */
     @Test
@@ -397,15 +435,5 @@ public class ClinicServiceTest {
     public void whenAskNonExistentPetMakeSoundThenException() throws NameException, ServiceException {
         this.clinicService.addClient(5, "Vasya");
         this.clinicService.askPetMakeSound("Vasya");
-    }
-
-    /**
-     * Test that <code>findClientByName</code> method throws exception for non-existent client's name.
-     */
-    @Test(expected = ServiceException.class)
-    public void whenFindClientByNonExistentNameThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
-        this.clinicService.addClient(5, "Vasya");
-        this.clinicService.findClientByName("Masha");
     }
 }

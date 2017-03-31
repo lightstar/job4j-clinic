@@ -9,6 +9,11 @@ package ru.lightstar.clinic.drug;
 public interface Drug {
 
     /**
+     * Drug object used instead of null. Indicates that there is really no drug at all.
+     */
+    Drug NONE = new None();
+
+    /**
      * Get drug's name.
      *
      * @return drug's name.

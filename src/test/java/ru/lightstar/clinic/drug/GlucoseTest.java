@@ -30,11 +30,11 @@ public class GlucoseTest {
      */
     @Test
     public void whenGetNameThenResult() {
-        assertThat(this.glucose.getName(), is("Glucose"));
+        assertThat(this.glucose.getName(), is("glucose"));
     }
 
     /**
-     * Test correctness of <code>getDungerLevel</code> method.
+     * Test correctness of <code>getDangerLevel</code> method.
      */
     @Test
     public void getDangerLevel() {

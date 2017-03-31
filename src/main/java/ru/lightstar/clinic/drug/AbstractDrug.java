@@ -72,4 +72,12 @@ public abstract class AbstractDrug implements Drug {
         result = 31 * result + this.dangerLevel;
         return result;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format("%s (%d)", this.name, this.dangerLevel);
+    }
 }

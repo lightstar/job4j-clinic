@@ -40,18 +40,12 @@ public class ClinicRunnerTest {
     private final ClinicRunner clinicRunner;
 
     /**
-     * <code>IoTestHelper</code> object used in tests.
-     */
-    private final IoTestHelper helper;
-
-    /**
      * Constructs <code>ClinicRunnerTest</code> object.
      */
     public ClinicRunnerTest() {
         this.input = new IteratorInput();
         this.output = new ByteArrayOutput();
         this.clinicRunner = new ClinicRunner(this.input, this.output);
-        this.helper = new IoTestHelper();
     }
 
     /**
@@ -72,7 +66,7 @@ public class ClinicRunnerTest {
                 "Masha",
                 "10",
 
-                "showAll",
+                "show",
 
                 "setPet",
                 "Masha",
@@ -89,7 +83,7 @@ public class ClinicRunnerTest {
                 "cat-dog",
                 "Murka-Rex",
 
-                "showAll",
+                "show",
 
                 "exit"
         }).iterator());
@@ -154,9 +148,9 @@ public class ClinicRunnerTest {
      */
     private void resultMenu(final List<String> result) {
         result.addAll(Arrays.asList(
-                "Menu:",
-                "-----",
-                "Show all clients (showAll).",
+                "Main menu:",
+                "----------",
+                "Show all clients (show).",
                 "Find clients by pet's name (findByPet).",
                 "Find client by name (find).",
                 "Add new client (add).",
@@ -166,6 +160,7 @@ public class ClinicRunnerTest {
                 "Delete client (delete).",
                 "Delete client's pet (deletePet).",
                 "Ask pet to make sound (makeSound).",
+                "Drug operations (drug).",
                 "Exit from program (exit).",
                 "",
                 "Choose action:"

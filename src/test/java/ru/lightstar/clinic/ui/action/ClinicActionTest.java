@@ -119,4 +119,28 @@ public class ClinicActionTest extends ActionTest {
         this.input.setIterator(Collections.singletonList("non-number").iterator());
         ((ClinicAction)this.action).askPosition();
     }
+
+    /**
+     * Test correctness of <code>askPetType</code> method.
+     */
+    @Test
+    public void whenAskPetTypeThenResult() throws ActionException {
+        this.input.setIterator(Collections.singletonList("cat").iterator());
+        final String petType = ((ClinicAction)this.action).askPetType();
+
+        assertThat(this.output.toString(), is(String.format("Pet's type (bird, fish, cat, dog, cat-dog):%n")));
+        assertThat(petType, is("cat"));
+    }
+
+    /**
+     * Test correctness of <code>addCommaIfNeeded</code> method.
+     */
+    @Test
+    public void whenAddCommaIfNeededThenResult() {
+        final StringBuilder builder = new StringBuilder();
+
+        assertThat(((ClinicAction)this.action).addCommaIfNeeded(builder, true), is(false));
+        assertThat(((ClinicAction)this.action).addCommaIfNeeded(builder, false), is(false));
+        assertThat(builder.toString(), is(", "));
+    }
 }

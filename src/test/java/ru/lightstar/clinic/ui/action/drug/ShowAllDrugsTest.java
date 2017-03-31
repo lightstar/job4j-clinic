@@ -1,25 +1,27 @@
-package ru.lightstar.clinic.ui.action;
+package ru.lightstar.clinic.ui.action.drug;
 
 import org.junit.Test;
 import ru.lightstar.clinic.exception.ActionException;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
+import ru.lightstar.clinic.ui.action.Action;
+import ru.lightstar.clinic.ui.action.ActionTest;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
- * <code>ShowAllClients</code> action tests.
+ * <code>ShowAllDrugs</code> class tests.
  *
  * @author LightStar
  * @since 0.0.1
  */
-public class ShowAllClientsTest extends ActionTest {
+public class ShowAllDrugsTest extends ActionTest {
 
     /**
-     * {@inheritDoc}
+     * Constructs <code>ShowAllDrugsTest</code> object.
      */
-    public ShowAllClientsTest() throws NameException, ServiceException {
+    public ShowAllDrugsTest() throws NameException, ServiceException {
         super();
     }
 
@@ -28,7 +30,7 @@ public class ShowAllClientsTest extends ActionTest {
      */
     @Override
     protected Action createAction() {
-        return new ShowAllClients(this.clinicService);
+        return new ShowAllDrugs(this.clinicService, this.drugService);
     }
 
     /**
@@ -44,7 +46,7 @@ public class ShowAllClientsTest extends ActionTest {
      */
     @Test
     public void whenGetDescriptionThenResult() {
-        assertThat(this.action.getDescription(), is("Show all clients"));
+        assertThat(this.action.getDescription(), is("Show all drugs"));
     }
 
     /**
@@ -53,12 +55,6 @@ public class ShowAllClientsTest extends ActionTest {
     @Test
     public void whenRunThenResult() throws ActionException {
         this.action.run();
-
-        assertThat(this.output.toString(), is(this.helper.joinLines(new String[]{
-                "Clinic size: 3.",
-                "1. Vasya with no pet.",
-                "2. Masha with cat 'Murka'.",
-                "3. VACANT."
-        })));
+        assertThat(this.output.toString(), is(String.format("Drugs: aspirin (2) - 2, glucose (1).%n")));
     }
 }

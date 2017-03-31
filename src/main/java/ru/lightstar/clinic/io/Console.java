@@ -39,7 +39,9 @@ public class Console implements Input, Output {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void waitEnter() {
         try {
+            System.in.mark(1);
             System.in.read();
+            System.in.reset();
         } catch (IOException e) {
             throw new IllegalStateException("I/O error", e);
         }

@@ -9,9 +9,14 @@ package ru.lightstar.clinic.drug;
 public class Aspirin extends AbstractDrug {
 
     /**
+     * Aspirin's name string.
+     */
+    public final static String NAME = "aspirin";
+
+    /**
      * Constructs <code>Aspirin</code> object.
      */
     public Aspirin() {
-        super("Aspirin", 2);
+        super(NAME, 2);
     }
 }

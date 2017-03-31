@@ -113,22 +113,32 @@ public abstract class ClinicAction implements Action {
      *
      * @return user's answer.
      */
-    protected String askPetType() throws ActionException {
-        final StringBuilder questionBuilder = new StringBuilder();
-        questionBuilder.append("Pet's type (");
+    protected String askPetType() {
+        final StringBuilder questionBuilder = new StringBuilder("Pet's type (");
 
         boolean isFirst = true;
         for (String petType : this.clinicService.getKnownPetTypes()) {
-            if (isFirst) {
-                isFirst = false;
-            } else {
-                questionBuilder.append(", ");
-            }
+            isFirst = this.addCommaIfNeeded(questionBuilder, isFirst);
             questionBuilder.append(petType);
         }
 
         questionBuilder.append("):");
 
         return this.ask(questionBuilder.toString());
+    }
+
+    /**
+     * Add comma to given <code>StringBuilder</code> if it is not first item in it.
+     * Used to create comma-separated lists.
+     *
+     * @param builder operated <code>StringBuilder</code> object.
+     * @param isFirst <code>true</code> if it is first invocation of this method, and <code>false</code> - otherwise.
+     * @return always <code>false</code> to set outside <code>isFirst</code> variable to this value.
+     */
+    protected boolean addCommaIfNeeded(final StringBuilder builder, final boolean isFirst) {
+        if (!isFirst) {
+            builder.append(", ");
+        }
+        return false;
     }
 }

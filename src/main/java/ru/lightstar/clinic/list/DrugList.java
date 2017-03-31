@@ -1,6 +1,5 @@
 package ru.lightstar.clinic.list;
 
-import com.sun.istack.internal.NotNull;
 import ru.lightstar.clinic.drug.Drug;
 
 import java.util.*;
@@ -68,7 +67,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public int indexOf(@NotNull final Object obj) {
+    public int indexOf(final Object obj) {
         int index = -1;
 
         for (int i = 0; i < this.size; i++) {
@@ -85,7 +84,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public int lastIndexOf(@NotNull final Object obj) {
+    public int lastIndexOf(final Object obj) {
         int index = -1;
 
         for (int i = this.size - 1; i >= 0; i--) {
@@ -102,7 +101,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public boolean contains(@NotNull final Object obj) {
+    public boolean contains(final Object obj) {
         return this.indexOf(obj) >= 0;
     }
 
@@ -119,7 +118,7 @@ public class DrugList implements List<Drug> {
      */
     @Override
     @SuppressWarnings({"unchecked","SuspiciousSystemArraycopy"})
-    public <T> T[] toArray(@NotNull final T[] dst) {
+    public <T> T[] toArray(final T[] dst) {
         if (dst.length < this.size || !(dst instanceof Drug[])) {
             return (T[])Arrays.copyOf(this.drugArray, this.size, dst.getClass());
         }
@@ -142,7 +141,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public Drug set(final int index, @NotNull final Drug drug) {
+    public Drug set(final int index, final Drug drug) {
         this.checkIndexOutOfBounds(index);
         this.drugArray[index] = drug;
         return drug;
@@ -152,7 +151,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public boolean add(@NotNull final Drug drug) {
+    public boolean add(final Drug drug) {
         this.add(this.size, drug);
         return true;
     }
@@ -161,7 +160,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public void add(final int index, @NotNull final Drug drug) {
+    public void add(final int index, final Drug drug) {
         this.checkIndexOutOfBoundsForInsert(index);
         this.enlargeArrayIfNeeded();
         System.arraycopy(this.drugArray, index, this.drugArray, index + 1, this.size - index);
@@ -173,7 +172,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public boolean remove(@NotNull final Object obj) {
+    public boolean remove(final Object obj) {
         int index = this.indexOf(obj);
 
         if (index == -1) {
@@ -214,7 +213,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public boolean containsAll(@NotNull final Collection<?> col) {
+    public boolean containsAll(final Collection<?> col) {
         boolean isContainsAll = true;
 
         for (final Object obj : col) {
@@ -231,7 +230,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public boolean addAll(@NotNull final Collection<? extends Drug> col) {
+    public boolean addAll(final Collection<? extends Drug> col) {
         for (final Drug drug : col) {
             this.add(drug);
         }
@@ -242,7 +241,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public boolean addAll(int index, @NotNull final Collection<? extends Drug> col) {
+    public boolean addAll(int index, final Collection<? extends Drug> col) {
         for (final Drug drug : col) {
             this.add(index++, drug);
         }
@@ -253,7 +252,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public boolean removeAll(@NotNull final Collection<?> col) {
+    public boolean removeAll(final Collection<?> col) {
         return this.removeAll(col, false);
     }
 
@@ -261,7 +260,7 @@ public class DrugList implements List<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public boolean retainAll(@NotNull final Collection<?> col) {
+    public boolean retainAll(final Collection<?> col) {
         return this.removeAll(col, true);
     }
 
@@ -340,7 +339,7 @@ public class DrugList implements List<Drug> {
      *                that are in given collection.
      * @return <code>true</code> if list was changed and <code>false</code> otherwise.
      */
-    private boolean removeAll(@NotNull final Collection<?> col, final boolean inverse) {
+    private boolean removeAll(final Collection<?> col, final boolean inverse) {
         int newSize = this.size;
         boolean isAnyRemoved = false;
 
@@ -466,7 +465,7 @@ public class DrugList implements List<Drug> {
          * {@inheritDoc}
          */
         @Override
-        public void set(@NotNull final Drug drug) {
+        public void set(final Drug drug) {
             if (this.lastIndex == -1) {
                 throw new IllegalStateException("Nowhere to set");
             }
@@ -477,7 +476,7 @@ public class DrugList implements List<Drug> {
          * {@inheritDoc}
          */
         @Override
-        public void add(@NotNull final Drug drug) {
+        public void add(final Drug drug) {
             DrugList.this.add(this.index, drug);
             this.index++;
             this.lastIndex = -1;

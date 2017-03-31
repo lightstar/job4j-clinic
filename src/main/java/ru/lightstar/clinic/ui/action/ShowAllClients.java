@@ -17,7 +17,7 @@ public class ShowAllClients extends ClinicAction {
      * @param clinicService clinic service operated by action
      */
     public ShowAllClients(final ClinicService clinicService) {
-        super("showAll", "Show all clients",clinicService);
+        super("show", "Show all clients", clinicService);
     }
 
     /**

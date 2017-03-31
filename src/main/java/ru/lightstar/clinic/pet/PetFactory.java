@@ -41,9 +41,9 @@ public class PetFactory {
      *
      * @param petClass pet class.
      */
-    public void addPet(Class<? extends Pet> petClass) {
+    public void addPet(final Class<? extends Pet> petClass) {
         try {
-            String type = (String) petClass.getField("TYPE").get(null);
+            final String type = (String) petClass.getField("TYPE").get(null);
             this.knownPets.put(type, petClass);
         } catch(Exception e) {
             throw new IllegalArgumentException("Wrong class. It must contain 'public static String TYPE' field.");
@@ -56,7 +56,7 @@ public class PetFactory {
      * @param type pet type.
      * @return true if given type is known and false otherwise.
      */
-    public boolean isKnownType(String type) {
+    public boolean isKnownType(final String type) {
         return this.knownPets.containsKey(type);
     }
 

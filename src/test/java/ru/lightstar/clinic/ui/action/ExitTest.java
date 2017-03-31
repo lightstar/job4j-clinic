@@ -1,26 +1,23 @@
 package ru.lightstar.clinic.ui.action;
 
 import org.junit.Test;
-import ru.lightstar.clinic.exception.ActionException;
-import ru.lightstar.clinic.exception.ExitException;
-import ru.lightstar.clinic.exception.NameException;
-import ru.lightstar.clinic.exception.ServiceException;
+import ru.lightstar.clinic.exception.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * <code>ExitAction</code> class tests.
+ * <code>Exit</code> class tests.
  *
  * @author LightStar
  * @since 0.0.1
  */
-public class ExitActionTest extends ActionTest {
+public class ExitTest extends ActionTest {
 
     /**
-     * Constructs <code>ExitActionTest</code> object.
+     * Constructs <code>ExitTest</code> object.
      */
-    public ExitActionTest() throws NameException, ServiceException {
+    public ExitTest() throws NameException, ServiceException {
         super();
     }
 
@@ -51,7 +48,7 @@ public class ExitActionTest extends ActionTest {
     /**
      * Test correct exception thrown in <code>run</code> method.
      */
-    @Test(expected = ExitException.class)
+    @Test(expected = ReturnException.class)
     public void whenRunThenException() throws ActionException {
         this.action.run();
     }
@@ -63,7 +60,7 @@ public class ExitActionTest extends ActionTest {
     public void whenRunThenByeBye() throws ActionException {
         try {
             this.action.run();
-        } catch(ExitException e) {
+        } catch(ReturnException e) {
             assertThat(this.output.toString(), is(String.format("Bye, bye!%n")));
         }
     }

@@ -30,11 +30,11 @@ public class AspirinTest {
      */
     @Test
     public void whenGetNameThenResult() {
-        assertThat(this.aspirin.getName(), is("Aspirin"));
+        assertThat(this.aspirin.getName(), is("aspirin"));
     }
 
     /**
-     * Test correctness of <code>getDungerLevel</code> method.
+     * Test correctness of <code>getDangerLevel</code> method.
      */
     @Test
     public void getDangerLevel() {

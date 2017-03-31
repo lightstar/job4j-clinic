@@ -9,9 +9,14 @@ package ru.lightstar.clinic.drug;
 public class Glucose extends AbstractDrug {
 
     /**
+     * Glucose's name string.
+     */
+    public final static String NAME = "glucose";
+
+    /**
      * Constructs <code>Glucose</code> object.
      */
     public Glucose() {
-        super("Glucose", 1);
+        super(NAME, 1);
     }
 }

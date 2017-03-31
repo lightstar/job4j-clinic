@@ -2,6 +2,7 @@ package ru.lightstar.clinic.ui;
 
 import ru.lightstar.clinic.exception.ActionException;
 import ru.lightstar.clinic.exception.MenuException;
+import ru.lightstar.clinic.exception.ReturnException;
 import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.Output;
 import ru.lightstar.clinic.ui.action.Action;
@@ -16,7 +17,17 @@ import java.util.Map;
  * @author LightStar
  * @since 0.0.1
  */
-public class Menu {
+public class Menu implements Action {
+
+    /**
+     * Menu's name.
+     */
+    private final String name;
+
+    /**
+     * Menu's description.
+     */
+    private final String description;
 
     /**
      * <code>Input</code> object used for choosing menu item.
@@ -36,10 +47,14 @@ public class Menu {
     /**
      * Constructs <code>Menu</code> object.
      *
+     * @param name menu's name.
+     * @param description menu's description.
      * @param input used for choosing menu item.
      * @param output used for showing menu.
      */
-    public Menu(final Input input, final Output output) {
+    public Menu(final String name, final String description, final Input input, final Output output) {
+        this.name = name;
+        this.description = description;
         this.input = input;
         this.output = output;
         this.actions = new LinkedHashMap<>();
@@ -67,8 +82,9 @@ public class Menu {
      * Show all actions in the menu for user to choose.
      */
     public void show() {
-        this.output.println("Menu:");
-        this.output.println("-----");
+        this.output.println(String.format("%s:", this.getDescription()));
+        this.output.println(String.join("",
+                Collections.nCopies(this.getDescription().length() + 1, "-")));
 
         for (final Action action : this.actions.values()) {
             this.output.println(String.format("%s (%s).", action.getDescription(), action.getName()));
@@ -83,7 +99,7 @@ public class Menu {
      * @throws MenuException thrown when wrong action chosen.
      * @throws ActionException action-specific exception.
      */
-    public void run() throws MenuException, ActionException {
+    public void runAction() throws MenuException, ActionException {
         final String actionName = this.input.ask(this.output, "Choose action:");
 
         if (!this.actions.containsKey(actionName)) {
@@ -91,5 +107,46 @@ public class Menu {
         }
 
         this.actions.get(actionName).run();
+    }
+
+    /**
+     * Get menu's name.
+     *
+     * @return menu's name.
+     */
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Get menu's description.
+     *
+     * @return menu's description.
+     */
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void run() {
+        while(true) {
+            this.show();
+
+            try {
+                this.runAction();
+            } catch(ReturnException e) {
+                break;
+            } catch (MenuException | ActionException e) {
+                this.output.println(e.getMessage());
+            }
+
+            this.output.println("Press 'Enter' to continue...");
+            this.input.waitEnter();
+        }
     }
 }

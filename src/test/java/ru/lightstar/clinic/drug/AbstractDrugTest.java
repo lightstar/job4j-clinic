@@ -19,9 +19,9 @@ public class AbstractDrugTest {
     private final static String TEST_DRUG_NAME = "TestDrug";
 
     /**
-     * Dunger level of test drug.
+     * Danger level of test drug.
      */
-    private final static int TEST_DRUG_DUNGER_LEVEL = 5;
+    private final static int TEST_DRUG_DANGER_LEVEL = 5;
 
     /**
      * <code>AbstractDrug</code> object used in tests.
@@ -44,11 +44,11 @@ public class AbstractDrugTest {
     }
 
     /**
-     * Test correctness of <code>getDungerLevel</code> method.
+     * Test correctness of <code>getDangerLevel</code> method.
      */
     @Test
-    public void whenGetDungerLevelThenResult() {
-        assertThat(this.abstractDrug.getDangerLevel(), is(TEST_DRUG_DUNGER_LEVEL));
+    public void whenGetDangerLevelThenResult() {
+        assertThat(this.abstractDrug.getDangerLevel(), is(TEST_DRUG_DANGER_LEVEL));
     }
 
     /**
@@ -78,17 +78,17 @@ public class AbstractDrugTest {
          * Constructs <code>TestDrug</code> object with default test properties.
          */
         public TestDrug() {
-            this(TEST_DRUG_NAME, TEST_DRUG_DUNGER_LEVEL);
+            this(TEST_DRUG_NAME, TEST_DRUG_DANGER_LEVEL);
         }
 
         /**
          * Constructs <code>TestDrug</code> object.
          *
          * @param name drug's name.
-         * @param dungerLevel drug's dunger level.
+         * @param dangerLevel drug's danger level.
          */
-        public TestDrug(final String name, final int dungerLevel) {
-            super(name, dungerLevel);
+        public TestDrug(final String name, final int dangerLevel) {
+            super(name, dangerLevel);
         }
     }
 }

@@ -2,6 +2,7 @@ package ru.lightstar.clinic;
 
 import org.junit.Test;
 import ru.lightstar.clinic.io.DummyOutput;
+import ru.lightstar.clinic.list.DrugList;
 import ru.lightstar.clinic.pet.Cat;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -59,5 +60,14 @@ public class ClinicTest {
     @Test
     public void whenGetSizeThenResult() {
         assertThat(this.clinic.getSize(), is(CLINIC_SIZE));
+    }
+
+    /**
+     * Test correctness of <code>getDrugList</code> method.
+     */
+    @Test
+    public void whenGetDrugListThenResult() {
+        assertThat(this.clinic.getDrugList(), instanceOf(DrugList.class));
+        assertThat(this.clinic.getDrugList().isEmpty(), is(true));
     }
 }
