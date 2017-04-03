@@ -91,6 +91,6 @@ public class Clinic {
      * @return pet list.
      */
     public PetList getPetList() {
-        return petList;
+        return this.petList;
     }
 }

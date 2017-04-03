@@ -429,7 +429,7 @@ public class PetList implements List<Pet> {
     }
 
     /**
-     * Checks if given pet is not in in list.
+     * Checks if given pet is not in list.
      *
      * @param pet checked pet.
      */
