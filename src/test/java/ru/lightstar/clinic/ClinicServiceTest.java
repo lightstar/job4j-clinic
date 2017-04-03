@@ -63,6 +63,19 @@ public class ClinicServiceTest {
     }
 
     /**
+     * Test correctness of <code>getAllPets</code> method.
+     */
+    @Test
+    public void whenGetAllPetsThenResult() throws NameException, ServiceException {
+        final Pet[] allPets = new Pet[1];
+
+        this.clinicService.addClient(0, "Vova");
+        allPets[0] = this.clinicService.setClientPet("Vova", "cat", "Murka");
+
+        assertThat(this.clinicService.getAllPets(), is(allPets));
+    }
+
+    /**
      * Test correctness of <code>getInput</code> method.
      */
     @Test
@@ -129,6 +142,7 @@ public class ClinicServiceTest {
         assertThat(pet, instanceOf(Cat.class));
         assertThat(pet.getName(), is("Murka"));
         assertThat(client.getPet(), is(pet));
+        assertThat(this.clinic.getPetList().get(0), is(pet));
     }
 
     /**
@@ -247,6 +261,7 @@ public class ClinicServiceTest {
         this.clinicService.deleteClientPet("Vova");
 
         assertThat(client.getPet(), is(Pet.NONE));
+        assertThat(this.clinic.getPetList().isEmpty(), is(true));
     }
 
     /**

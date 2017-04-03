@@ -46,6 +46,7 @@ public class CatDog implements Pet {
         super();
         this.cat = cat;
         this.dog = dog;
+        this.init();
     }
 
     /**
@@ -55,9 +56,11 @@ public class CatDog implements Pet {
      * @throws NameException thrown when given name doesn't fit correct format.
      */
     public CatDog(final String name, final Output output) throws NameException {
+        super();
         String[] nameArray = this.splitName(name);
         this.cat = new Cat(nameArray[0], output);
         this.dog = new Dog(nameArray[1], output);
+        this.init();
     }
 
     /**
@@ -166,5 +169,13 @@ public class CatDog implements Pet {
             throw new NameException(String.format("Wrong cat-dog's name: %s", name));
         }
         return nameArray;
+    }
+
+    /**
+     * Initialize operations common for all constructors.
+     */
+    private void init() {
+        this.nextPet = Pet.NONE;
+        this.prevPet = Pet.NONE;
     }
 }

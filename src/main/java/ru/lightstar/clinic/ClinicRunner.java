@@ -43,6 +43,7 @@ public class ClinicRunner {
 
         this.mainMenu = new Menu("main", "Main menu", input, output);
         this.mainMenu.addAction(new ShowAllClients(clinicService));
+        this.mainMenu.addAction(new ShowAllPets(clinicService));
         this.mainMenu.addAction(new FindClientsByPetName(clinicService));
         this.mainMenu.addAction(new FindClientByName(clinicService));
         this.mainMenu.addAction(new AddClient(clinicService));

@@ -65,6 +65,16 @@ public class ClinicService {
     }
 
     /**
+     * Get array of all pets in clinic.
+     *
+     * @return array of all pets in clinic.
+     */
+    public Pet[] getAllPets() {
+        final Pet[] pets = new Pet[this.clinic.getPetList().size()];
+        return this.clinic.getPetList().toArray(pets);
+    }
+
+    /**
      * Get all known pet types from pet factory.
      *
      * @return array of all known pet types.
@@ -246,6 +256,8 @@ public class ClinicService {
         this.checkPetName(petName);
 
         final Pet pet = this.petFactory.create(petType, petName);
+
+        this.clinic.getPetList().set(client.getPet(), pet);
         client.setPet(pet);
 
         return pet;
@@ -298,6 +310,12 @@ public class ClinicService {
      */
     public void deleteClient(final String name) throws ServiceException {
         final int position = this.findClientPositionByName(name);
+        final Client client = this.getClientByPosition(position);
+
+        if (client.getPet() != Pet.NONE) {
+            this.clinic.getPetList().remove(client.getPet());
+        }
+
         this.clinic.deleteClient(position);
     }
 
@@ -325,6 +343,7 @@ public class ClinicService {
             throw new ServiceException("Client doesn't have pet");
         }
 
+        this.clinic.getPetList().remove(client.getPet());
         client.setPet(Pet.NONE);
     }
 

@@ -1,6 +1,7 @@
 package ru.lightstar.clinic;
 
 import ru.lightstar.clinic.list.DrugList;
+import ru.lightstar.clinic.list.PetList;
 
 import java.util.Arrays;
 
@@ -23,6 +24,11 @@ public class Clinic {
     private final DrugList drugList;
 
     /**
+     * Clinic's pet list.
+     */
+    private final PetList petList;
+
+    /**
      * Constructs clinic with specified size.
      * @param size clinic's size.
      */
@@ -30,6 +36,7 @@ public class Clinic {
         super();
         this.clients = new Client[size];
         this.drugList = new DrugList();
+        this.petList = new PetList();
     }
 
     /**
@@ -76,5 +83,14 @@ public class Clinic {
      */
     public DrugList getDrugList() {
         return this.drugList;
+    }
+
+    /**
+     * Get clinic's pet list.
+     *
+     * @return pet list.
+     */
+    public PetList getPetList() {
+        return petList;
     }
 }

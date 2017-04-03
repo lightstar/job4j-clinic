@@ -6,29 +6,26 @@ import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
- * <code>ShowAllClients</code> action tests.
+ * <code>ShowAllPets</code> action tests.
  *
  * @author LightStar
  * @since 0.0.1
  */
-public class ShowAllClientsTest extends ActionTest {
+public class ShowAllPetsTest extends ActionTest {
 
     /**
-     * Constructs <code>ShowAllClientsTest</code> object.
+     * Constructs <code>ShowAllPetsTest</code> object.
      */
-    public ShowAllClientsTest() throws NameException, ServiceException {
+    public ShowAllPetsTest() throws NameException, ServiceException {
         super();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected Action createAction() {
-        return new ShowAllClients(this.clinicService);
+        return new ShowAllPets(this.clinicService);
     }
 
     /**
@@ -36,7 +33,7 @@ public class ShowAllClientsTest extends ActionTest {
      */
     @Test
     public void whenGetNameThenResult() {
-        assertThat(this.action.getName(), is("show"));
+        assertThat(this.action.getName(), is("showPets"));
     }
 
     /**
@@ -44,7 +41,7 @@ public class ShowAllClientsTest extends ActionTest {
      */
     @Test
     public void whenGetDescriptionThenResult() {
-        assertThat(this.action.getDescription(), is("Show all clients"));
+        assertThat(this.action.getDescription(), is("Show all pets"));
     }
 
     /**
@@ -53,12 +50,6 @@ public class ShowAllClientsTest extends ActionTest {
     @Test
     public void whenRunThenResult() throws ActionException {
         this.action.run();
-
-        assertThat(this.output.toString(), is(this.helper.joinLines(new String[]{
-                "Clinic size: 3.",
-                "1. Vasya with no pet.",
-                "2. Masha with cat 'Murka'.",
-                "3. VACANT."
-        })));
+        assertThat(this.output.toString(), is(String.format("Pets: cat 'Murka'.%n")));
     }
 }

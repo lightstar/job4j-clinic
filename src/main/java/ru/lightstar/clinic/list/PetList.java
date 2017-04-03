@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * List of all pets in clinic. It is assumed that there is only one such list in program.
+ * List of all pets in clinic.
+ * It is assumed that there is only one such list in program and pet <code>setNextPet</code>/<code>setPrevPet</code>
+ * methods are called only from within that list, otherwise things might get broken.
  *
  * @author LightStar
  * @since 0.0.1
@@ -143,9 +145,27 @@ public class PetList implements List<Pet> {
     @Override
     public Pet set(final int index, final Pet newPet) {
         this.checkIndexOutOfBounds(index);
+        return this.set(this.get(index), newPet);
+    }
+
+    /**
+     * Set new pet instead of old pet. Old pet is removed from list.
+     * If old pet is <code>Pet.NONE</code> then new pet is added to the end of list.
+     *
+     * @param pet old pet.
+     * @param newPet new pet.
+     * @return old pet.
+     */
+    public Pet set(final Pet pet, final Pet newPet) {
+        if (pet == Pet.NONE) {
+            this.add(newPet);
+            return Pet.NONE;
+        }
+
+        this.checkPetNotInList(pet);
+        this.checkPetNone(newPet);
         this.checkPetInList(newPet);
 
-        final Pet pet = this.get(index);
         this.add(pet.getPrevPet(), pet.getNextPet(), newPet);
 
         pet.setNextPet(Pet.NONE);
@@ -159,8 +179,6 @@ public class PetList implements List<Pet> {
      */
     @Override
     public boolean add(final Pet newPet) {
-        this.checkPetInList(newPet);
-
         this.add(Pet.NONE, newPet);
         return true;
     }
@@ -170,13 +188,32 @@ public class PetList implements List<Pet> {
      */
     @Override
     public void add(final int index, final Pet newPet) {
-        this.checkPetInList(newPet);
-
         if (index == this.size) {
             this.add(Pet.NONE, newPet);
         } else {
             this.add(this.get(index), newPet);
         }
+    }
+
+    /**
+     * Add new pet before given pet.
+     * If given pet is <code>Pet.NONE</code>, then add new pet to end of list.
+     *
+     * @param petBefore new pet is added before this pet.
+     * @param pet new pet.
+     */
+    private void add(final Pet petBefore, final Pet pet) {
+        this.checkPetNone(pet);
+        this.checkPetInList(pet);
+
+        if (petBefore == Pet.NONE) {
+            this.add(this.lastPet, Pet.NONE, pet);
+        } else {
+            this.checkPetNotInList(petBefore);
+            this.add(petBefore.getPrevPet(), petBefore, pet);
+        }
+
+        this.size++;
     }
 
     /**
@@ -199,8 +236,35 @@ public class PetList implements List<Pet> {
      */
     @Override
     public Pet remove(final int index) {
-        final Pet pet = this.get(index);
-        this.remove(pet);
+        return this.remove(this.get(index));
+    }
+
+    /**
+     * Remove given pet object from this list.
+     *
+     * @param pet removed pet.
+     */
+    public Pet remove(final Pet pet) {
+        this.checkPetNone(pet);
+        this.checkPetNotInList(pet);
+
+        if (pet.getNextPet() != Pet.NONE) {
+            pet.getNextPet().setPrevPet(pet.getPrevPet());
+        } else {
+            this.lastPet = pet.getPrevPet();
+        }
+
+        if (pet.getPrevPet() != Pet.NONE) {
+            pet.getPrevPet().setNextPet(pet.getNextPet());
+        } else {
+            this.firstPet = pet.getNextPet();
+        }
+
+        pet.setNextPet(Pet.NONE);
+        pet.setPrevPet(Pet.NONE);
+
+        this.size--;
+
         return pet;
     }
 
@@ -262,7 +326,6 @@ public class PetList implements List<Pet> {
 
         final Pet pet = this.get(index);
         for (final Pet newPet : col) {
-            this.checkPetInList(newPet);
             this.add(pet, newPet);
         }
 
@@ -343,6 +406,17 @@ public class PetList implements List<Pet> {
     }
 
     /**
+     * Checks if given pet is special 'NONE' value.
+     *
+     * @param pet checked pet.
+     */
+    private void checkPetNone(final Pet pet) {
+        if (pet == Pet.NONE) {
+            throw new IllegalArgumentException("Pet is special 'NONE' value");
+        }
+    }
+
+    /**
      * Checks if given pet is already in list.
      *
      * @param pet checked pet.
@@ -351,6 +425,18 @@ public class PetList implements List<Pet> {
         if (pet == this.firstPet || pet == this.lastPet ||
                 pet.getNextPet() != Pet.NONE || pet.getPrevPet() != Pet.NONE) {
             throw new IllegalArgumentException("Pet is already in list");
+        }
+    }
+
+    /**
+     * Checks if given pet is not in in list.
+     *
+     * @param pet checked pet.
+     */
+    private void checkPetNotInList(final Pet pet) {
+        if (pet != this.firstPet && pet != this.lastPet &&
+                pet.getNextPet() == Pet.NONE && pet.getPrevPet() == Pet.NONE) {
+            throw new IllegalArgumentException("Pet is not in list");
         }
     }
 
@@ -396,46 +482,6 @@ public class PetList implements List<Pet> {
         }
 
         return new FoundPet(pet, index);
-    }
-
-    /**
-     * Remove given pet object from this list.
-     *
-     * @param pet given pet object.
-     */
-    private void remove(final Pet pet) {
-        if (pet.getNextPet() != Pet.NONE) {
-            pet.getNextPet().setPrevPet(pet.getPrevPet());
-        } else {
-            this.lastPet = pet.getPrevPet();
-        }
-
-        if (pet.getPrevPet() != Pet.NONE) {
-            pet.getPrevPet().setNextPet(pet.getNextPet());
-        } else {
-            this.firstPet = pet.getNextPet();
-        }
-
-        pet.setNextPet(Pet.NONE);
-        pet.setPrevPet(Pet.NONE);
-
-        this.size--;
-    }
-
-    /**
-     * Add new pet before given pet.
-     * If given pet is <code>Pet.NONE</code>, then add new pet to end of list.
-     *
-     * @param petBefore new pet is added before this pet.
-     * @param pet new pet.
-     */
-    private void add(final Pet petBefore, final Pet pet) {
-        if (petBefore == Pet.NONE) {
-            this.add(this.lastPet, Pet.NONE, pet);
-        } else {
-            this.add(petBefore.getPrevPet(), petBefore, pet);
-        }
-        this.size++;
     }
 
     /**
@@ -619,13 +665,9 @@ public class PetList implements List<Pet> {
                 throw new IllegalStateException("Nowhere to set");
             }
 
-            PetList.this.checkPetInList(pet);
-            PetList.this.add(this.lastPet.getPrevPet(), this.lastPet.getNextPet(), pet);
+            PetList.this.set(this.lastPet, pet);
 
-            this.lastPet.setNextPet(Pet.NONE);
-            this.lastPet.setPrevPet(Pet.NONE);
             this.lastPet = pet;
-
             this.pet = this.index == this.lastIndex ? pet : pet.getNextPet();
         }
 
@@ -634,7 +676,6 @@ public class PetList implements List<Pet> {
          */
         @Override
         public void add(final Pet pet) {
-            PetList.this.checkPetInList(pet);
             PetList.this.add(this.pet, pet);
 
             this.index++;

@@ -151,6 +151,7 @@ public class ClinicRunnerTest {
                 "Main menu:",
                 "----------",
                 "Show all clients (show).",
+                "Show all pets (showPets).",
                 "Find clients by pet's name (findByPet).",
                 "Find client by name (find).",
                 "Add new client (add).",
