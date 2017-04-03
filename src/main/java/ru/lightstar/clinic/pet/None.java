@@ -44,4 +44,34 @@ class None implements Pet {
     @Override
     public void setName(final String name) {
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Pet getNextPet() {
+        return Pet.NONE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Pet getPrevPet() {
+        return Pet.NONE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setNextPet(final Pet nextPet) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPrevPet(final Pet prevPet) {
+    }
 }

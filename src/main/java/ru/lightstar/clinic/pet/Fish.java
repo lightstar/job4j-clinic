@@ -29,6 +29,6 @@ public class Fish extends Animal {
      */
     @Override
     public void makeSound() {
-        this.output.println("<silence>");
+        this.getOutput().println("<silence>");
     }
 }

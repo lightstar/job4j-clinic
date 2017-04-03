@@ -29,6 +29,6 @@ public class Dog extends Animal {;
      */
     @Override
     public void makeSound() {
-        this.output.println("Gav, gav!");
+        this.getOutput().println("Gav, gav!");
     }
 }

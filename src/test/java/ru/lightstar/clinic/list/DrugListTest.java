@@ -314,6 +314,7 @@ public class DrugListTest {
         this.list.add(new Aspirin());
         this.list.add(new Glucose());
         this.list.add(new Aspirin());
+
         this.list.removeAll(Arrays.asList(new Glucose(), new Aspirin()));
 
         assertThat(this.list.toArray(), is(new Object[]{}));
@@ -327,6 +328,7 @@ public class DrugListTest {
         this.list.add(new Aspirin());
         this.list.add(new Glucose());
         this.list.add(new Aspirin());
+
         this.list.retainAll(Collections.singletonList(new Glucose()));
 
         assertThat(this.list.toArray(), is(new Object[]{new Glucose()}));

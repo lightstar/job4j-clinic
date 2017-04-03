@@ -23,7 +23,17 @@ public abstract class Animal implements Pet {
     /**
      * Output used for sounds.
      */
-    protected final Output output;
+    private final Output output;
+
+    /**
+     * Next pet in chain.
+     */
+    private Pet nextPet;
+
+    /**
+     * Previous pet in chain.
+     */
+    private Pet prevPet;
 
     /**
      * Constructs <code>Animal</code> object.
@@ -37,6 +47,8 @@ public abstract class Animal implements Pet {
         this.type = type;
         this.name = name;
         this.output = output;
+        this.nextPet = Pet.NONE;
+        this.prevPet = Pet.NONE;
     }
 
     /**
@@ -61,6 +73,46 @@ public abstract class Animal implements Pet {
     @Override
     public void setName(final String name) {
         this.name = name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Pet getNextPet() {
+        return this.nextPet;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setNextPet(final Pet nextPet) {
+        this.nextPet = nextPet;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPrevPet(final Pet prevPet) {
+        this.prevPet = prevPet;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Pet getPrevPet() {
+        return this.prevPet;
+    }
+
+    /**
+     * Get <code>Output</code> object used by animal.
+     * @return <code>Output</code> object.
+     */
+    public Output getOutput() {
+        return this.output;
     }
 
     /**

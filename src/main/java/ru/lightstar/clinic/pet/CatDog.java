@@ -27,6 +27,16 @@ public class CatDog implements Pet {
     private final Dog dog;
 
     /**
+     * Next pet in chain.
+     */
+    private Pet nextPet;
+
+    /**
+     * Previous pet in chain.
+     */
+    private Pet prevPet;
+
+    /**
      * Constructs <code>CatDog</code> object from given cat and dog objects.
      *
      * @param cat inner cat.
@@ -101,6 +111,38 @@ public class CatDog implements Pet {
         String[] nameArray = this.splitName(name);
         this.cat.setName(nameArray[0]);
         this.dog.setName(nameArray[1]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Pet getNextPet() {
+        return this.nextPet;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setNextPet(final Pet nextPet) {
+        this.nextPet = nextPet;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPrevPet(final Pet prevPet) {
+        this.prevPet = prevPet;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Pet getPrevPet() {
+        return this.prevPet;
     }
 
     /**

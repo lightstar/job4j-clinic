@@ -29,6 +29,6 @@ public class Cat extends Animal {
      */
     @Override
     public void makeSound() {
-        this.output.println("Mew, mew!");
+        this.getOutput().println("Mew, mew!");
     }
 }

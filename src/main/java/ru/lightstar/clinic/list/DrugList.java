@@ -23,7 +23,7 @@ public class DrugList implements List<Drug> {
     private Drug[] drugArray;
 
     /**
-     * Current size of list list.
+     * Current size of this list.
      */
     private int size;
 
@@ -119,11 +119,19 @@ public class DrugList implements List<Drug> {
     @Override
     @SuppressWarnings({"unchecked","SuspiciousSystemArraycopy"})
     public <T> T[] toArray(final T[] dst) {
-        if (dst.length < this.size || !(dst instanceof Drug[])) {
-            return (T[])Arrays.copyOf(this.drugArray, this.size, dst.getClass());
+        if (!(dst instanceof Drug[])) {
+            throw new IllegalArgumentException("Argument is not array of drugs");
+        }
+
+        if (dst.length < this.size) {
+            return (T[]) Arrays.copyOf(this.drugArray, this.size, dst.getClass());
         }
 
         System.arraycopy(this.drugArray, 0, dst, 0, this.size);
+
+        if (dst.length > this.size) {
+            dst[this.size] = null;
+        }
 
         return dst;
     }
@@ -293,6 +301,7 @@ public class DrugList implements List<Drug> {
      */
     @Override
     public ListIterator<Drug> listIterator(final int index) {
+        this.checkIndexOutOfBoundsForInsert(index);
         return new DrugIterator(index);
     }
 
