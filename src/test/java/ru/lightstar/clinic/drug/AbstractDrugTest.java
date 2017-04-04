@@ -32,6 +32,7 @@ public class AbstractDrugTest {
      * Constructs <code>AbstractDrugTest</code> object.
      */
     public AbstractDrugTest() {
+        super();
         this.abstractDrug = new TestDrug();
     }
 

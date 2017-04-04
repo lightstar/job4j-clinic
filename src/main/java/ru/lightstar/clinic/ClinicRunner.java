@@ -31,6 +31,7 @@ public class ClinicRunner {
      * @param output <code>Output</code> object used for output.
      */
     public ClinicRunner(final Input input, final Output output) {
+        super();
         final Clinic clinic = new Clinic(CLINIC_SIZE);
         final ClinicService clinicService = new ClinicService(input, output, clinic);
         final DrugService drugService = new DrugService(clinic);

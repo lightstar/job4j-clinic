@@ -25,6 +25,7 @@ public class ConsoleTest {
      * Constructs <code>ConsoleTest</code> object.
      */
     public ConsoleTest() {
+        super();
         this.helper = new IoTestHelper();
     }
 

@@ -23,6 +23,7 @@ public class DrugFactoryTest {
      * Constructs <code>DrugFactoryTest</code> object.
      */
     public DrugFactoryTest() {
+        super();
         this.drugFactory = new DrugFactory();
         this.drugFactory.addDrug(Aspirin.class);
         this.drugFactory.addDrug(Glucose.class);

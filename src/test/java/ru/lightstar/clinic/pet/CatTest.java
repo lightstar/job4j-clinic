@@ -28,6 +28,7 @@ public class CatTest {
      * Constructs <code>CatTest</code> object.
      */
     public CatTest() {
+        super();
         this.byteArrayOutput = new ByteArrayOutput();
         this.cat = new Cat("Murka", this.byteArrayOutput);
     }

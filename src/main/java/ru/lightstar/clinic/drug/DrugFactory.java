@@ -29,7 +29,7 @@ public class DrugFactory {
      *
      * @param drugClass drug class.
      */
-    public void addDrug(Class<? extends Drug> drugClass) {
+    public void addDrug(final Class<? extends Drug> drugClass) {
         try {
             String type = (String) drugClass.getField("NAME").get(null);
             this.knownDrugs.put(type, drugClass);
@@ -72,7 +72,7 @@ public class DrugFactory {
         try {
             return this.knownDrugs.get(name).newInstance();
         } catch (Exception e) {
-            throw new IllegalStateException("Wrong drug class. Its must have default constructor.");
+            throw new IllegalStateException("Wrong drug class. It must have default constructor.");
         }
     }
 }

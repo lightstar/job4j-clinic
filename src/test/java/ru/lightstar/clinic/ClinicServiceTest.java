@@ -46,6 +46,7 @@ public class ClinicServiceTest {
      * Constructs <code>ClinicServiceTest</code> object.
      */
     public ClinicServiceTest() {
+        super();
         this.input = new IteratorInput();
         this.output = new ByteArrayOutput();
         this.clinic = new Clinic(CLINIC_SIZE);
@@ -146,10 +147,10 @@ public class ClinicServiceTest {
     }
 
     /**
-     * Test that <code>setClientPet</code> method throws exception on attempt to set pet for non-existent client.
+     * Test that <code>setClientPet</code> method throws exception on attempt to set pet for non-existing client.
      */
     @Test(expected = ServiceException.class)
-    public void whenSetClientPetToNonExistentClientThenException() throws NameException, ServiceException {
+    public void whenSetClientPetToNonExistingClientThenException() throws NameException, ServiceException {
         this.clinicService.setClientPet("Vasya", "cat", "Murka");
     }
 
@@ -214,11 +215,11 @@ public class ClinicServiceTest {
     }
 
     /**
-     * Test that <code>updateClientPetName</code> method throws exception on attempt to set pet name for non-existent
+     * Test that <code>updateClientPetName</code> method throws exception on attempt to set pet name for non-existing
      * client.
      */
     @Test(expected = ServiceException.class)
-    public void whenUpdatePetNameForNonExistentClientThenException() throws NameException, ServiceException {
+    public void whenUpdatePetNameForNonExistingClientThenException() throws NameException, ServiceException {
         this.clinicService.updateClientPetName("Vova", "Bobik");
     }
 
@@ -244,10 +245,10 @@ public class ClinicServiceTest {
     }
 
     /**
-     * Test that <code>deleteClient</code> method throws exception on attempt to delete non-existent client.
+     * Test that <code>deleteClient</code> method throws exception on attempt to delete non-existing client.
      */
     @Test(expected = ServiceException.class)
-    public void whenDeleteNonExistentClientThenException() throws NameException, ServiceException {
+    public void whenDeleteNonExistingClientThenException() throws NameException, ServiceException {
         this.clinicService.deleteClient("Vova");
     }
 
@@ -265,18 +266,18 @@ public class ClinicServiceTest {
     }
 
     /**
-     * Test that <code>deleteClientPet</code> method throws exception on attempt to delete pet from non-existent client.
+     * Test that <code>deleteClientPet</code> method throws exception on attempt to delete pet from non-existing client.
      */
     @Test(expected = ServiceException.class)
-    public void whenDeletePetFromNonExistentClientThenException() throws NameException, ServiceException {
+    public void whenDeletePetFromNonExistingClientThenException() throws NameException, ServiceException {
         this.clinicService.deleteClientPet("Vova");
     }
 
     /**
-     * Test that <code>deleteClientPet</code> method throws exception on attempt to delete non-existent pet.
+     * Test that <code>deleteClientPet</code> method throws exception on attempt to delete non-existing pet.
      */
     @Test(expected = ServiceException.class)
-    public void whenDeleteNonExistentPetThenException() throws NameException, ServiceException {
+    public void whenDeleteNonExistingPetThenException() throws NameException, ServiceException {
         this.clinicService.addClient(0, "Vova");
         this.clinicService.deleteClientPet("Vova");
     }
@@ -333,10 +334,10 @@ public class ClinicServiceTest {
     }
 
     /**
-     * Test that <code>findClientPositionByName</code> method throws exception for non-existent client's name.
+     * Test that <code>findClientPositionByName</code> method throws exception for non-existing client's name.
      */
     @Test(expected = ServiceException.class)
-    public void whenFindClientPositionByNonExistentNameThenException() throws NameException, ServiceException {
+    public void whenFindClientPositionByNonExistingNameThenException() throws NameException, ServiceException {
         this.clinicService.addClient(1, "Vova");
         this.clinicService.addClient(5, "Vasya");
 
@@ -385,10 +386,10 @@ public class ClinicServiceTest {
     }
 
     /**
-     * Test that <code>findClientByName</code> method throws exception for non-existent client's name.
+     * Test that <code>findClientByName</code> method throws exception for non-existing client's name.
      */
     @Test(expected = ServiceException.class)
-    public void whenFindClientByNonExistentNameThenException() throws NameException, ServiceException {
+    public void whenFindClientByNonExistingNameThenException() throws NameException, ServiceException {
         this.clinicService.addClient(1, "Vova");
         this.clinicService.addClient(5, "Vasya");
         this.clinicService.findClientByName("Masha");
@@ -409,7 +410,7 @@ public class ClinicServiceTest {
      * Test that <code>getClientPet</code> method throws exception is client not exists.
      */
     @Test(expected = ServiceException.class)
-    public void whenGetClientPetByNonExistentNameThenException() throws NameException, ServiceException {
+    public void whenGetClientPetByNonExistingNameThenException() throws NameException, ServiceException {
         this.clinicService.getClientPet("Vova");
     }
 
@@ -436,18 +437,18 @@ public class ClinicServiceTest {
     }
 
     /**
-     * Test that <code>askPetMakeSound</code> throws exception for non-existent client's name.
+     * Test that <code>askPetMakeSound</code> throws exception for non-existing client's name.
      */
     @Test(expected = ServiceException.class)
-    public void whenAskPetMakeSoundByNonExistentNameThenException() throws ServiceException {
+    public void whenAskPetMakeSoundByNonExistingNameThenException() throws ServiceException {
         this.clinicService.askPetMakeSound("Vasya");
     }
 
     /**
-     * Test that <code>askPetMakeSound</code> throws exception for non-existent client's pet.
+     * Test that <code>askPetMakeSound</code> throws exception for non-existing client's pet.
      */
     @Test(expected = ServiceException.class)
-    public void whenAskNonExistentPetMakeSoundThenException() throws NameException, ServiceException {
+    public void whenAskNonExistingPetMakeSoundThenException() throws NameException, ServiceException {
         this.clinicService.addClient(5, "Vasya");
         this.clinicService.askPetMakeSound("Vasya");
     }

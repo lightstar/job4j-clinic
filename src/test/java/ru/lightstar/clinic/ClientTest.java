@@ -25,6 +25,7 @@ public class ClientTest {
      * Constructs <code>ClientTest</code> object.
      */
     public ClientTest() {
+        super();
         this.client = new Client("Vova", new Dog("Bobik", new DummyOutput()), 0);
     }
 

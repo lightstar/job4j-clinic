@@ -40,7 +40,7 @@ public class IoTestHelper {
      * @param lines joined lines
      * @return result string
      */
-    public String joinLines(String[] lines) {
+    public String joinLines(final String[] lines) {
         return String.format("%s%n", String.join(String.format("%n"), lines));
     }
 }

@@ -22,6 +22,7 @@ public class GlucoseTest {
      * Constructs <code>GlucoseTest</code> object.
      */
     public GlucoseTest() {
+        super();
         this.glucose = new Glucose();
     }
 

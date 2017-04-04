@@ -28,6 +28,7 @@ public class CatDogTest {
      * Constructs <code>CatDog</code> object.
      */
     public CatDogTest() {
+        super();
         this.byteArrayOutput = new ByteArrayOutput();
         this.catDog = new CatDog(new Cat("Tom", this.byteArrayOutput),
                 new Dog("Rex", this.byteArrayOutput));

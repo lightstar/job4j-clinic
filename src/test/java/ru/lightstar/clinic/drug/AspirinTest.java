@@ -22,6 +22,7 @@ public class AspirinTest {
      * Constructs <code>AspirinTest</code> object.
      */
     public AspirinTest() {
+        super();
         this.aspirin = new Aspirin();
     }
 

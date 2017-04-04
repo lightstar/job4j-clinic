@@ -43,6 +43,7 @@ public class ClinicRunnerTest {
      * Constructs <code>ClinicRunnerTest</code> object.
      */
     public ClinicRunnerTest() {
+        super();
         this.input = new IteratorInput();
         this.output = new ByteArrayOutput();
         this.clinicRunner = new ClinicRunner(this.input, this.output);

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * List of all pets in clinic.
+ * List of all pets in clinic as custom <code>LinkedList</code> realization.
  * It is assumed that there is only one such list in program and pet <code>setNextPet</code>/<code>setPrevPet</code>
  * methods are called only from within that list, otherwise things might get broken.
  *
@@ -37,6 +37,7 @@ public class PetList implements List<Pet> {
      * Construct <code>PetList</code> object.
      */
     public PetList() {
+        super();
         this.firstPet = Pet.NONE;
         this.lastPet = Pet.NONE;
     }
@@ -202,7 +203,7 @@ public class PetList implements List<Pet> {
      * @param petBefore new pet is added before this pet.
      * @param pet new pet.
      */
-    private void add(final Pet petBefore, final Pet pet) {
+    public void add(final Pet petBefore, final Pet pet) {
         this.checkPetNone(pet);
         this.checkPetInList(pet);
 
@@ -276,7 +277,7 @@ public class PetList implements List<Pet> {
         Pet pet = this.firstPet;
 
         while (pet != Pet.NONE) {
-            Pet nextPet = pet.getNextPet();
+            final Pet nextPet = pet.getNextPet();
             pet.setNextPet(Pet.NONE);
             pet.setPrevPet(Pet.NONE);
             pet = nextPet;
@@ -321,12 +322,12 @@ public class PetList implements List<Pet> {
     @Override
     public boolean addAll(final int index, final Collection<? extends Pet> col) {
         if (index == this.size) {
-            return this.addAll(col);
-        }
-
-        final Pet pet = this.get(index);
-        for (final Pet newPet : col) {
-            this.add(pet, newPet);
+            this.addAll(col);
+        } else {
+            final Pet pet = this.get(index);
+            for (final Pet newPet : col) {
+                this.add(pet, newPet);
+            }
         }
 
         return col.size() > 0;
@@ -522,7 +523,7 @@ public class PetList implements List<Pet> {
         boolean isAnyRemoved = false;
 
         while (pet != Pet.NONE) {
-            Pet nextPet = pet.getNextPet();
+            final Pet nextPet = pet.getNextPet();
             if (col.contains(pet) == !inverse) {
                 this.remove(pet);
                 isAnyRemoved = true;
@@ -571,6 +572,7 @@ public class PetList implements List<Pet> {
          * @param index initial index.
          */
         private PetIterator(final int index) {
+            super();
             this.index = index;
             this.pet = index != PetList.this.size ? PetList.this.get(index) : Pet.NONE;
             this.lastPet = Pet.NONE;
@@ -667,8 +669,10 @@ public class PetList implements List<Pet> {
 
             PetList.this.set(this.lastPet, pet);
 
+            if (this.pet == this.lastPet) {
+                this.pet = pet;
+            }
             this.lastPet = pet;
-            this.pet = this.index == this.lastIndex ? pet : pet.getNextPet();
         }
 
         /**
@@ -706,6 +710,7 @@ public class PetList implements List<Pet> {
          * @param index found pet's index in list.
          */
         public FoundPet(final Pet pet, final int index) {
+            super();
             this.pet = pet;
             this.index = index;
         }
@@ -716,7 +721,7 @@ public class PetList implements List<Pet> {
          * @return found pet.
          */
         public Pet getPet() {
-            return pet;
+            return this.pet;
         }
 
         /**
@@ -725,7 +730,7 @@ public class PetList implements List<Pet> {
          * @return found pet's index.
          */
         public int getIndex() {
-            return index;
+            return this.index;
         }
     }
 }

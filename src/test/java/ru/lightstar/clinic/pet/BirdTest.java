@@ -28,6 +28,7 @@ public class BirdTest {
      * Constructs <code>BirdTest</code> object.
      */
     public BirdTest() {
+        super();
         this.byteArrayOutput = new ByteArrayOutput();
         this.bird = new Bird("Beauty", this.byteArrayOutput);
     }

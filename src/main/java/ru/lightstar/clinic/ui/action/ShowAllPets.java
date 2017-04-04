@@ -30,18 +30,17 @@ public class ShowAllPets extends ClinicAction {
 
         if (allPets.length == 0) {
             this.getOutput().println("No pets found.");
-            return;
+        } else {
+            final StringBuilder resultBuilder = new StringBuilder("Pets: ");
+
+            boolean isFirst = true;
+            for (final Pet pet : allPets) {
+                isFirst = this.addCommaIfNeeded(resultBuilder, isFirst);
+                resultBuilder.append(pet);
+            }
+
+            resultBuilder.append(".");
+            this.getOutput().println(resultBuilder.toString());
         }
-
-        final StringBuilder resultBuilder = new StringBuilder("Pets: ");
-
-        boolean isFirst = true;
-        for (final Pet pet : allPets) {
-            isFirst = this.addCommaIfNeeded(resultBuilder, isFirst);
-            resultBuilder.append(pet);
-        }
-
-        resultBuilder.append(".");
-        this.getOutput().println(resultBuilder.toString());
     }
 }

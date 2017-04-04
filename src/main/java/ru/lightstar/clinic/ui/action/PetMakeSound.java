@@ -17,7 +17,7 @@ public class PetMakeSound extends ClinicAction {
      *
      * @param clinicService clinic service operated by action.
      */
-    public PetMakeSound(ClinicService clinicService) {
+    public PetMakeSound(final ClinicService clinicService) {
         super("makeSound", "Ask pet to make sound", clinicService);
     }
 

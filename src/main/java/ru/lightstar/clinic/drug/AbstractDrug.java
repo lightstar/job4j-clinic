@@ -25,6 +25,7 @@ public abstract class AbstractDrug implements Drug {
      * @param dangerLevel drug's danger level.
      */
     public AbstractDrug(final String name, final int dangerLevel) {
+        super();
         this.name = name;
         this.dangerLevel = dangerLevel;
     }

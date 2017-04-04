@@ -82,7 +82,7 @@ public class GiveDrugToClientPetTest extends ActionTest {
      */
     @Test(expected = ActionException.class)
     public void whenRunWithNonExistentDrugThenException() throws ActionException {
-        this.input.setIterator(Arrays.asList("Masha", "non-existed").iterator());
+        this.input.setIterator(Arrays.asList("Masha", "non-existing").iterator());
         this.action.run();
     }
 }

@@ -16,7 +16,7 @@ public class Exit extends Return {
      *
      * @param output <code>Output</code> object used by this action.
      */
-    public Exit(Output output) {
+    public Exit(final Output output) {
         super(output);
     }
 

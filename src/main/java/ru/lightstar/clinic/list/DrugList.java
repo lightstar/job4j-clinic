@@ -5,7 +5,7 @@ import ru.lightstar.clinic.drug.Drug;
 import java.util.*;
 
 /**
- * List of all drugs in clinic.
+ * List of all drugs in clinic as custom <code>ArrayList</code> realization.
  *
  * @author LightStar
  * @since 0.0.1
@@ -40,6 +40,7 @@ public class DrugList implements List<Drug> {
      * @param initialSize inner array's initial size.
      */
     public DrugList(final int initialSize) {
+        super();
         if (initialSize <= 0) {
             throw new IllegalArgumentException("Initial size must be greater than zero");
         }
@@ -397,6 +398,7 @@ public class DrugList implements List<Drug> {
          * @param index initial index.
          */
         private DrugIterator(final int index) {
+            super();
             this.index = index;
             this.lastIndex = -1;
         }

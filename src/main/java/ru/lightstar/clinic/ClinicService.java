@@ -173,13 +173,13 @@ public class ClinicService {
     public Client getClientByPosition(final int position) throws ServiceException {
         this.checkPositionBounds(position);
 
-        final Client[] allClients = this.clinic.getClients();
+        final Client client = this.clinic.getClientByPosition(position);
 
-        if (allClients[position] == null) {
+        if (client == null) {
             throw new ServiceException("Client not found");
         }
 
-        return allClients[position];
+        return client;
     }
 
     /**

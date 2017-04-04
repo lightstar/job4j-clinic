@@ -23,6 +23,7 @@ public class Return implements Action {
      * @param output <code>Output</code> object used by this action.
      */
     public Return(final Output output) {
+        super();
         this.output = output;
     }
 

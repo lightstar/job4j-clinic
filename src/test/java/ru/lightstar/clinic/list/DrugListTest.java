@@ -31,6 +31,7 @@ public class DrugListTest {
      * Constructs <code>DrugListTest</code> object.
      */
     public DrugListTest() {
+        super();
         this.list = new DrugList();
     }
 
@@ -143,7 +144,7 @@ public class DrugListTest {
      */
     @Test
     public void whenToTypedArrayThenResult() {
-        Drug[] array = new Drug[2];
+        final Drug[] array = new Drug[2];
 
         this.list.add(new Aspirin());
         this.list.add(new Glucose());

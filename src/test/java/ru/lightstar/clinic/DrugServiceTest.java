@@ -37,6 +37,7 @@ public class DrugServiceTest {
      * Constructs <code>DrugServiceTest</code> object.
      */
     public DrugServiceTest() {
+        super();
         this.clinic = new Clinic(CLINIC_SIZE);
         this.drugService = new DrugService(this.clinic);
     }

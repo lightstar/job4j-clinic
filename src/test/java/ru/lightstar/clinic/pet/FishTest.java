@@ -28,6 +28,7 @@ public class FishTest {
      * Constructs <code>CatTest</code> object.
      */
     public FishTest() {
+        super();
         this.byteArrayOutput = new ByteArrayOutput();
         this.fish = new Fish("Beauty", this.byteArrayOutput);
     }

@@ -31,6 +31,7 @@ public class ClinicTest {
      * Constructs <code>Clinic</code> object.
      */
     public ClinicTest() {
+        super();
         this.clinic = new Clinic(CLINIC_SIZE);
     }
 
@@ -40,8 +41,8 @@ public class ClinicTest {
     @Test
     public void whenAddClientThatHeAdds() {
         final Client client = new Client("Vasya", new Cat("Murka", new DummyOutput()), 0);
-        clinic.addClient(1, client);
-        assertThat(clinic.getClients()[1], is(client));
+        this.clinic.addClient(1, client);
+        assertThat(this.clinic.getClients()[1], is(client));
     }
 
     /**
@@ -61,6 +62,16 @@ public class ClinicTest {
     @Test
     public void whenGetSizeThenResult() {
         assertThat(this.clinic.getSize(), is(CLINIC_SIZE));
+    }
+
+    /**
+     * Test correctness of <code>getClientByPosition</code> method.
+     */
+    @Test
+    public void whenGetClientByPositionThenResult() {
+        final Client client = new Client("Vasya", new Cat("Murka", new DummyOutput()), 0);
+        this.clinic.addClient(1, client);
+        assertThat(this.clinic.getClientByPosition(1), is(client));
     }
 
     /**

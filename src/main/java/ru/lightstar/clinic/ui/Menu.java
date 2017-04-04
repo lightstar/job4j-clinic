@@ -53,6 +53,7 @@ public class Menu implements Action {
      * @param output used for showing menu.
      */
     public Menu(final String name, final String description, final Input input, final Output output) {
+        super();
         this.name = name;
         this.description = description;
         this.input = input;

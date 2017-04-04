@@ -34,19 +34,18 @@ public class ShowAllDrugs extends DrugAction {
 
         if (drugMap.size() == 0) {
             this.getOutput().println("No drugs found.");
-            return;
+        } else {
+            final StringBuilder resultBuilder = new StringBuilder("Drugs: ");
+
+            boolean isFirst = true;
+            for (Map.Entry<Drug, Integer> drugEntry : drugMap.entrySet()) {
+                isFirst = this.addCommaIfNeeded(resultBuilder, isFirst);
+                this.appendDrugEntry(drugEntry, resultBuilder);
+            }
+
+            resultBuilder.append(".");
+            this.getOutput().println(resultBuilder.toString());
         }
-
-        final StringBuilder resultBuilder = new StringBuilder("Drugs: ");
-
-        boolean isFirst = true;
-        for (Map.Entry<Drug, Integer> drugEntry : drugMap.entrySet()) {
-            isFirst = this.addCommaIfNeeded(resultBuilder, isFirst);
-            this.appendDrugEntry(drugEntry, resultBuilder);
-        }
-
-        resultBuilder.append(".");
-        this.getOutput().println(resultBuilder.toString());
     }
 
     /**

@@ -78,6 +78,7 @@ public class MenuTest {
      * Constructs <code>MenuTest</code> object.
      */
     public MenuTest() {
+        super();
         this.helper = new IoTestHelper();
         this.input = new IteratorInput();
         this.output = new ByteArrayOutput();

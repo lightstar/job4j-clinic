@@ -28,6 +28,7 @@ public class DogTest {
      * Constructs <code>CatTest</code> object.
      */
     public DogTest() {
+        super();
         this.byteArrayOutput = new ByteArrayOutput();
         this.dog = new Dog("Rex", this.byteArrayOutput);
     }

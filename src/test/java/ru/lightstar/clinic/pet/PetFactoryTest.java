@@ -25,6 +25,7 @@ public class PetFactoryTest {
      * Constructs <code>PetFactoryTest</code> object.
      */
     public PetFactoryTest() {
+        super();
         this.petFactory = new PetFactory(new DummyOutput());
         this.petFactory.addPet(CatDog.class);
     }

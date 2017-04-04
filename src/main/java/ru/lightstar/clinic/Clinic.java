@@ -69,11 +69,23 @@ public class Clinic {
 
     /**
      * Get copy of client's array.
+     * Not optimal for performance, but there is no other way to protect inner array from modifications.
      *
      * @return client's array.
      */
     public Client[] getClients() {
         return Arrays.copyOf(this.clients, this.clients.length);
+    }
+
+    /**
+     * Get client by his position.
+     *
+     * @param position client's position.
+     * @return client or <code>null</code> if there is no client at given position.
+     * @throws IndexOutOfBoundsException thrown if given position is out of inner array's bounds.
+     */
+    public Client getClientByPosition(final int position) {
+        return this.clients[position];
     }
 
     /**

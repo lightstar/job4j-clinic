@@ -36,6 +36,7 @@ public abstract class ClinicAction implements Action {
      * @param clinicService clinic service operated by action.
      */
     public ClinicAction(final String name, final String description, final ClinicService clinicService) {
+        super();
         this.name = name;
         this.description = description;
         this.clinicService = clinicService;

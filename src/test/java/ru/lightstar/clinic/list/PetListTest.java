@@ -34,6 +34,7 @@ public class PetListTest {
      * Constructs <code>PetListTest</code> object.
      */
     public PetListTest() {
+        super();
         this.list = new PetList();
         this.output = new DummyOutput();
     }
@@ -103,7 +104,6 @@ public class PetListTest {
         assertThat(this.list.lastIndexOf(cat), is(1));
     }
 
-
     /**
      * Test correctness of <code>lastIndexOf</code> method for absent pet.
      */
@@ -122,7 +122,6 @@ public class PetListTest {
         this.list.add(dog);
         assertThat(this.list.contains(dog), is(true));
     }
-
 
     /**
      * Test correctness of <code>contains</code> method for absent pet.
@@ -152,7 +151,7 @@ public class PetListTest {
      */
     @Test
     public void whenToTypedArrayThenResult() {
-        Pet[] array = new Pet[2];
+        final Pet[] array = new Pet[2];
 
         final Dog dog = new Dog("Bobik", this.output);
         final Cat cat = new Cat("Murka", this.output);
@@ -163,7 +162,6 @@ public class PetListTest {
         assertThat(this.list.toArray(array), is(array));
         assertThat(this.list.toArray(array), instanceOf(Pet[].class));
     }
-
 
     /**
      * Test correctness of <code>get</code> method.
@@ -190,7 +188,6 @@ public class PetListTest {
         this.list.get(3);
     }
 
-
     /**
      * Test correctness of <code>set</code> method.
      */
@@ -215,6 +212,23 @@ public class PetListTest {
         this.list.add(new Fish("Beauty", this.output));
         this.list.add(new Dog("Bobik", this.output));
         this.list.set(3, new Dog("Rex", this.output));
+    }
+
+    /**
+     * Test correctness of <code>set</code> method with two <code>Pet</code> params.
+     */
+    @Test
+    public void whenSetWithTwoPetParamsThenResult() {
+        final Cat cat = new Cat("Murka", this.output);
+        final Dog dog = new Dog("Bobik", this.output);
+
+        this.list.add(new Fish("Beauty", this.output));
+        this.list.add(cat);
+        this.list.add(new Dog("Bobik", this.output));
+
+        this.list.set(cat, dog);
+
+        assertThat(this.list.get(1), is(dog));
     }
 
     /**
@@ -247,6 +261,24 @@ public class PetListTest {
         this.list.add(1, dog);
 
         assertThat(this.list.get(1), is(dog));
+    }
+
+    /**
+     * Test correctness of <code>add</code> method with two <code>Pet</code> params.
+     */
+    @Test
+    public void whenAddWithTwoPetParamsThenResult() {
+        final Dog dog = new Dog("Bobik", this.output);
+        final Cat cat = new Cat("Murka", this.output);
+        final Fish fish = new Fish("Beauty", this.output);
+
+        this.list.add(dog);
+        this.list.add(cat);
+        this.list.add(dog, fish);
+
+        assertThat(this.list.get(0), is(fish));
+        assertThat(this.list.get(1), is(dog));
+        assertThat(this.list.get(2), is(cat));
     }
 
     /**
