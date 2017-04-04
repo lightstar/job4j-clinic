@@ -47,7 +47,7 @@ public class DrugService {
      *
      * @return map of all drugs with their counts.
      */
-    public Map<Drug, Integer> getAllDrugs() {
+    public synchronized Map<Drug, Integer> getAllDrugs() {
         final Map<Drug, Integer> resultMap = new LinkedHashMap<>();
 
         for (final Drug drug : this.clinic.getDrugList()) {
@@ -77,7 +77,7 @@ public class DrugService {
      * @return added drug object.
      * @throws ServiceException thrown when drug's name is unknown.
      */
-    public Drug addDrug(final String name) throws ServiceException {
+    public synchronized Drug addDrug(final String name) throws ServiceException {
         this.checkDrugName(name);
 
         final Drug drug = this.drugFactory.create(name);
@@ -93,7 +93,7 @@ public class DrugService {
      * @return taken drug object.
      * @throws ServiceException thrown when there are no such drug in clinic.
      */
-    public Drug takeDrug(final String name) throws ServiceException {
+    public synchronized Drug takeDrug(final String name) throws ServiceException {
         Drug takenDrug = Drug.NONE;
         final Iterator<Drug> iterator = this.clinic.getDrugList().iterator();
 

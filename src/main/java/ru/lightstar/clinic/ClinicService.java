@@ -69,7 +69,7 @@ public class ClinicService {
      *
      * @return array of all pets in clinic.
      */
-    public Pet[] getAllPets() {
+    public synchronized Pet[] getAllPets() {
         final Pet[] pets = new Pet[this.clinic.getPetList().size()];
         return this.clinic.getPetList().toArray(pets);
     }
@@ -107,7 +107,7 @@ public class ClinicService {
      * @param name pet's name.
      * @return count of found clients.
      */
-    public int countClientsByPetName(final String name) {
+    public synchronized int countClientsByPetName(final String name) {
         int count = 0;
 
         for (final Client client : this.clinic.getClients()) {
@@ -125,7 +125,7 @@ public class ClinicService {
      * @param name pet's name.
      * @return array of found clients.
      */
-    public Client[] findClientsByPetName(final String name) {
+    public synchronized Client[] findClientsByPetName(final String name) {
         final Client[] resultClients = new Client[this.countClientsByPetName(name)];
         int resultIndex = 0;
 
@@ -145,7 +145,7 @@ public class ClinicService {
      * @return found client's position.
      * @throws ServiceException thrown if client can't be found.
      */
-    public int findClientPositionByName(final String name) throws ServiceException {
+    public synchronized int findClientPositionByName(final String name) throws ServiceException {
         final Client[] allClients = this.clinic.getClients();
         int resultPosition = -1;
 
@@ -170,7 +170,7 @@ public class ClinicService {
      * @return found client.
      * @throws ServiceException thrown if client can't be found.
      */
-    public Client getClientByPosition(final int position) throws ServiceException {
+    public synchronized Client getClientByPosition(final int position) throws ServiceException {
         this.checkPositionBounds(position);
 
         final Client client = this.clinic.getClientByPosition(position);
@@ -189,7 +189,7 @@ public class ClinicService {
      * @return found client.
      * @throws ServiceException thrown if client can't be found.
      */
-    public Client findClientByName(final String name) throws ServiceException {
+    public synchronized Client findClientByName(final String name) throws ServiceException {
         int position = this.findClientPositionByName(name);
         return this.getClientByPosition(position);
     }
@@ -200,7 +200,7 @@ public class ClinicService {
      * @param name client's name.
      * @throws ServiceException thrown if client can't be found or doesn't have pet.
      */
-    public Pet getClientPet(final String name) throws ServiceException {
+    public synchronized Pet getClientPet(final String name) throws ServiceException {
         final Client client = this.findClientByName(name);
 
         if (client.getPet() == Pet.NONE) {
@@ -219,7 +219,7 @@ public class ClinicService {
      * @throws ServiceException thrown if position is busy.
      * @throws NameException thrown if client's name is incorrect.
      */
-    public Client addClient(final int position, final String name)
+    public synchronized Client addClient(final int position, final String name)
             throws ServiceException, NameException {
 
         this.checkPositionBounds(position);
@@ -247,7 +247,7 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found or pet's type is wrong.
      * @throws NameException thrown if pet's name is wrong.
      */
-    public Pet setClientPet(final String name, final String petType, final String petName)
+    public synchronized Pet setClientPet(final String name, final String petType, final String petName)
             throws ServiceException, NameException {
 
         final Client client = this.findClientByName(name);
@@ -271,7 +271,7 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found.
      * @throws NameException thrown if new name is wrong.
      */
-    public void updateClientName(final String name, final String newName) throws ServiceException, NameException {
+    public synchronized void updateClientName(final String name, final String newName) throws ServiceException, NameException {
         if (name.equals(newName)) {
             throw new NameException("New name is the same as previous");
         }
@@ -290,7 +290,7 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found or he doesn't has pet.
      * @throws NameException thrown if new name is wrong.
      */
-    public void updateClientPetName(final String name, final String petName) throws ServiceException, NameException {
+    public synchronized void updateClientPetName(final String name, final String petName) throws ServiceException, NameException {
         final Pet pet = this.getClientPet(name);
 
         if (pet.getName().equals(petName)) {
@@ -308,7 +308,7 @@ public class ClinicService {
      * @param name client's name.
      * @throws ServiceException thrown if client can't be found.
      */
-    public void deleteClient(final String name) throws ServiceException {
+    public synchronized void deleteClient(final String name) throws ServiceException {
         final int position = this.findClientPositionByName(name);
         final Client client = this.getClientByPosition(position);
 
@@ -325,7 +325,7 @@ public class ClinicService {
      * @param name client's name.
      * @throws ServiceException thrown if client can't be found or doesn't have pet.
      */
-    public void askPetMakeSound(final String name) throws ServiceException {
+    public synchronized void askPetMakeSound(final String name) throws ServiceException {
         final Pet pet = this.getClientPet(name);
         pet.makeSound();
     }
@@ -336,7 +336,7 @@ public class ClinicService {
      * @param name client's name.
      * @throws ServiceException thrown if client can't be found or he doesn't has pet.
      */
-    public void deleteClientPet(final String name) throws ServiceException {
+    public synchronized void deleteClientPet(final String name) throws ServiceException {
         final Client client = this.findClientByName(name);
 
         if (client.getPet() == Pet.NONE) {
