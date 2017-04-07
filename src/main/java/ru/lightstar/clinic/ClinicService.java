@@ -60,7 +60,7 @@ public class ClinicService {
      *
      * @return array of all clients in clinic.
      */
-    public Client[] getAllClients() {
+    public synchronized Client[] getAllClients() {
         return this.clinic.getClients();
     }
 
