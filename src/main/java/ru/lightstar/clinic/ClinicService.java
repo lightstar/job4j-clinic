@@ -287,8 +287,22 @@ public class ClinicService {
      */
     public synchronized Pet setClientPet(final String name, final String petType, final String petName)
             throws ServiceException, NameException {
+        return this.setClientPet(this.findClientByName(name), petType, petName);
+    }
 
-        final Client client = this.findClientByName(name);
+    /**
+     * Set client's pet using pre-defined client object.
+     *
+     * @param client pre-defined client object.
+     * @param petType pet's type.
+     * @param petName pet's name.
+     * @return created pet.
+     * @throws ServiceException thrown if client can't be found or pet's type is wrong.
+     * @throws NameException thrown if pet's name is wrong.
+     */
+    protected synchronized Pet setClientPet(final Client client, final String petType, final String petName)
+            throws ServiceException, NameException {
+
 
         this.checkPetType(petType);
         this.checkPetName(petName);
