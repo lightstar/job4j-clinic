@@ -102,6 +102,24 @@ public class ClinicService {
     }
 
     /**
+     * Get this service's inner clinic object.
+     *
+     * @return clinic object.
+     */
+    protected Clinic getClinic() {
+        return this.clinic;
+    }
+
+    /**
+     * Get this service's inner pet factory.
+     *
+     * @return pet factory object.
+     */
+    protected PetFactory getPetFactory() {
+        return this.petFactory;
+    }
+
+    /**
      * Count clients by pet's name
      *
      * @param name pet's name.
@@ -201,8 +219,16 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found or doesn't have pet.
      */
     public synchronized Pet getClientPet(final String name) throws ServiceException {
-        final Client client = this.findClientByName(name);
+        return this.getClientPet(this.findClientByName(name));
+    }
 
+    /**
+     * Get client's pet using pre-defined client object.
+     *
+     * @param client pre-defined client object.
+     * @throws ServiceException thrown if client can't be found or doesn't have pet.
+     */
+    protected synchronized Pet getClientPet(final Client client) throws ServiceException {
         if (client.getPet() == Pet.NONE) {
             throw new ServiceException("Client doesn't have pet");
         }
@@ -221,9 +247,22 @@ public class ClinicService {
      */
     public synchronized Client addClient(final int position, final String name)
             throws ServiceException, NameException {
+        return this.addClient(position, new Client(name, Pet.NONE, position));
+    }
+
+    /**
+     * Add new pre-defined client.
+     *
+     * @param position position for client.
+     * @param client pre-defined client.
+     * @return added client.
+     * @throws ServiceException thrown if position is busy.
+     */
+    protected synchronized Client addClient(final int position, final Client client)
+            throws ServiceException, NameException {
 
         this.checkPositionBounds(position);
-        this.checkClientName(name);
+        this.checkClientName(client.getName());
 
         final Client[] allClients = this.clinic.getClients();
 
@@ -231,7 +270,6 @@ public class ClinicService {
             throw new ServiceException("Position is busy");
         }
 
-        final Client client = new Client(name, Pet.NONE, position);
         this.clinic.addClient(position, client);
 
         return client;
@@ -256,11 +294,22 @@ public class ClinicService {
         this.checkPetName(petName);
 
         final Pet pet = this.petFactory.create(petType, petName);
+        this.setClientPet(client, pet);
+        return pet;
+    }
+
+    /**
+     * Set client's pet using pre-defined client and pet objects.
+     *
+     * @param client pre-defined client.
+     * @param pet pre-defined pet.
+     * @throws ServiceException thrown if client can't be found or pet's type is wrong.
+     */
+    protected synchronized void setClientPet(final Client client, final Pet pet)
+            throws ServiceException {
 
         this.clinic.getPetList().set(client.getPet(), pet);
         client.setPet(pet);
-
-        return pet;
     }
 
     /**
@@ -272,13 +321,23 @@ public class ClinicService {
      * @throws NameException thrown if new name is wrong.
      */
     public synchronized void updateClientName(final String name, final String newName) throws ServiceException, NameException {
-        if (name.equals(newName)) {
+        this.updateClientName(this.findClientByName(name), newName);
+    }
+
+    /**
+     * Update client's name using pre-defined client object.
+     *
+     * @param client pre-defined client object.
+     * @param newName new name.
+     * @throws ServiceException thrown if client can't be found.
+     * @throws NameException thrown if new name is wrong.
+     */
+    protected synchronized void updateClientName(final Client client, final String newName) throws ServiceException, NameException {
+        if (client.getName().equals(newName)) {
             throw new NameException("New name is the same as previous");
         }
 
         this.checkClientName(newName);
-
-        final Client client = this.findClientByName(name);
         client.setName(newName);
     }
 
@@ -291,7 +350,19 @@ public class ClinicService {
      * @throws NameException thrown if new name is wrong.
      */
     public synchronized void updateClientPetName(final String name, final String petName) throws ServiceException, NameException {
-        final Pet pet = this.getClientPet(name);
+        this.updateClientPetName(this.findClientByName(name), petName);
+    }
+
+    /**
+     * Update client pet's name using pre-defined client object.
+     *
+     * @param client pre-defined client object.
+     * @param petName pet's name.
+     * @throws ServiceException thrown if client can't be found or he doesn't has pet.
+     * @throws NameException thrown if new name is wrong.
+     */
+    protected synchronized void updateClientPetName(final Client client, final String petName) throws ServiceException, NameException {
+        final Pet pet = this.getClientPet(client);
 
         if (pet.getName().equals(petName)) {
             throw new NameException("New name is the same as previous");
@@ -309,14 +380,20 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found.
      */
     public synchronized void deleteClient(final String name) throws ServiceException {
-        final int position = this.findClientPositionByName(name);
-        final Client client = this.getClientByPosition(position);
+        this.deleteClient(this.findClientByName(name));
+    }
 
+    /**
+     * Delete client using pre-defined client object.
+     *
+     * @param client pre-defined client.
+     * @throws ServiceException thrown if client can't be found.
+     */
+    protected synchronized void deleteClient(final Client client) throws ServiceException {
         if (client.getPet() != Pet.NONE) {
             this.clinic.getPetList().remove(client.getPet());
         }
-
-        this.clinic.deleteClient(position);
+        this.clinic.deleteClient(client.getPosition());
     }
 
     /**
@@ -326,7 +403,17 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found or doesn't have pet.
      */
     public synchronized void askPetMakeSound(final String name) throws ServiceException {
-        final Pet pet = this.getClientPet(name);
+        this.askPetMakeSound(this.findClientByName(name));
+    }
+
+    /**
+     * Ask client's pet to make sound using pre-defined client object.
+     *
+     * @param client pre-defined client object.
+     * @throws ServiceException thrown if client can't be found or doesn't have pet.
+     */
+    protected synchronized void askPetMakeSound(final Client client) throws ServiceException {
+        final Pet pet = this.getClientPet(client);
         pet.makeSound();
     }
 
@@ -337,8 +424,16 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found or he doesn't has pet.
      */
     public synchronized void deleteClientPet(final String name) throws ServiceException {
-        final Client client = this.findClientByName(name);
+        this.deleteClientPet(this.findClientByName(name));
+    }
 
+    /**
+     * Delete client's pet using pre-defined client object.
+     *
+     * @param client pre-defined client.
+     * @throws ServiceException thrown if client can't be found or he doesn't has pet.
+     */
+    protected synchronized void deleteClientPet(final Client client) throws ServiceException {
         if (client.getPet() == Pet.NONE) {
             throw new ServiceException("Client doesn't have pet");
         }

@@ -9,6 +9,11 @@ package ru.lightstar.clinic.drug;
 public abstract class AbstractDrug implements Drug {
 
     /**
+     * Drug's database id.
+     */
+    private int id;
+
+    /**
      * Drug's name.
      */
     private final String name;
@@ -28,6 +33,22 @@ public abstract class AbstractDrug implements Drug {
         super();
         this.name = name;
         this.dangerLevel = dangerLevel;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setId(final int id) {
+        this.id = id;
     }
 
     /**

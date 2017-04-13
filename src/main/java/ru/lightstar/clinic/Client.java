@@ -11,6 +11,11 @@ import ru.lightstar.clinic.pet.Pet;
 public class Client {
 
     /**
+     * Client's database id.
+     */
+    private int id;
+
+    /**
      * Client's name.
      */
     private String name;
@@ -36,6 +41,24 @@ public class Client {
         this.name = name;
         this.pet = pet;
         this.position = position;
+    }
+
+    /**
+     * Get client's database id.
+     *
+     * @return database id.
+     */
+    public int getId() {
+        return this.id;
+    }
+
+    /**
+     * Set client's database id.
+     *
+     * @param id database id.
+     */
+    public void setId(final int id) {
+        this.id = id;
     }
 
     /**

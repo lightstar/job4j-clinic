@@ -11,6 +11,11 @@ import ru.lightstar.clinic.io.Output;
 public abstract class Animal implements Pet {
 
     /**
+     * Pet's database id.
+     */
+    private int id;
+
+    /**
      * Animal's type.
      */
     private final String type;
@@ -49,6 +54,22 @@ public abstract class Animal implements Pet {
         this.output = output;
         this.nextPet = Pet.NONE;
         this.prevPet = Pet.NONE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setId(final int id) {
+        this.id = id;
     }
 
     /**

@@ -17,6 +17,11 @@ public class CatDog implements Pet {
     public final static String TYPE = "cat-dog";
 
     /**
+     * Pet's database id.
+     */
+    private int id;
+
+    /**
      * Inner <code>Cat</code> object.
      */
     private final Cat cat;
@@ -88,6 +93,22 @@ public class CatDog implements Pet {
     public void makeSound() {
         this.cat.makeSound();
         this.dog.makeSound();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setId(final int id) {
+        this.id = id;
     }
 
     /**

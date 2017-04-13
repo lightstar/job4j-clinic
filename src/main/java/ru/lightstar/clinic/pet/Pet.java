@@ -21,6 +21,18 @@ public interface Pet {
     void makeSound();
 
     /**
+     * Get pet's database id.
+     *
+     * @return pet's database id.
+     */
+    int getId();
+
+    /**
+     * Set pet's database id.
+     */
+    void setId(int id);
+
+    /**
      * Get pet's type.
      *
      * @return pet's type.

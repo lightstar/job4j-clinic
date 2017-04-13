@@ -14,6 +14,20 @@ public interface Drug {
     Drug NONE = new None();
 
     /**
+     * Get drug's database id.
+     *
+     * @return database id.
+     */
+    int getId();
+
+    /**
+     * Set drug's database id.
+     *
+     * @param id database id.
+     */
+    void setId(int id);
+
+    /**
      * Get drug's name.
      *
      * @return drug's name.
