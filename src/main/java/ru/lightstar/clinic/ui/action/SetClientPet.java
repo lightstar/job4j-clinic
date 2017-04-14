@@ -4,6 +4,7 @@ import ru.lightstar.clinic.ClinicService;
 import ru.lightstar.clinic.exception.ActionException;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
+import ru.lightstar.clinic.pet.Sex;
 
 /**
  * Action to set client's pet.
@@ -32,7 +33,7 @@ public class SetClientPet extends ClinicAction {
         final String petName = this.ask("Pet's name:");
 
         try {
-            this.getClinicService().setClientPet(name, petType, petName);
+            this.getClinicService().setClientPet(name, petType, petName, 0, Sex.M);
         } catch (ServiceException | NameException e) {
             throw new ActionException(String.format("%s.", e.getMessage()));
         }

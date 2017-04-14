@@ -241,13 +241,19 @@ public class ClinicService {
      *
      * @param position position for client.
      * @param name client's name.
+     * @param email client's email.
+     * @param phone client's phone.
      * @return added client.
      * @throws ServiceException thrown if position is busy.
      * @throws NameException thrown if client's name is incorrect.
      */
-    public synchronized Client addClient(final int position, final String name)
+    public synchronized Client addClient(final int position, final String name, final String email,
+                                         final String phone)
             throws ServiceException, NameException {
-        return this.addClient(position, new Client(name, Pet.NONE, position));
+        final Client client = new Client(name, Pet.NONE, position);
+        client.setEmail(email);
+        client.setPhone(phone);
+        return this.addClient(position, client);
     }
 
     /**
@@ -262,7 +268,9 @@ public class ClinicService {
             throws ServiceException, NameException {
 
         this.checkPositionBounds(position);
-        this.checkClientName(client.getName());
+        this.checkClientName(client, client.getName());
+        this.checkClientEmail(client.getEmail());
+        this.checkClientPhone(client.getPhone());
 
         final Client[] allClients = this.clinic.getClients();
 
@@ -281,13 +289,16 @@ public class ClinicService {
      * @param name client's name.
      * @param petType pet's type.
      * @param petName pet's name.
+     * @param petAge pet's age.
+     * @param petSex pet's sex.
      * @return created pet.
      * @throws ServiceException thrown if client can't be found or pet's type is wrong.
      * @throws NameException thrown if pet's name is wrong.
      */
-    public synchronized Pet setClientPet(final String name, final String petType, final String petName)
+    public synchronized Pet setClientPet(final String name, final String petType, final String petName,
+                                         final int petAge, final Sex petSex)
             throws ServiceException, NameException {
-        return this.setClientPet(this.findClientByName(name), petType, petName);
+        return this.setClientPet(this.findClientByName(name), petType, petName, petAge, petSex);
     }
 
     /**
@@ -296,18 +307,24 @@ public class ClinicService {
      * @param client pre-defined client object.
      * @param petType pet's type.
      * @param petName pet's name.
+     * @param petAge pet's age.
+     * @param petSex pet's sex.
      * @return created pet.
      * @throws ServiceException thrown if client can't be found or pet's type is wrong.
      * @throws NameException thrown if pet's name is wrong.
      */
-    protected synchronized Pet setClientPet(final Client client, final String petType, final String petName)
+    protected synchronized Pet setClientPet(final Client client, final String petType, final String petName,
+                                            final int petAge, final Sex petSex)
             throws ServiceException, NameException {
 
 
         this.checkPetType(petType);
         this.checkPetName(petName);
+        this.checkPetAge(petAge);
 
         final Pet pet = this.petFactory.create(petType, petName);
+        pet.setAge(petAge);
+        pet.setSex(petSex);
         this.setClientPet(client, pet);
         return pet;
     }
@@ -327,64 +344,88 @@ public class ClinicService {
     }
 
     /**
-     * Update client's name.
+     * Update client's name, email and phone.
      *
      * @param name client's old name.
      * @param newName new name.
+     * @param newEmail new email.
+     * @param newPhone new phone.
      * @throws ServiceException thrown if client can't be found.
      * @throws NameException thrown if new name is wrong.
      */
-    public synchronized void updateClientName(final String name, final String newName) throws ServiceException, NameException {
-        this.updateClientName(this.findClientByName(name), newName);
+    public synchronized void updateClient(final String name, final String newName,
+                                              final String newEmail, final String newPhone)
+            throws ServiceException, NameException {
+        this.updateClient(this.findClientByName(name), newName, newEmail, newPhone);
     }
 
     /**
-     * Update client's name using pre-defined client object.
+     * Update client's name, email and phone using pre-defined client object.
      *
      * @param client pre-defined client object.
      * @param newName new name.
+     * @param newEmail new email.
+     * @param newPhone new phone.
      * @throws ServiceException thrown if client can't be found.
      * @throws NameException thrown if new name is wrong.
      */
-    protected synchronized void updateClientName(final Client client, final String newName) throws ServiceException, NameException {
-        if (client.getName().equals(newName)) {
-            throw new NameException("New name is the same as previous");
+    protected synchronized void updateClient(final Client client, final String newName,
+                                             final String newEmail, final String newPhone)
+            throws ServiceException, NameException {
+        if (client.getName().equals(newName) && client.getEmail().equals(newEmail) &&
+                client.getPhone().equals(newPhone)) {
+            throw new ServiceException("Parameters not changed");
         }
 
-        this.checkClientName(newName);
+        this.checkClientName(client, newName);
+        this.checkClientEmail(newEmail);
+        this.checkClientPhone(newPhone);
         client.setName(newName);
+        client.setEmail(newEmail);
+        client.setPhone(newPhone);
     }
 
     /**
-     * Update client pet's name.
+     * Update client pet's name, age and sex.
      *
      * @param name client's name.
      * @param petName pet's name.
+     * @param petAge pet's age.
+     * @param petSex pet's sex.
      * @throws ServiceException thrown if client can't be found or he doesn't has pet.
      * @throws NameException thrown if new name is wrong.
      */
-    public synchronized void updateClientPetName(final String name, final String petName) throws ServiceException, NameException {
-        this.updateClientPetName(this.findClientByName(name), petName);
+    public synchronized void updateClientPet(final String name, final String petName,
+                                             final int petAge, final Sex petSex)
+            throws ServiceException, NameException {
+        this.updateClientPet(this.findClientByName(name), petName, petAge, petSex);
     }
 
     /**
-     * Update client pet's name using pre-defined client object.
+     * Update client pet's name age and sex using pre-defined client object.
      *
      * @param client pre-defined client object.
      * @param petName pet's name.
+     * @param petAge pet's age.
+     * @param petSex pet's sex.
      * @throws ServiceException thrown if client can't be found or he doesn't has pet.
      * @throws NameException thrown if new name is wrong.
      */
-    protected synchronized void updateClientPetName(final Client client, final String petName) throws ServiceException, NameException {
+    protected synchronized void updateClientPet(final Client client, final String petName,
+                                                final int petAge, final Sex petSex)
+            throws ServiceException, NameException {
         final Pet pet = this.getClientPet(client);
 
-        if (pet.getName().equals(petName)) {
-            throw new NameException("New name is the same as previous");
+        if (pet.getName().equals(petName) && pet.getAge() == petAge && pet.getSex() == petSex) {
+            throw new ServiceException("Parameters not changed");
         }
 
         this.checkPetName(petName);
+        this.checkPetAge(petAge);
 
         pet.setName(petName);
+        pet.setAge(petAge);
+        pet.setSex(petSex);
     }
 
     /**
@@ -471,19 +512,36 @@ public class ClinicService {
     /**
      * Checks if provided client name is unique and non-empty.
      *
+     * @param client client.
      * @param name client's name.
      * @throws NameException thrown if name is wrong.
      */
-    private void checkClientName(final String name) throws NameException {
+    private void checkClientName(final Client client, final String name) throws NameException {
         if (name.isEmpty()) {
             throw new NameException("Client's name is empty");
         }
 
-        for (final Client client : this.clinic.getClients()) {
-            if (client != null && client.getName().equals(name)) {
+        for (final Client curClient : this.clinic.getClients()) {
+            if (curClient != null && curClient != client && curClient.getName().equals(name)) {
                 throw new NameException("Client's name is not unique");
             }
         }
+    }
+
+    /**
+     * Checks provided client's email.
+     *
+     * @param email client's email.
+     */
+    private void checkClientEmail(final String email) throws ServiceException {
+    }
+
+    /**
+     * Checks provided client's phone.
+     *
+     * @param phone client's phone.
+     */
+    private void checkClientPhone(final String phone) throws ServiceException {
     }
 
     /**
@@ -507,6 +565,17 @@ public class ClinicService {
     private void checkPetName(final String name) throws NameException {
         if (name.isEmpty()) {
             throw new NameException("Pet's name is empty");
+        }
+    }
+
+    /**
+     * Checks provided pet's age.
+     *
+     * @param petAge pet's age.
+     */
+    private void checkPetAge(final int petAge) throws ServiceException {
+        if (petAge < 0) {
+            throw new ServiceException("Pet's age can't be negative");
         }
     }
 }

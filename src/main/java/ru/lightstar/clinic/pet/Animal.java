@@ -26,6 +26,16 @@ public abstract class Animal implements Pet {
     private String name;
 
     /**
+     * Animal's age.
+     */
+    private int age;
+
+    /**
+     * Animal's sex.
+     */
+    private Sex sex;
+
+    /**
      * Output used for sounds.
      */
     private final Output output;
@@ -51,6 +61,8 @@ public abstract class Animal implements Pet {
         super();
         this.type = type;
         this.name = name;
+        this.age = 0;
+        this.sex = Sex.M;
         this.output = output;
         this.nextPet = Pet.NONE;
         this.prevPet = Pet.NONE;
@@ -94,6 +106,38 @@ public abstract class Animal implements Pet {
     @Override
     public void setName(final String name) {
         this.name = name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getAge() {
+        return this.age;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAge(final int age) {
+        this.age = age;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Sex getSex() {
+        return this.sex;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSex(final Sex sex) {
+        this.sex = sex;
     }
 
     /**

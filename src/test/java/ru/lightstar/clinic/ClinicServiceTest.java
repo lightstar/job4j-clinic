@@ -59,7 +59,7 @@ public class ClinicServiceTest {
     @Test
     public void whenGetAllClientsThenResult() throws NameException, ServiceException {
         final Client[] allClients = new Client[CLINIC_SIZE];
-        allClients[0] = this.clinicService.addClient(0, "Vova");
+        allClients[0] = this.clinicService.addClient(0, "Vova", "", "");
         assertThat(this.clinicService.getAllClients(), is(allClients));
     }
 
@@ -70,8 +70,8 @@ public class ClinicServiceTest {
     public void whenGetAllPetsThenResult() throws NameException, ServiceException {
         final Pet[] allPets = new Pet[1];
 
-        this.clinicService.addClient(0, "Vova");
-        allPets[0] = this.clinicService.setClientPet("Vova", "cat", "Murka");
+        this.clinicService.addClient(0, "Vova", "", "");
+        allPets[0] = this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
 
         assertThat(this.clinicService.getAllPets(), is(allPets));
     }
@@ -97,7 +97,7 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenAddClientThenItAddsWithNonePet() throws NameException, ServiceException {
-        final Client client = this.clinicService.addClient(0, "Vova");
+        final Client client = this.clinicService.addClient(0, "Vova", "", "");
         final Client[] allClients = this.clinic.getClients();
 
         assertThat(allClients[0], instanceOf(Client.class));
@@ -111,8 +111,8 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenAddClientToOccupiedPositionThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        this.clinicService.addClient(0, "Vasya");
+        this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.addClient(0, "Vasya", "", "");
     }
 
     /**
@@ -120,8 +120,8 @@ public class ClinicServiceTest {
      */
     @Test(expected = NameException.class)
     public void whenAddClientWithNonUniqueNameThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        this.clinicService.addClient(1, "Vova");
+        this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.addClient(1, "Vova", "", "");
     }
 
     /**
@@ -129,7 +129,7 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenAddClientToWrongPositionThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(CLINIC_SIZE, "Vova");
+        this.clinicService.addClient(CLINIC_SIZE, "Vova", "", "");
     }
 
     /**
@@ -137,8 +137,8 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenSetClientPetThenItSets() throws NameException, ServiceException {
-        final Client client = this.clinicService.addClient(0, "Vova");
-        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka");
+        final Client client = this.clinicService.addClient(0, "Vova", "", "");
+        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
 
         assertThat(pet, instanceOf(Cat.class));
         assertThat(pet.getName(), is("Murka"));
@@ -151,7 +151,7 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenSetClientPetToNonExistingClientThenException() throws NameException, ServiceException {
-        this.clinicService.setClientPet("Vasya", "cat", "Murka");
+        this.clinicService.setClientPet("Vasya", "cat", "Murka", 0, Sex.M);
     }
 
     /**
@@ -159,8 +159,8 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenSetClientPetWithWrongTypeThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        this.clinicService.setClientPet("Vova", "unknown", "Unknown");
+        this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.setClientPet("Vova", "unknown", "Unknown", 0, Sex.M);
     }
 
     /**
@@ -168,69 +168,73 @@ public class ClinicServiceTest {
      */
     @Test(expected = NameException.class)
     public void whenSetClientPetWithWrongNameThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        this.clinicService.setClientPet("Vova", "cat-dog", "Murka");
+        this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.setClientPet("Vova", "cat-dog", "Murka", 0, Sex.M);
     }
 
     /**
-     * Test correctness of <code>updateClientName</code> method.
+     * Test correctness of <code>updateClient</code> method.
      */
     @Test
-    public void whenUpdateClientNameThenItChanges() throws NameException, ServiceException {
-        final Client client = this.clinicService.addClient(0, "Vova");
-        this.clinicService.updateClientName("Vova", "Vasya");
+    public void whenUpdateClientParametersThenTheyChange() throws NameException, ServiceException {
+        final Client client = this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.updateClient("Vova", "Vasya", "test@mail.ru", "22222");
 
         assertThat(client.getName(), is("Vasya"));
+        assertThat(client.getEmail(), is("test@mail.ru"));
+        assertThat(client.getPhone(), is("22222"));
     }
 
     /**
-     * Test that <code>updateClientName</code> method throws exception on attempt to set the same name.
+     * Test that <code>updateClient</code> method throws exception on attempt to set the same name.
      */
-    @Test(expected = NameException.class)
-    public void whenUpdateClientNameToSameStringThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        this.clinicService.updateClientName("Vova", "Vova");
+    @Test(expected = ServiceException.class)
+    public void whenUpdateClientParametersToSameValuesThenException() throws NameException, ServiceException {
+        this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.updateClient("Vova", "Vova", "", "");
     }
 
     /**
-     * Test that <code>updateClientName</code> method throws exception on attempt to set the non-unique name.
+     * Test that <code>updateClient</code> method throws exception on attempt to set the non-unique name.
      */
     @Test(expected = NameException.class)
     public void whenUpdateClientNameToNonUniqueThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        this.clinicService.addClient(1, "Vasya");
-        this.clinicService.updateClientName("Vova", "Vasya");
+        this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.addClient(1, "Vasya", "", "");
+        this.clinicService.updateClient("Vova", "Vasya", "", "");
     }
 
     /**
-     * Test correctness of <code>updateClientPetName</code> method.
+     * Test correctness of <code>updateClientPet</code> method.
      */
     @Test
-    public void whenUpdatePetNameThenItChanges() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka");
-        this.clinicService.updateClientPetName("Vova", "Bobik");
+    public void whenUpdatePetParametersThenTheyChange() throws NameException, ServiceException {
+        this.clinicService.addClient(0, "Vova", "", "");
+        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
+        this.clinicService.updateClientPet("Vova", "Bobik", 5, Sex.F);
 
         assertThat(pet.getName(), is("Bobik"));
+        assertThat(pet.getAge(), is(5));
+        assertThat(pet.getSex(), is(Sex.F));
     }
 
     /**
-     * Test that <code>updateClientPetName</code> method throws exception on attempt to set pet name for non-existing
+     * Test that <code>updateClientPet</code> method throws exception on attempt to update pet for non-existing
      * client.
      */
     @Test(expected = ServiceException.class)
     public void whenUpdatePetNameForNonExistingClientThenException() throws NameException, ServiceException {
-        this.clinicService.updateClientPetName("Vova", "Bobik");
+        this.clinicService.updateClientPet("Vova", "Bobik", 5, Sex.M);
     }
 
     /**
-     * Test that <code>updatePetName</code> method throws exception on attempt to set the same pet name.
+     * Test that <code>updatePet</code> method throws exception on attempt to set the same pet parameters.
      */
-    @Test(expected = NameException.class)
-    public void whenUpdatePetNameToSameStringThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        this.clinicService.setClientPet("Vova", "cat", "Murka");
-        this.clinicService.updateClientPetName("Vova", "Murka");
+    @Test(expected = ServiceException.class)
+    public void whenUpdatePetNameToSameValuesThenException() throws NameException, ServiceException {
+        this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
+        this.clinicService.updateClientPet("Vova", "Murka", 0, Sex.M);
     }
 
     /**
@@ -238,7 +242,7 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenDeleteClientThenItDeletes() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
+        this.clinicService.addClient(0, "Vova", "", "");
         this.clinicService.deleteClient("Vova");
 
         assertThat(this.clinic.getClients()[0], is(nullValue()));
@@ -257,8 +261,8 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenDeletePetThenItDeletes() throws NameException, ServiceException {
-        final Client client = this.clinicService.addClient(0, "Vova");
-        this.clinicService.setClientPet("Vova", "cat", "Murka");
+        final Client client = this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
         this.clinicService.deleteClientPet("Vova");
 
         assertThat(client.getPet(), is(Pet.NONE));
@@ -278,7 +282,7 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenDeleteNonExistingPetThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
+        this.clinicService.addClient(0, "Vova", "", "");
         this.clinicService.deleteClientPet("Vova");
     }
 
@@ -287,14 +291,14 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenCountClientsByPetNameThenResult() throws NameException, ServiceException {
-        this.clinicService.addClient(0, "Vova");
-        this.clinicService.addClient(1, "Vasya");
-        this.clinicService.addClient(3, "Masha");
-        this.clinicService.addClient(4, "Nastya");
+        this.clinicService.addClient(0, "Vova", "", "");
+        this.clinicService.addClient(1, "Vasya", "", "");
+        this.clinicService.addClient(3, "Masha", "", "");
+        this.clinicService.addClient(4, "Nastya", "", "");
 
-        this.clinicService.setClientPet("Vova", "cat", "Murka");
-        this.clinicService.setClientPet("Vasya", "fish", "Murka");
-        this.clinicService.setClientPet("Masha", "dog", "Bobik");
+        this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
+        this.clinicService.setClientPet("Vasya", "fish", "Murka", 0, Sex.M);
+        this.clinicService.setClientPet("Masha", "dog", "Bobik", 0, Sex.M);
 
         final int count = this.clinicService.countClientsByPetName("Murka");
 
@@ -306,14 +310,14 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenFindClientsByPetNameThenResult() throws NameException, ServiceException {
-        final Client client1 = this.clinicService.addClient(0, "Vova");
-        final Client client2 = this.clinicService.addClient(1, "Vasya");
-        this.clinicService.addClient(3, "Masha");
-        this.clinicService.addClient(4, "Nastya");
+        final Client client1 = this.clinicService.addClient(0, "Vova", "", "");
+        final Client client2 = this.clinicService.addClient(1, "Vasya", "", "");
+        this.clinicService.addClient(3, "Masha", "", "");
+        this.clinicService.addClient(4, "Nastya", "", "");
 
-        this.clinicService.setClientPet("Vova", "cat", "Murka");
-        this.clinicService.setClientPet("Vasya", "fish", "Murka");
-        this.clinicService.setClientPet("Masha", "dog", "Bobik");
+        this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
+        this.clinicService.setClientPet("Vasya", "fish", "Murka", 0, Sex.M);
+        this.clinicService.setClientPet("Masha", "dog", "Bobik", 0, Sex.M);
 
         final Client[] foundClients = this.clinicService.findClientsByPetName("Murka");
 
@@ -325,8 +329,8 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenFindClientPositionByNameThenResult() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
-        this.clinicService.addClient(5, "Vasya");
+        this.clinicService.addClient(1, "Vova", "", "");
+        this.clinicService.addClient(5, "Vasya", "", "");
 
         final int position = clinicService.findClientPositionByName("Vasya");
 
@@ -338,8 +342,8 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenFindClientPositionByNonExistingNameThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
-        this.clinicService.addClient(5, "Vasya");
+        this.clinicService.addClient(1, "Vova", "", "");
+        this.clinicService.addClient(5, "Vasya", "", "");
 
         this.clinicService.findClientPositionByName("Masha");
     }
@@ -349,8 +353,8 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenGetClientByPositionThenResult() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
-        final Client client = this.clinicService.addClient(5, "Vasya");
+        this.clinicService.addClient(1, "Vova", "", "");
+        final Client client = this.clinicService.addClient(5, "Vasya", "", "");
 
         assertThat(this.clinicService.getClientByPosition(5), is(client));
     }
@@ -360,8 +364,8 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenGetClientByEmptyPositionThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
-        this.clinicService.addClient(5, "Vasya");
+        this.clinicService.addClient(1, "Vova", "", "");
+        this.clinicService.addClient(5, "Vasya", "", "");
 
         this.clinicService.getClientByPosition(6);
     }
@@ -379,8 +383,8 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenFindClientByNameThenResult() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
-        final Client client = this.clinicService.addClient(5, "Vasya");
+        this.clinicService.addClient(1, "Vova", "", "");
+        final Client client = this.clinicService.addClient(5, "Vasya", "", "");
 
         assertThat(this.clinicService.findClientByName("Vasya"), is(client));
     }
@@ -390,8 +394,8 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenFindClientByNonExistingNameThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
-        this.clinicService.addClient(5, "Vasya");
+        this.clinicService.addClient(1, "Vova", "", "");
+        this.clinicService.addClient(5, "Vasya", "", "");
         this.clinicService.findClientByName("Masha");
     }
 
@@ -400,8 +404,8 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenGetClientPetThenResult() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
-        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka");
+        this.clinicService.addClient(1, "Vova", "", "");
+        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
 
         assertThat(this.clinicService.getClientPet("Vova"), is(pet));
     }
@@ -419,7 +423,7 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenGetClientPetAndClientHasNoPetThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(1, "Vova");
+        this.clinicService.addClient(1, "Vova", "", "");
         this.clinicService.getClientPet("Vova");
     }
 
@@ -428,8 +432,8 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenAskPetMakeSoundThenResult() throws NameException, ServiceException {
-        this.clinicService.addClient(5, "Vasya");
-        this.clinicService.setClientPet("Vasya", "cat", "Murka");
+        this.clinicService.addClient(5, "Vasya", "", "");
+        this.clinicService.setClientPet("Vasya", "cat", "Murka", 0, Sex.M);
 
         this.clinicService.askPetMakeSound("Vasya");
 
@@ -449,7 +453,7 @@ public class ClinicServiceTest {
      */
     @Test(expected = ServiceException.class)
     public void whenAskNonExistingPetMakeSoundThenException() throws NameException, ServiceException {
-        this.clinicService.addClient(5, "Vasya");
+        this.clinicService.addClient(5, "Vasya", "", "");
         this.clinicService.askPetMakeSound("Vasya");
     }
 }

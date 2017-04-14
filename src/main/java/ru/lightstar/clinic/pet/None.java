@@ -64,6 +64,36 @@ class None implements Pet {
      * {@inheritDoc}
      */
     @Override
+    public int getAge() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAge(final int age) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Sex getSex() {
+        return Sex.M;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSex(final Sex sex) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Pet getNextPet() {
         return Pet.NONE;
     }

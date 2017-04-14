@@ -31,7 +31,7 @@ public class UpdateClientName extends ClinicAction {
         final String newName = this.ask("Client's new name:");
 
         try {
-            this.getClinicService().updateClientName(name, newName);
+            this.getClinicService().updateClient(name, newName, "", "");
         } catch (ServiceException | NameException e) {
             throw new ActionException(String.format("%s.", e.getMessage()));
         }

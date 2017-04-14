@@ -31,6 +31,16 @@ public class Client {
     private final int position;
 
     /**
+     * Client's email.
+     */
+    private String email;
+
+    /**
+     * Client's phone.
+     */
+    private String phone;
+
+    /**
      * Constructs <code>Client</code> object.
      *  @param name client's name.
      * @param pet client's pet.
@@ -41,6 +51,8 @@ public class Client {
         this.name = name;
         this.pet = pet;
         this.position = position;
+        this.email = "";
+        this.phone = "";
     }
 
     /**
@@ -104,6 +116,42 @@ public class Client {
      */
     public int getPosition() {
         return this.position;
+    }
+
+    /**
+     * Get client's email.
+     *
+     * @return client's email.
+     */
+    public String getEmail() {
+        return this.email;
+    }
+
+    /**
+     * Set client's email.
+     *
+     * @param email client's email.
+     */
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    /**
+     * Get client's phone.
+     *
+     * @return client's phone.
+     */
+    public String getPhone() {
+        return this.phone;
+    }
+
+    /**
+     * Set client's phone.
+     *
+     * @param phone client's phone.
+     */
+    public void setPhone(final String phone) {
+        this.phone = phone;
     }
 
     /**

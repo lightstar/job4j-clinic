@@ -31,7 +31,7 @@ public class AddClient extends ClinicAction {
         final int position = this.askPosition();
 
         try {
-            this.getClinicService().addClient(position, name);
+            this.getClinicService().addClient(position, name, "", "");
         } catch (ServiceException | NameException e) {
             throw new ActionException(String.format("%s.", e.getMessage()));
         }

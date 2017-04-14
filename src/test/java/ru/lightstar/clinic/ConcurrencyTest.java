@@ -8,6 +8,7 @@ import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.IteratorInput;
 import ru.lightstar.clinic.io.Output;
 import ru.lightstar.clinic.pet.Pet;
+import ru.lightstar.clinic.pet.Sex;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -39,9 +40,9 @@ public class ConcurrencyTest {
         final StringBuffer adminLog = new StringBuffer();
         final Thread adminThread = new Thread(() -> {
             try {
-                clinicService.addClient(0, "Vasya");
-                clinicService.addClient(1, "Vova");
-                clinicService.addClient(2, "Masha");
+                clinicService.addClient(0, "Vasya", "", "");
+                clinicService.addClient(1, "Vova", "", "");
+                clinicService.addClient(2, "Masha", "", "");
 
                 drugService.addDrug("aspirin");
                 drugService.addDrug("glucose");
@@ -62,7 +63,7 @@ public class ConcurrencyTest {
                     vasyaLog.append(String.format("In the beginning Vasya sees: %s%n", vasya));
 
                     if (vasya.getPet() == Pet.NONE) {
-                        clinicService.setClientPet("Vasya", "cat", "Murka");
+                        clinicService.setClientPet("Vasya", "cat", "Murka", 0, Sex.M);
                         vasyaLog.append(String.format("After setting pet Vasya sees: %s%n",
                                 clinicService.findClientByName("Vasya")));
                     }
@@ -85,7 +86,7 @@ public class ConcurrencyTest {
                     vovaLog.append(String.format("In the beginning Vova sees: %s%n", vova));
 
                     if (vova.getPet() == Pet.NONE) {
-                        clinicService.setClientPet("Vova", "dog", "Bobik");
+                        clinicService.setClientPet("Vova", "dog", "Bobik", 0, Sex.M);
                         vovaLog.append(String.format("After setting pet Vova sees: %s%n",
                                 clinicService.findClientByName("Vova")));
                     }
@@ -108,7 +109,7 @@ public class ConcurrencyTest {
                     mashaLog.append(String.format("In the beginning Masha sees: %s%n", masha));
 
                     if (masha.getPet() == Pet.NONE) {
-                        clinicService.setClientPet("Masha", "fish", "Summer");
+                        clinicService.setClientPet("Masha", "fish", "Summer", 0, Sex.M);
                         mashaLog.append(String.format("After setting her pet Masha sees: %s%n",
                                 clinicService.findClientByName("Masha")));
                     }

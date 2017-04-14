@@ -141,6 +141,40 @@ public class CatDog implements Pet {
      * {@inheritDoc}
      */
     @Override
+    public int getAge() {
+        return this.cat.getAge();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAge(final int age) {
+        this.cat.setAge(age);
+        this.dog.setAge(age);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Sex getSex() {
+        return this.cat.getSex();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSex(final Sex sex) {
+        this.cat.setSex(sex);
+        this.dog.setSex(sex);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Pet getNextPet() {
         return this.nextPet;
     }

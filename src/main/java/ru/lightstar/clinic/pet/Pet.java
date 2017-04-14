@@ -47,6 +47,34 @@ public interface Pet {
     String getName();
 
     /**
+     * Set pet's age.
+     *
+     * @param age new pet's age.
+     */
+    void setAge(int age);
+
+    /**
+     * Get pet's age.
+     *
+     * @return pet's age.
+     */
+    int getAge();
+
+    /**
+     * Set pet's sex.
+     *
+     * @param sex new pet's sex.
+     */
+    void setSex(Sex sex);
+
+    /**
+     * Get pet's sex.
+     *
+     * @return pet's sex.
+     */
+    Sex getSex();
+
+    /**
      * Set pet's name.
      *
      * @param name new pet's name.

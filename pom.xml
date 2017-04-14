@@ -65,7 +65,7 @@
                             <goal>prepare-agent</goal>
                         </goals>
                         <configuration>
-                            <destFile>${build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
                         </configuration>
                     </execution>
                     <execution>
@@ -78,8 +78,8 @@
                             <excludes>
                                 <exclude>ru/lightstar/clinic/ClinicServlet.class</exclude>
                             </excludes>
-                            <dataFile>${build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
-                            <outputDirectory>${reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
