@@ -114,6 +114,47 @@ public class DrugService {
     }
 
     /**
+     * Add new pre-defined drug to clinic.
+     *
+     * @param drug drug object.
+     * @throws ServiceException thrown when drug's name is unknown.
+     */
+    protected synchronized void addDrug(final Drug drug) throws ServiceException {
+        this.checkDrugName(drug.getName());
+        this.clinic.getDrugList().add(drug);
+    }
+
+    /**
+     * Take pre-defined drug from clinic (efficiently removing it).
+     *
+     * @param drug drug object.
+     * @throws ServiceException thrown when there are no such drug in clinic.
+     */
+    protected synchronized void takeDrug(final Drug drug) throws ServiceException {
+        if (!this.clinic.getDrugList().remove(drug)) {
+            throw new ServiceException("Drug not found");
+        }
+    }
+
+    /**
+     * Get this service's inner clinic object.
+     *
+     * @return clinic object.
+     */
+    protected Clinic getClinic() {
+        return this.clinic;
+    }
+
+    /**
+     * Get this service's inner drug factory.
+     *
+     * @return drug factory.
+     */
+    protected DrugFactory getDrugFactory() {
+        return this.drugFactory;
+    }
+
+    /**
      * Checks if provided drug's name is correct.
      *
      * @param drugName drug's name.

@@ -102,4 +102,38 @@ public class DrugServiceTest {
     public void whenTakeAbsentDrugThenException() throws ServiceException {
         this.drugService.takeDrug("aspirin");
     }
+
+    /**
+     * Test correctness of <code>addDrug</code> method with pre-defined drug object.
+     */
+    @Test
+    public void whenAddPreDefinedDrugThenItAdds() throws ServiceException {
+        final Drug drug = this.drugService.getDrugFactory().create("aspirin");
+        this.drugService.addDrug(drug);
+        assertThat(this.clinic.getDrugList().toArray(), is(new Object[]{new Aspirin()}));
+    }
+
+    /**
+     * Test correctness of <code>takeDrug</code> method with pre-defined drug object..
+     */
+    @Test
+    public void whenTakePreDefinedDrugThenItTakesOut() throws ServiceException {
+        this.drugService.addDrug("aspirin");
+        this.drugService.addDrug("aspirin");
+        this.drugService.addDrug("glucose");
+
+        final Drug drug = this.drugService.getDrugFactory().create("aspirin");
+        this.drugService.takeDrug(drug);
+
+        assertThat(this.clinic.getDrugList().toArray(), is(new Object[]{new Aspirin(), new Glucose()}));
+    }
+
+    /**
+     * Test exception in <code>takeDrug</code> with pre-defined drug object
+     * which is thrown if drug not exists in clinic.
+     */
+    @Test(expected = ServiceException.class)
+    public void whenTakeAbsentPreDefinedDrugThenException() throws ServiceException {
+        this.drugService.takeDrug(this.drugService.getDrugFactory().create("aspirin"));
+    }
 }
