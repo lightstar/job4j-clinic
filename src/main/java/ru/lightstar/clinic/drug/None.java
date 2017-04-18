@@ -6,7 +6,7 @@ package ru.lightstar.clinic.drug;
  * @author LightStar
  * @since 0.0.1
  */
-class None implements Drug {
+final class None implements Drug {
 
     /**
      * Constructs <code>None</code> object.
@@ -20,7 +20,7 @@ class None implements Drug {
      */
     @Override
     public int getId() {
-        return 0;
+        return -1;
     }
 
     /**

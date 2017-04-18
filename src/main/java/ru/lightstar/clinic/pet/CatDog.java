@@ -1,5 +1,6 @@
 package ru.lightstar.clinic.pet;
 
+import ru.lightstar.clinic.Client;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.io.Output;
 
@@ -22,6 +23,11 @@ public class CatDog implements Pet {
     private int id;
 
     /**
+     * Pet's host.
+     */
+    private Client client;
+
+    /**
      * Inner <code>Cat</code> object.
      */
     private final Cat cat;
@@ -42,6 +48,13 @@ public class CatDog implements Pet {
     private Pet prevPet;
 
     /**
+     * Constructs <code>CatDog</code> object.
+     */
+    public CatDog() {
+        this(new Cat(), new Dog());
+    }
+
+    /**
      * Constructs <code>CatDog</code> object from given cat and dog objects.
      *
      * @param cat inner cat.
@@ -49,6 +62,8 @@ public class CatDog implements Pet {
      */
     public CatDog(final Cat cat, final Dog dog) {
         super();
+        this.id = -1;
+        this.client = Client.NONE;
         this.cat = cat;
         this.dog = dog;
         this.init();
@@ -62,6 +77,8 @@ public class CatDog implements Pet {
      */
     public CatDog(final String name, final Output output) throws NameException {
         super();
+        this.id = -1;
+        this.client = Client.NONE;
         String[] nameArray = this.splitName(name);
         this.cat = new Cat(nameArray[0], output);
         this.dog = new Dog(nameArray[1], output);
@@ -109,6 +126,22 @@ public class CatDog implements Pet {
     @Override
     public void setId(final int id) {
         this.id = id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Client getClient() {
+        return this.client;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setClient(final Client client) {
+        this.client = client;
     }
 
     /**

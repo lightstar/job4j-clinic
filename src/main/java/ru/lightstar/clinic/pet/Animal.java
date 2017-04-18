@@ -1,5 +1,6 @@
 package ru.lightstar.clinic.pet;
 
+import ru.lightstar.clinic.Client;
 import ru.lightstar.clinic.io.Output;
 
 /**
@@ -14,6 +15,11 @@ public abstract class Animal implements Pet {
      * Pet's database id.
      */
     private int id;
+
+    /**
+     * Pet's host.
+     */
+    private Client client;
 
     /**
      * Animal's type.
@@ -59,6 +65,8 @@ public abstract class Animal implements Pet {
      */
     public Animal(final String type, final String name, final Output output) {
         super();
+        this.id = -1;
+        this.client = Client.NONE;
         this.type = type;
         this.name = name;
         this.age = 0;
@@ -82,6 +90,22 @@ public abstract class Animal implements Pet {
     @Override
     public void setId(final int id) {
         this.id = id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Client getClient() {
+        return this.client;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setClient(final Client client) {
+        this.client = client;
     }
 
     /**

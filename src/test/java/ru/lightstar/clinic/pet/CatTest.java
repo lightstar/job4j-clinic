@@ -1,6 +1,7 @@
 package ru.lightstar.clinic.pet;
 
 import org.junit.Test;
+import ru.lightstar.clinic.Client;
 import ru.lightstar.clinic.io.ByteArrayOutput;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -43,6 +44,15 @@ public class CatTest {
     }
 
     /**
+     * Test correctness of <code>setId</code> and <code>getId</code> methods.
+     */
+    @Test
+    public void whenSetIdThenItChanges() {
+        this.cat.setId(1);
+        assertThat(this.cat.getId(), is(1));
+    }
+
+    /**
      * Test correctness of <code>setName</code> and <code>getName</code> methods.
      */
     @Test
@@ -57,6 +67,34 @@ public class CatTest {
     @Test
     public void whenGetTypeThenCat() {
         assertThat(this.cat.getType(), is("cat"));
+    }
+
+    /**
+     * Test correctness of <code>setAge</code> and <code>getAge</code> methods.
+     */
+    @Test
+    public void whenSetAgeThenItChanges() {
+        this.cat.setAge(10);
+        assertThat(this.cat.getAge(), is(10));
+    }
+
+    /**
+     * Test correctness of <code>setSex</code> and <code>getSex</code> methods.
+     */
+    @Test
+    public void whenSetSexThenItChanges() {
+        this.cat.setSex(Sex.F);
+        assertThat(this.cat.getSex(), is(Sex.F));
+    }
+
+    /**
+     * Test correctness of <code>setClient</code> and <code>getClient</code> methods.
+     */
+    @Test
+    public void whenSetClientThenItChanges() {
+        final Client client = new Client();
+        this.cat.setClient(client);
+        assertThat(this.cat.getClient(), is(client));
     }
 
     /**

@@ -37,6 +37,15 @@ public class AbstractDrugTest {
     }
 
     /**
+     * Test correctness of <code>setId</code> and <code>getId</code> methods.
+     */
+    @Test
+    public void whenSetIdThenItChanges() {
+        this.abstractDrug.setId(1);
+        assertThat(this.abstractDrug.getId(), is(1));
+    }
+
+    /**
      * Test correctness of <code>getName</code> method.
      */
     @Test

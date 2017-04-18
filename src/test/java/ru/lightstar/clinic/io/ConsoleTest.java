@@ -73,4 +73,17 @@ public class ConsoleTest {
         assertThat(mockedOutput.toString(), is(String.format("What is your name?%n")));
         assertThat(result, is("Boris"));
     }
+
+    /**
+     * Test correctness of <code>waitEnter</code> method.
+     */
+    @Test
+    public void whenWaitEnterThenResult() {
+        this.helper.mockStandardInput(new byte[]{});
+        final OutputStream mockedOutput = this.helper.mockStandardOutput();
+
+        new Console().waitEnter();
+
+        assertThat(mockedOutput.toString(), is(""));
+    }
 }

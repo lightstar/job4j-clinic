@@ -1,6 +1,7 @@
 package ru.lightstar.clinic.pet;
 
 import org.junit.Test;
+import ru.lightstar.clinic.Client;
 import ru.lightstar.clinic.io.ByteArrayOutput;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -44,6 +45,15 @@ public class BirdTest {
     }
 
     /**
+     * Test correctness of <code>setId</code> and <code>getId</code> methods.
+     */
+    @Test
+    public void whenSetIdThenItChanges() {
+        this.bird.setId(1);
+        assertThat(this.bird.getId(), is(1));
+    }
+
+    /**
      * Test correctness of <code>setName</code> and <code>getName</code> methods.
      */
     @Test
@@ -58,6 +68,34 @@ public class BirdTest {
     @Test
     public void whenGetTypeThenBird() {
         assertThat(this.bird.getType(), is("bird"));
+    }
+
+    /**
+     * Test correctness of <code>setAge</code> and <code>getAge</code> methods.
+     */
+    @Test
+    public void whenSetAgeThenItChanges() {
+        this.bird.setAge(10);
+        assertThat(this.bird.getAge(), is(10));
+    }
+
+    /**
+     * Test correctness of <code>setSex</code> and <code>getSex</code> methods.
+     */
+    @Test
+    public void whenSetSexThenItChanges() {
+        this.bird.setSex(Sex.F);
+        assertThat(this.bird.getSex(), is(Sex.F));
+    }
+
+    /**
+     * Test correctness of <code>setClient</code> and <code>getClient</code> methods.
+     */
+    @Test
+    public void whenSetClientThenItChanges() {
+        final Client client = new Client();
+        this.bird.setClient(client);
+        assertThat(this.bird.getClient(), is(client));
     }
 
     /**

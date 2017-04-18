@@ -1,12 +1,14 @@
 package ru.lightstar.clinic.pet;
 
+import ru.lightstar.clinic.Client;
+
 /**
  * 'None' pet used instead of null object. It indicates that there is really no pet at all.
  *
  * @author LightStar
  * @since 0.0.1
  */
-class None implements Pet {
+final class None implements Pet {
 
     /**
      * Constructs <code>None</code> object.
@@ -27,7 +29,7 @@ class None implements Pet {
      */
     @Override
     public int getId() {
-        return 0;
+        return -1;
     }
 
     /**
@@ -35,6 +37,21 @@ class None implements Pet {
      */
     @Override
     public void setId(final int id) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Client getClient() {
+        return Client.NONE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setClient(final Client client) {
     }
 
     /**

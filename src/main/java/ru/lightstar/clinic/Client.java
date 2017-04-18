@@ -11,6 +11,11 @@ import ru.lightstar.clinic.pet.Pet;
 public class Client {
 
     /**
+     * 'None' client used instead of null object. It indicates that there is really no client at all.
+     */
+    public static final Client NONE = new None();
+
+    /**
      * Client's database id.
      */
     private int id;
@@ -28,7 +33,7 @@ public class Client {
     /**
      * Client's position.
      */
-    private final int position;
+    private int position;
 
     /**
      * Client's email.
@@ -42,12 +47,20 @@ public class Client {
 
     /**
      * Constructs <code>Client</code> object.
-     *  @param name client's name.
+     */
+    public Client() {
+        this("", Pet.NONE, 0);
+    }
+
+    /**
+     * Constructs <code>Client</code> object.
+     * @param name client's name.
      * @param pet client's pet.
      * @param position client's position.
      */
     public Client(final String name, final Pet pet, final int position) {
         super();
+        this.id = -1;
         this.name = name;
         this.pet = pet;
         this.position = position;
@@ -119,6 +132,15 @@ public class Client {
     }
 
     /**
+     * Set client's position.
+     *
+     * @param position client's position.
+     */
+    public void setPosition(final int position) {
+        this.position = position;
+    }
+
+    /**
      * Get client's email.
      *
      * @return client's email.
@@ -163,6 +185,62 @@ public class Client {
             return String.format("%d. %s with no pet", this.getPosition() + 1, this.getName());
         } else {
             return String.format("%d. %s with %s", this.getPosition() + 1, this.getName(), this.getPet().toString());
+        }
+    }
+
+    /**
+     * 'None' client used instead of null object. It indicates that there is really no client at all.
+     * Overridden methods make this object immutable.
+     */
+    private static final class None extends Client {
+
+        /**
+         * Constructs <code>None</code> object.
+         */
+        public None() {
+            super();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setId(final int id) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setName(final String name) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setPosition(final int id) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setPet(final Pet pet) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setEmail(final String email) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setPhone(final String phone) {
         }
     }
 }

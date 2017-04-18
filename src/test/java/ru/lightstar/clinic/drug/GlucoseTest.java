@@ -27,6 +27,15 @@ public class GlucoseTest {
     }
 
     /**
+     * Test correctness of <code>setId</code> and <code>getId</code> methods.
+     */
+    @Test
+    public void whenSetIdThenItChanges() {
+        this.glucose.setId(1);
+        assertThat(this.glucose.getId(), is(1));
+    }
+
+    /**
      * Test correctness of <code>getName</code> method.
      */
     @Test

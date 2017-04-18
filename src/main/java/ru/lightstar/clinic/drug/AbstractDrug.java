@@ -31,6 +31,7 @@ public abstract class AbstractDrug implements Drug {
      */
     public AbstractDrug(final String name, final int dangerLevel) {
         super();
+        this.id = -1;
         this.name = name;
         this.dangerLevel = dangerLevel;
     }

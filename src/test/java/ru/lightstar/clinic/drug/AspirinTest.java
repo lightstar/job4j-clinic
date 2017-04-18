@@ -27,6 +27,15 @@ public class AspirinTest {
     }
 
     /**
+     * Test correctness of <code>setId</code> and <code>getId</code> methods.
+     */
+    @Test
+    public void whenSetIdThenItChanges() {
+        this.aspirin.setId(1);
+        assertThat(this.aspirin.getId(), is(1));
+    }
+
+    /**
      * Test correctness of <code>getName</code> method.
      */
     @Test

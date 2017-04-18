@@ -1,5 +1,6 @@
 package ru.lightstar.clinic.pet;
 
+import ru.lightstar.clinic.io.DummyOutput;
 import ru.lightstar.clinic.io.Output;
 
 /**
@@ -14,6 +15,13 @@ public class Cat extends Animal {
      * Cat's type string.
      */
     public final static String TYPE = "cat";
+
+    /**
+     * Constructs <code>Cat</code> object.
+     */
+    public Cat() {
+        super(TYPE, "", new DummyOutput());
+    }
 
     /**
      * Constructs <code>Cat</code> object.

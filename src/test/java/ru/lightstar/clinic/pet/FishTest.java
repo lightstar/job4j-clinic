@@ -1,6 +1,7 @@
 package ru.lightstar.clinic.pet;
 
 import org.junit.Test;
+import ru.lightstar.clinic.Client;
 import ru.lightstar.clinic.io.ByteArrayOutput;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -43,6 +44,15 @@ public class FishTest {
     }
 
     /**
+     * Test correctness of <code>setId</code> and <code>getId</code> methods.
+     */
+    @Test
+    public void whenSetIdThenItChanges() {
+        this.fish.setId(1);
+        assertThat(this.fish.getId(), is(1));
+    }
+
+    /**
      * Test correctness of <code>setName</code> and <code>getName</code> methods.
      */
     @Test
@@ -57,6 +67,34 @@ public class FishTest {
     @Test
     public void whenGetTypeThenFish() {
         assertThat(this.fish.getType(), is("fish"));
+    }
+
+    /**
+     * Test correctness of <code>setAge</code> and <code>getAge</code> methods.
+     */
+    @Test
+    public void whenSetAgeThenItChanges() {
+        this.fish.setAge(10);
+        assertThat(this.fish.getAge(), is(10));
+    }
+
+    /**
+     * Test correctness of <code>setSex</code> and <code>getSex</code> methods.
+     */
+    @Test
+    public void whenSetSexThenItChanges() {
+        this.fish.setSex(Sex.F);
+        assertThat(this.fish.getSex(), is(Sex.F));
+    }
+
+    /**
+     * Test correctness of <code>setClient</code> and <code>getClient</code> methods.
+     */
+    @Test
+    public void whenSetClientThenItChanges() {
+        final Client client = new Client();
+        this.fish.setClient(client);
+        assertThat(this.fish.getClient(), is(client));
     }
 
     /**

@@ -1,6 +1,7 @@
 package ru.lightstar.clinic.pet;
 
 import org.junit.Test;
+import ru.lightstar.clinic.Client;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.io.ByteArrayOutput;
 
@@ -62,6 +63,15 @@ public class CatDogTest {
     }
 
     /**
+     * Test correctness of <code>setId</code> and <code>getId</code> methods.
+     */
+    @Test
+    public void whenSetIdThenItChanges() {
+        this.catDog.setId(1);
+        assertThat(this.catDog.getId(), is(1));
+    }
+
+    /**
      * Test correctness of <code>makeSound</code> method.
      */
     @Test
@@ -76,6 +86,34 @@ public class CatDogTest {
     @Test
     public void whenGetTypeThenCatDog() {
         assertThat(this.catDog.getType(), is("cat-dog"));
+    }
+
+    /**
+     * Test correctness of <code>setAge</code> and <code>getAge</code> methods.
+     */
+    @Test
+    public void whenSetAgeThenItChanges() {
+        this.catDog.setAge(10);
+        assertThat(this.catDog.getAge(), is(10));
+    }
+
+    /**
+     * Test correctness of <code>setSex</code> and <code>getSex</code> methods.
+     */
+    @Test
+    public void whenSetSexThenItChanges() {
+        this.catDog.setSex(Sex.F);
+        assertThat(this.catDog.getSex(), is(Sex.F));
+    }
+
+    /**
+     * Test correctness of <code>setClient</code> and <code>getClient</code> methods.
+     */
+    @Test
+    public void whenSetClientThenItChanges() {
+        final Client client = new Client();
+        this.catDog.setClient(client);
+        assertThat(this.catDog.getClient(), is(client));
     }
 
     /**

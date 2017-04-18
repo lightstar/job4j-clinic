@@ -1,5 +1,6 @@
 package ru.lightstar.clinic.pet;
 
+import ru.lightstar.clinic.Client;
 import ru.lightstar.clinic.exception.NameException;
 
 /**
@@ -33,6 +34,20 @@ public interface Pet {
     void setId(int id);
 
     /**
+     * Get pet's host.
+     *
+     * @return pet's host.
+     */
+    Client getClient();
+
+    /**
+     * Set pet's host.
+     *
+     * @param client pet's host.
+     */
+    void setClient(Client client);
+
+    /**
      * Get pet's type.
      *
      * @return pet's type.
@@ -47,11 +62,11 @@ public interface Pet {
     String getName();
 
     /**
-     * Set pet's age.
+     * Set pet's name.
      *
-     * @param age new pet's age.
+     * @param name new pet's name.
      */
-    void setAge(int age);
+    void setName(String name) throws NameException;
 
     /**
      * Get pet's age.
@@ -61,11 +76,11 @@ public interface Pet {
     int getAge();
 
     /**
-     * Set pet's sex.
+     * Set pet's age.
      *
-     * @param sex new pet's sex.
+     * @param age new pet's age.
      */
-    void setSex(Sex sex);
+    void setAge(int age);
 
     /**
      * Get pet's sex.
@@ -75,11 +90,11 @@ public interface Pet {
     Sex getSex();
 
     /**
-     * Set pet's name.
+     * Set pet's sex.
      *
-     * @param name new pet's name.
+     * @param sex new pet's sex.
      */
-    void setName(String name) throws NameException;
+    void setSex(Sex sex);
 
     /**
      * Get next pet in chain.<br>
