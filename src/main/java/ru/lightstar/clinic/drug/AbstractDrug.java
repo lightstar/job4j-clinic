@@ -21,7 +21,7 @@ public abstract class AbstractDrug implements Drug {
     /**
      * Drug's danger level.
      */
-    private final int dangerLevel;
+    private int dangerLevel;
 
     /**
      * Constructs <code>AbstractDrug</code> object.
@@ -66,6 +66,14 @@ public abstract class AbstractDrug implements Drug {
     @Override
     public int getDangerLevel() {
         return this.dangerLevel;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setDangerLevel(final int dangerLevel) {
+        this.dangerLevel = dangerLevel;
     }
 
     /**

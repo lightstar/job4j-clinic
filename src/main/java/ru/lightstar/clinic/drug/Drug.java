@@ -40,4 +40,11 @@ public interface Drug {
      * @return drug's danger level.
      */
     int getDangerLevel();
+
+    /**
+     * Set drug's danger level.
+     *
+     * @param dangerLevel drug's danger level.
+     */
+    void setDangerLevel(int dangerLevel);
 }

@@ -45,4 +45,11 @@ final class None implements Drug {
     public int getDangerLevel() {
         return 0;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setDangerLevel(final int dangerLevel) {
+    }
 }

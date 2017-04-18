@@ -97,11 +97,14 @@ public class ClinicServiceTest {
      */
     @Test
     public void whenAddClientThenItAddsWithNonePet() throws NameException, ServiceException {
-        final Client client = this.clinicService.addClient(0, "Vova", "", "");
+        final Client client = this.clinicService.addClient(0, "Vova", "vova@mail.ru",
+                "123456");
         final Client[] allClients = this.clinic.getClients();
 
         assertThat(allClients[0], instanceOf(Client.class));
         assertThat(allClients[0].getName(), is("Vova"));
+        assertThat(allClients[0].getEmail(), is("vova@mail.ru"));
+        assertThat(allClients[0].getPhone(), is("123456"));
         assertThat(allClients[0].getPet(), is(Pet.NONE));
         assertThat(allClients[0], is(client));
     }
@@ -138,10 +141,13 @@ public class ClinicServiceTest {
     @Test
     public void whenSetClientPetThenItSets() throws NameException, ServiceException {
         final Client client = this.clinicService.addClient(0, "Vova", "", "");
-        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
+        final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka", 5, Sex.F);
 
         assertThat(pet, instanceOf(Cat.class));
         assertThat(pet.getName(), is("Murka"));
+        assertThat(pet.getClient(), is(client));
+        assertThat(pet.getAge(), is(5));
+        assertThat(pet.getSex(), is(Sex.F));
         assertThat(client.getPet(), is(pet));
         assertThat(this.clinic.getPetList().get(0), is(pet));
     }

@@ -323,6 +323,7 @@ public class ClinicService {
         this.checkPetAge(petAge);
 
         final Pet pet = this.petFactory.create(petType, petName);
+        pet.setClient(client);
         pet.setAge(petAge);
         pet.setSex(petSex);
         this.setClientPet(client, pet);
