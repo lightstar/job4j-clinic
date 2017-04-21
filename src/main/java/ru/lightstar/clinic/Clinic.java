@@ -2,6 +2,7 @@ package ru.lightstar.clinic;
 
 import ru.lightstar.clinic.list.DrugList;
 import ru.lightstar.clinic.list.PetList;
+import ru.lightstar.clinic.model.Client;
 
 import java.util.Arrays;
 

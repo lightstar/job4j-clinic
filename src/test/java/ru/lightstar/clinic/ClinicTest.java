@@ -4,6 +4,7 @@ import org.junit.Test;
 import ru.lightstar.clinic.io.DummyOutput;
 import ru.lightstar.clinic.list.DrugList;
 import ru.lightstar.clinic.list.PetList;
+import ru.lightstar.clinic.model.Client;
 import ru.lightstar.clinic.pet.Cat;
 
 import static org.hamcrest.CoreMatchers.*;

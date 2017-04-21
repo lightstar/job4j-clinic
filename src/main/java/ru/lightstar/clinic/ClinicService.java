@@ -4,6 +4,7 @@ import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.Output;
+import ru.lightstar.clinic.model.Client;
 import ru.lightstar.clinic.pet.*;
 
 /**

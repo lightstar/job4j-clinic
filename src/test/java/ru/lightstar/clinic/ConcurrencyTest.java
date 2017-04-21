@@ -7,6 +7,7 @@ import ru.lightstar.clinic.io.ByteArrayOutput;
 import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.IteratorInput;
 import ru.lightstar.clinic.io.Output;
+import ru.lightstar.clinic.model.Client;
 import ru.lightstar.clinic.pet.Pet;
 import ru.lightstar.clinic.pet.Sex;
 

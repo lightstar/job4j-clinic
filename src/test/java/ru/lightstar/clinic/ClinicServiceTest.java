@@ -4,6 +4,7 @@ import org.junit.Test;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 import ru.lightstar.clinic.io.*;
+import ru.lightstar.clinic.model.Client;
 import ru.lightstar.clinic.pet.*;
 
 import static org.hamcrest.CoreMatchers.*;

@@ -1,6 +1,6 @@
 package ru.lightstar.clinic.ui.action;
 
-import ru.lightstar.clinic.Client;
+import ru.lightstar.clinic.model.Client;
 import ru.lightstar.clinic.ClinicService;
 
 /**

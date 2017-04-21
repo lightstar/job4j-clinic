@@ -1,6 +1,9 @@
-package ru.lightstar.clinic;
+package ru.lightstar.clinic.model;
 
 import ru.lightstar.clinic.pet.Pet;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Clinic's client.
@@ -8,17 +11,12 @@ import ru.lightstar.clinic.pet.Pet;
  * @author LightStar
  * @since 0.0.1
  */
-public class Client {
+public class Client extends Base {
 
     /**
      * 'None' client used instead of null object. It indicates that there is really no client at all.
      */
     public static final Client NONE = new None();
-
-    /**
-     * Client's database id.
-     */
-    private int id;
 
     /**
      * Client's name.
@@ -46,6 +44,16 @@ public class Client {
     private String phone;
 
     /**
+     * Client's role.
+     */
+    private Role role;
+
+    /**
+     * Client's messages.
+     */
+    private Set<Message> messages;
+
+    /**
      * Constructs <code>Client</code> object.
      */
     public Client() {
@@ -60,30 +68,13 @@ public class Client {
      */
     public Client(final String name, final Pet pet, final int position) {
         super();
-        this.id = -1;
         this.name = name;
         this.pet = pet;
         this.position = position;
         this.email = "";
         this.phone = "";
-    }
-
-    /**
-     * Get client's database id.
-     *
-     * @return database id.
-     */
-    public int getId() {
-        return this.id;
-    }
-
-    /**
-     * Set client's database id.
-     *
-     * @param id database id.
-     */
-    public void setId(final int id) {
-        this.id = id;
+        this.role = new Role();
+        this.messages = new HashSet<>();
     }
 
     /**
@@ -174,6 +165,42 @@ public class Client {
      */
     public void setPhone(final String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * Get client's role.
+     *
+     * @return client's role.
+     */
+    public Role getRole() {
+        return this.role;
+    }
+
+    /**
+     * Set client's role.
+     *
+     * @param role client's role.
+     */
+    public void setRole(final Role role) {
+        this.role = role;
+    }
+
+    /**
+     * Get client's messages.
+     *
+     * @return client's messages.
+     */
+    public Set<Message> getMessages() {
+        return this.messages;
+    }
+
+    /**
+     * Set client's messages.
+     *
+     * @param messages client's messages.
+     */
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 
     /**

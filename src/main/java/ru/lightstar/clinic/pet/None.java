@@ -1,6 +1,6 @@
 package ru.lightstar.clinic.pet;
 
-import ru.lightstar.clinic.Client;
+import ru.lightstar.clinic.model.Client;
 
 /**
  * 'None' pet used instead of null object. It indicates that there is really no pet at all.

@@ -2,6 +2,7 @@ package ru.lightstar.clinic;
 
 import org.junit.Test;
 import ru.lightstar.clinic.io.DummyOutput;
+import ru.lightstar.clinic.model.Client;
 import ru.lightstar.clinic.pet.Cat;
 import ru.lightstar.clinic.pet.Dog;
 import ru.lightstar.clinic.pet.Pet;
