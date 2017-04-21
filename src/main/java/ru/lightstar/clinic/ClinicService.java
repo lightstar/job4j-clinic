@@ -5,6 +5,7 @@ import ru.lightstar.clinic.exception.ServiceException;
 import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.Output;
 import ru.lightstar.clinic.model.Client;
+import ru.lightstar.clinic.model.Role;
 import ru.lightstar.clinic.pet.*;
 
 /**
@@ -244,16 +245,18 @@ public class ClinicService {
      * @param name client's name.
      * @param email client's email.
      * @param phone client's phone.
+     * @param role client's role.
      * @return added client.
      * @throws ServiceException thrown if position is busy.
      * @throws NameException thrown if client's name is incorrect.
      */
     public synchronized Client addClient(final int position, final String name, final String email,
-                                         final String phone)
+                                         final String phone, final Role role)
             throws ServiceException, NameException {
         final Client client = new Client(name, Pet.NONE, position);
         client.setEmail(email);
         client.setPhone(phone);
+        client.setRole(role);
         return this.addClient(position, client);
     }
 
@@ -264,6 +267,7 @@ public class ClinicService {
      * @param client pre-defined client.
      * @return added client.
      * @throws ServiceException thrown if position is busy.
+     * @throws NameException thrown if name is wrong.
      */
     protected synchronized Client addClient(final int position, final Client client)
             throws ServiceException, NameException {
@@ -346,36 +350,41 @@ public class ClinicService {
     }
 
     /**
-     * Update client's name, email and phone.
+     * Update client's name, email, phone and role.
      *
      * @param name client's old name.
      * @param newName new name.
      * @param newEmail new email.
      * @param newPhone new phone.
+     * @param newRole new role.
      * @throws ServiceException thrown if client can't be found.
      * @throws NameException thrown if new name is wrong.
      */
     public synchronized void updateClient(final String name, final String newName,
-                                              final String newEmail, final String newPhone)
+                                          final String newEmail, final String newPhone,
+                                          final Role newRole)
             throws ServiceException, NameException {
-        this.updateClient(this.findClientByName(name), newName, newEmail, newPhone);
+        this.updateClient(this.findClientByName(name), newName, newEmail, newPhone, newRole);
     }
 
     /**
-     * Update client's name, email and phone using pre-defined client object.
+     * Update client's name, email, phone and role using pre-defined client object.
      *
      * @param client pre-defined client object.
      * @param newName new name.
      * @param newEmail new email.
      * @param newPhone new phone.
+     * @param newRole new role.
      * @throws ServiceException thrown if client can't be found.
      * @throws NameException thrown if new name is wrong.
      */
     protected synchronized void updateClient(final Client client, final String newName,
-                                             final String newEmail, final String newPhone)
+                                             final String newEmail, final String newPhone,
+                                             final Role newRole)
             throws ServiceException, NameException {
         if (client.getName().equals(newName) && client.getEmail().equals(newEmail) &&
-                client.getPhone().equals(newPhone)) {
+                client.getPhone().equals(newPhone) &&
+                client.getRole().getName().equals(newRole.getName())) {
             throw new ServiceException("Parameters not changed");
         }
 
@@ -385,6 +394,7 @@ public class ClinicService {
         client.setName(newName);
         client.setEmail(newEmail);
         client.setPhone(newPhone);
+        client.setRole(newRole);
     }
 
     /**

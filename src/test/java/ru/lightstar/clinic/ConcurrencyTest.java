@@ -8,6 +8,7 @@ import ru.lightstar.clinic.io.Input;
 import ru.lightstar.clinic.io.IteratorInput;
 import ru.lightstar.clinic.io.Output;
 import ru.lightstar.clinic.model.Client;
+import ru.lightstar.clinic.model.Role;
 import ru.lightstar.clinic.pet.Pet;
 import ru.lightstar.clinic.pet.Sex;
 
@@ -41,9 +42,9 @@ public class ConcurrencyTest {
         final StringBuffer adminLog = new StringBuffer();
         final Thread adminThread = new Thread(() -> {
             try {
-                clinicService.addClient(0, "Vasya", "", "");
-                clinicService.addClient(1, "Vova", "", "");
-                clinicService.addClient(2, "Masha", "", "");
+                clinicService.addClient(0, "Vasya", "", "", new Role());
+                clinicService.addClient(1, "Vova", "", "", new Role());
+                clinicService.addClient(2, "Masha", "", "", new Role());
 
                 drugService.addDrug("aspirin");
                 drugService.addDrug("glucose");

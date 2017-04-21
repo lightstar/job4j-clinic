@@ -4,6 +4,7 @@ import ru.lightstar.clinic.ClinicService;
 import ru.lightstar.clinic.exception.ActionException;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
+import ru.lightstar.clinic.model.Role;
 
 /**
  * Action to add new client.
@@ -31,7 +32,7 @@ public class AddClient extends ClinicAction {
         final int position = this.askPosition();
 
         try {
-            this.getClinicService().addClient(position, name, "", "");
+            this.getClinicService().addClient(position, name, "", "", new Role());
         } catch (ServiceException | NameException e) {
             throw new ActionException(String.format("%s.", e.getMessage()));
         }

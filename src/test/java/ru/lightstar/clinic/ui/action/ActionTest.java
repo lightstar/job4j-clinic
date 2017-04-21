@@ -8,6 +8,7 @@ import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
 import ru.lightstar.clinic.io.ByteArrayOutput;
 import ru.lightstar.clinic.io.IteratorInput;
+import ru.lightstar.clinic.model.Role;
 import ru.lightstar.clinic.pet.Sex;
 
 /**
@@ -71,8 +72,8 @@ public abstract class ActionTest {
         this.helper = new IoTestHelper();
         this.action = this.createAction();
 
-        this.clinicService.addClient(0, "Vasya", "", "");
-        this.clinicService.addClient(1, "Masha", "", "");
+        this.clinicService.addClient(0, "Vasya", "", "", new Role());
+        this.clinicService.addClient(1, "Masha", "", "", new Role());
         this.clinicService.setClientPet("Masha", "cat", "Murka", 0, Sex.M);
 
         this.drugService.addDrug("aspirin");

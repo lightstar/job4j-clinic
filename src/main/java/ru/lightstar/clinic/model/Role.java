@@ -14,11 +14,20 @@ public class Role extends Base {
     private String name;
 
     /**
-     * Constructs <code>Role</code> object.
+     * Constructs <code>Role</code> object with empty name.
      */
     public Role() {
+        this("");
+    }
+
+    /**
+     * Constructs <code>Role</code> object.
+     *
+     * @param name role's name.
+     */
+    public Role(final String name) {
         super();
-        this.name = "";
+        this.name = name;
     }
 
     /**

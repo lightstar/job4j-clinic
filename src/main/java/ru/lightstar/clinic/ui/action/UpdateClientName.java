@@ -4,6 +4,7 @@ import ru.lightstar.clinic.ClinicService;
 import ru.lightstar.clinic.exception.ActionException;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
+import ru.lightstar.clinic.model.Role;
 
 /**
  * Action to update client's name.
@@ -31,7 +32,7 @@ public class UpdateClientName extends ClinicAction {
         final String newName = this.ask("Client's new name:");
 
         try {
-            this.getClinicService().updateClient(name, newName, "", "");
+            this.getClinicService().updateClient(name, newName, "", "", new Role());
         } catch (ServiceException | NameException e) {
             throw new ActionException(String.format("%s.", e.getMessage()));
         }
