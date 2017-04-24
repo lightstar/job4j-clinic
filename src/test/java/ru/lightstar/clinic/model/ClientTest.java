@@ -1,14 +1,14 @@
-package ru.lightstar.clinic;
+package ru.lightstar.clinic.model;
 
 import org.junit.Test;
 import ru.lightstar.clinic.io.DummyOutput;
-import ru.lightstar.clinic.model.Client;
 import ru.lightstar.clinic.pet.Cat;
 import ru.lightstar.clinic.pet.Dog;
 import ru.lightstar.clinic.pet.Pet;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * <code>Client</code> class tests.
@@ -87,6 +87,15 @@ public class ClientTest {
     }
 
     /**
+     * Test correctness of <code>setRole</code> and <code>getRole</code> methods.
+     */
+    @Test
+    public void whenSetRoleThenItChanges() {
+        this.client.setRole(new Role("admin"));
+        assertThat(this.client.getRole().getName(), is("admin"));
+    }
+
+    /**
      * Test correctness of <code>toString</code> method.
      */
     @Test
@@ -105,6 +114,7 @@ public class ClientTest {
         Client.NONE.setEmail("Test");
         Client.NONE.setPhone("Test");
         Client.NONE.setPet(new Cat());
+        Client.NONE.setRole(new Role("admin"));
 
         assertThat(Client.NONE.getId(), is(-1));
         assertThat(Client.NONE.getName(), is(""));
@@ -112,5 +122,6 @@ public class ClientTest {
         assertThat(Client.NONE.getPet(), is(Pet.NONE));
         assertThat(Client.NONE.getEmail(), is(""));
         assertThat(Client.NONE.getPhone(), is(""));
+        assertThat(Client.NONE.getRole().getName(), is(""));
     }
 }

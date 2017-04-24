@@ -269,5 +269,12 @@ public class Client extends Base {
         @Override
         public void setPhone(final String phone) {
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setRole(final Role role) {
+        }
     }
 }

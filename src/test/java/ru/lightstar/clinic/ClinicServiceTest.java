@@ -220,7 +220,7 @@ public class ClinicServiceTest {
      * Test correctness of <code>updateClientPet</code> method.
      */
     @Test
-    public void whenUpdatePetParametersThenTheyChange() throws NameException, ServiceException {
+    public void whenUpdatePetThenItChanges() throws NameException, ServiceException {
         this.clinicService.addClient(0, "Vova", "", "", new Role());
         final Pet pet = this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
         this.clinicService.updateClientPet("Vova", "Bobik", 5, Sex.F);
@@ -235,7 +235,7 @@ public class ClinicServiceTest {
      * client.
      */
     @Test(expected = ServiceException.class)
-    public void whenUpdatePetNameForNonExistingClientThenException() throws NameException, ServiceException {
+    public void whenUpdatePetForNonExistingClientThenException() throws NameException, ServiceException {
         this.clinicService.updateClientPet("Vova", "Bobik", 5, Sex.M);
     }
 
@@ -243,7 +243,7 @@ public class ClinicServiceTest {
      * Test that <code>updatePet</code> method throws exception on attempt to set the same pet parameters.
      */
     @Test(expected = ServiceException.class)
-    public void whenUpdatePetNameToSameValuesThenException() throws NameException, ServiceException {
+    public void whenUpdatePetToSameValuesThenException() throws NameException, ServiceException {
         this.clinicService.addClient(0, "Vova", "", "", new Role());
         this.clinicService.setClientPet("Vova", "cat", "Murka", 0, Sex.M);
         this.clinicService.updateClientPet("Vova", "Murka", 0, Sex.M);
