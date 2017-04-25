@@ -19,12 +19,22 @@ public class Message extends Base {
     private String text;
 
     /**
-     * Constructs <code>Message</code> object.
+     * Constructs <code>Message</code> object with empty client and text.
      */
     public Message() {
+        this(Client.NONE, "");
+    }
+
+    /**
+     * Constructs <code>Message</code> object with given client and text.
+     *
+     * @param client message's author.
+     * @param text message's text.
+     */
+    public Message(final Client client, final String text) {
         super();
-        this.client = Client.NONE;
-        this.text = "";
+        this.client = client;
+        this.text = text;
     }
 
     /**
