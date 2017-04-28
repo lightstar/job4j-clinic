@@ -340,10 +340,8 @@ public class ClinicService {
      *
      * @param client pre-defined client.
      * @param pet pre-defined pet.
-     * @throws ServiceException thrown if client can't be found or pet's type is wrong.
      */
-    protected synchronized void setClientPet(final Client client, final Pet pet)
-            throws ServiceException {
+    protected synchronized void setClientPet(final Client client, final Pet pet) {
 
         this.clinic.getPetList().set(client.getPet(), pet);
         client.setPet(pet);
@@ -454,9 +452,8 @@ public class ClinicService {
      * Delete client using pre-defined client object.
      *
      * @param client pre-defined client.
-     * @throws ServiceException thrown if client can't be found.
      */
-    protected synchronized void deleteClient(final Client client) throws ServiceException {
+    protected synchronized void deleteClient(final Client client) {
         if (client.getPet() != Pet.NONE) {
             this.clinic.getPetList().remove(client.getPet());
         }
@@ -545,7 +542,7 @@ public class ClinicService {
      *
      * @param email client's email.
      */
-    private void checkClientEmail(final String email) throws ServiceException {
+    private void checkClientEmail(final String email) {
     }
 
     /**
@@ -553,7 +550,7 @@ public class ClinicService {
      *
      * @param phone client's phone.
      */
-    private void checkClientPhone(final String phone) throws ServiceException {
+    private void checkClientPhone(final String phone) {
     }
 
     /**
