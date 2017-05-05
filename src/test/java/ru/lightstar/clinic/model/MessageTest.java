@@ -54,4 +54,14 @@ public class MessageTest {
         this.message.setText("Test message");
         assertThat(this.message.getText(), is("Test message"));
     }
+
+    /**
+     * Test correctness of <code>getFormattedText</code> methods.
+     */
+    @Test
+    public void whenGetFormattedTextThenResult() {
+        this.message.setText("Test message <tag>Content</tag>\r\nAnother line");
+        assertThat(this.message.getFormattedText(),
+                is("Test message &lt;tag&gt;Content&lt;/tag&gt;<br>Another line"));
+    }
 }

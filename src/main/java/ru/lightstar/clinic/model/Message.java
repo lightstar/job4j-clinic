@@ -72,4 +72,17 @@ public class Message extends Base {
     public void setText(final String text) {
         this.text = text;
     }
+
+    /**
+     * Get message's text, formatted for output in html page.
+     *
+     * @return formatted message's text.
+     */
+    public String getFormattedText() {
+        return this.text.replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll("\"", "&quot;")
+                .replaceAll("\r?\n", "<br>");
+    }
 }
