@@ -32,7 +32,7 @@ public class UpdateClientName extends ClinicAction {
         final String newName = this.ask("Client's new name:");
 
         try {
-            this.getClinicService().updateClient(name, newName, "", "", new Role());
+            this.getClinicService().updateClient(name, newName, "", "", new Role(), "");
         } catch (ServiceException | NameException e) {
             throw new ActionException(String.format("%s.", e.getMessage()));
         }

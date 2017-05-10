@@ -6,6 +6,8 @@ import ru.lightstar.clinic.pet.Cat;
 import ru.lightstar.clinic.pet.Dog;
 import ru.lightstar.clinic.pet.Pet;
 
+import java.util.Collections;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -96,6 +98,26 @@ public class ClientTest {
     }
 
     /**
+     * Test correctness of <code>setMessages</code> and <code>getMessages</code> methods.
+     */
+    @Test
+    public void whenSetMessagesThenItChanges() {
+        this.client.setMessages(Collections.singleton(new Message(this.client, "Test message")));
+        assertThat(this.client.getMessages().size(), is(1));
+        assertThat(this.client.getMessages().iterator().next().getText(), is("Test message"));
+        assertThat(this.client.getMessages().iterator().next().getClient(), is(this.client));
+    }
+
+    /**
+     * Test correctness of <code>setPassword</code> and <code>getPassword</code> method.
+     */
+    @Test
+    public void whenSetPasswordThenItChanges() {
+        this.client.setPassword("123456");
+        assertThat(this.client.getPassword(), is("123456"));
+    }
+
+    /**
      * Test correctness of <code>toString</code> method.
      */
     @Test
@@ -115,6 +137,8 @@ public class ClientTest {
         Client.NONE.setPhone("Test");
         Client.NONE.setPet(new Cat());
         Client.NONE.setRole(new Role("admin"));
+        Client.NONE.setMessages(Collections.singleton(new Message(Client.NONE, "Test message")));
+        Client.NONE.setPassword("Test");
 
         assertThat(Client.NONE.getId(), is(-1));
         assertThat(Client.NONE.getName(), is(""));
@@ -123,5 +147,7 @@ public class ClientTest {
         assertThat(Client.NONE.getEmail(), is(""));
         assertThat(Client.NONE.getPhone(), is(""));
         assertThat(Client.NONE.getRole().getName(), is(""));
+        assertThat(Client.NONE.getMessages().size(), is(0));
+        assertThat(Client.NONE.getPassword(), is(""));
     }
 }

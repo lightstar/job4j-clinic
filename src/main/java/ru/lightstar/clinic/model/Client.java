@@ -54,6 +54,11 @@ public class Client extends Base {
     private Set<Message> messages;
 
     /**
+     * Client's hashed password.
+     */
+    private String password;
+
+    /**
      * Constructs <code>Client</code> object.
      */
     public Client() {
@@ -75,6 +80,7 @@ public class Client extends Base {
         this.phone = "";
         this.role = new Role();
         this.messages = new HashSet<>();
+        this.password = "";
     }
 
     /**
@@ -199,8 +205,26 @@ public class Client extends Base {
      *
      * @param messages client's messages.
      */
-    public void setMessages(Set<Message> messages) {
+    public void setMessages(final Set<Message> messages) {
         this.messages = messages;
+    }
+
+    /**
+     * Get client's hashed password.
+     *
+     * @return client's hashed password.
+     */
+    public String getPassword() {
+        return this.password;
+    }
+
+    /**
+     * Set client's hashed password.
+     *
+     * @param password client's hashed password.
+     */
+    public void setPassword(final String password) {
+        this.password = password;
     }
 
     /**
@@ -275,6 +299,20 @@ public class Client extends Base {
          */
         @Override
         public void setRole(final Role role) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setMessages(final Set<Message> messages) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setPassword(final String password) {
         }
     }
 }

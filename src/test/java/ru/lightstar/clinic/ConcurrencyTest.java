@@ -42,9 +42,9 @@ public class ConcurrencyTest {
         final StringBuffer adminLog = new StringBuffer();
         final Thread adminThread = new Thread(() -> {
             try {
-                clinicService.addClient(0, "Vasya", "", "", new Role());
-                clinicService.addClient(1, "Vova", "", "", new Role());
-                clinicService.addClient(2, "Masha", "", "", new Role());
+                clinicService.addClient(0, "Vasya", "", "", new Role(), "");
+                clinicService.addClient(1, "Vova", "", "", new Role(), "");
+                clinicService.addClient(2, "Masha", "", "", new Role(), "");
 
                 drugService.addDrug("aspirin");
                 drugService.addDrug("glucose");

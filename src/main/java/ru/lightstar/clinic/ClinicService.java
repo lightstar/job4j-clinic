@@ -246,17 +246,19 @@ public class ClinicService {
      * @param email client's email.
      * @param phone client's phone.
      * @param role client's role.
+     * @param password client's hashed password.
      * @return added client.
      * @throws ServiceException thrown if position is busy.
      * @throws NameException thrown if client's name is incorrect.
      */
     public synchronized Client addClient(final int position, final String name, final String email,
-                                         final String phone, final Role role)
+                                         final String phone, final Role role, final String password)
             throws ServiceException, NameException {
         final Client client = new Client(name, Pet.NONE, position);
         client.setEmail(email);
         client.setPhone(phone);
         client.setRole(role);
+        client.setPassword(password);
         return this.addClient(position, client);
     }
 
@@ -276,6 +278,7 @@ public class ClinicService {
         this.checkClientName(client, client.getName());
         this.checkClientEmail(client.getEmail());
         this.checkClientPhone(client.getPhone());
+        this.checkClientPassword(client.getPassword());
 
         final Client[] allClients = this.clinic.getClients();
 
@@ -355,14 +358,15 @@ public class ClinicService {
      * @param newEmail new email.
      * @param newPhone new phone.
      * @param newRole new role.
+     * @param newPassword new password.
      * @throws ServiceException thrown if client can't be found.
      * @throws NameException thrown if new name is wrong.
      */
     public synchronized void updateClient(final String name, final String newName,
                                           final String newEmail, final String newPhone,
-                                          final Role newRole)
+                                          final Role newRole, final String newPassword)
             throws ServiceException, NameException {
-        this.updateClient(this.findClientByName(name), newName, newEmail, newPhone, newRole);
+        this.updateClient(this.findClientByName(name), newName, newEmail, newPhone, newRole, newPassword);
     }
 
     /**
@@ -373,26 +377,29 @@ public class ClinicService {
      * @param newEmail new email.
      * @param newPhone new phone.
      * @param newRole new role.
+     * @param newPassword new password.
      * @throws ServiceException thrown if client can't be found.
      * @throws NameException thrown if new name is wrong.
      */
     protected synchronized void updateClient(final Client client, final String newName,
                                              final String newEmail, final String newPhone,
-                                             final Role newRole)
+                                             final Role newRole, final String newPassword)
             throws ServiceException, NameException {
         if (client.getName().equals(newName) && client.getEmail().equals(newEmail) &&
-                client.getPhone().equals(newPhone) &&
-                client.getRole().getName().equals(newRole.getName())) {
+                client.getPhone().equals(newPhone) && client.getRole().getName().equals(newRole.getName()) &&
+                client.getPassword().equals(newPassword)) {
             throw new ServiceException("Parameters not changed");
         }
 
         this.checkClientName(client, newName);
         this.checkClientEmail(newEmail);
         this.checkClientPhone(newPhone);
+        this.checkClientPassword(newPassword);
         client.setName(newName);
         client.setEmail(newEmail);
         client.setPhone(newPhone);
         client.setRole(newRole);
+        client.setPassword(newPassword);
     }
 
     /**
@@ -551,6 +558,14 @@ public class ClinicService {
      * @param phone client's phone.
      */
     private void checkClientPhone(final String phone) {
+    }
+
+    /**
+     * Checks provided client's password.
+     *
+     * @param password client's hashed password.
+     */
+    private void checkClientPassword(final String password) {
     }
 
     /**

@@ -72,8 +72,8 @@ public abstract class ActionTest {
         this.helper = new IoTestHelper();
         this.action = this.createAction();
 
-        this.clinicService.addClient(0, "Vasya", "", "", new Role());
-        this.clinicService.addClient(1, "Masha", "", "", new Role());
+        this.clinicService.addClient(0, "Vasya", "", "", new Role(), "");
+        this.clinicService.addClient(1, "Masha", "", "", new Role(), "");
         this.clinicService.setClientPet("Masha", "cat", "Murka", 0, Sex.M);
 
         this.drugService.addDrug("aspirin");
