@@ -35,7 +35,12 @@ public class Clinic {
      */
     public Clinic(final int size) {
         super();
+
         this.clients = new Client[size];
+        for (int i = 0; i < size; i++) {
+            this.clients[i] = new Client.PlaceHolder(i);
+        }
+
         this.drugList = new DrugList();
         this.petList = new PetList();
     }
@@ -56,7 +61,7 @@ public class Clinic {
      * @param position client's position.
      */
     public void deleteClient(final int position) {
-        this.clients[position] = null;
+        this.clients[position] = new Client.PlaceHolder(position);
     }
 
     /**

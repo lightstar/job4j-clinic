@@ -61,9 +61,18 @@ public class ClinicServiceTest {
     @Test
     public void whenGetAllClientsThenResult() throws NameException, ServiceException {
         final Client[] allClients = new Client[CLINIC_SIZE];
+        for (int i = 0; i < CLINIC_SIZE; i++) {
+            allClients[i] = new Client.PlaceHolder(i);
+        }
         allClients[0] = this.clinicService.addClient(0, "Vova", "", "", new Role(),
                 "");
-        assertThat(this.clinicService.getAllClients(), is(allClients));
+
+        final Client[] serviceAllClients = this.clinicService.getAllClients();
+        assertThat(serviceAllClients.length, is(CLINIC_SIZE));
+        assertThat(serviceAllClients[0], is(allClients[0]));
+        for (int i = 1; i < CLINIC_SIZE; i++) {
+            assertThat(serviceAllClients[i], instanceOf(Client.PlaceHolder.class));
+        }
     }
 
     /**
@@ -262,7 +271,7 @@ public class ClinicServiceTest {
         this.clinicService.addClient(0, "Vova", "", "", new Role(), "");
         this.clinicService.deleteClient("Vova");
 
-        assertThat(this.clinic.getClients()[0], is(nullValue()));
+        assertThat(this.clinic.getClients()[0], instanceOf(Client.PlaceHolder.class));
     }
 
     /**

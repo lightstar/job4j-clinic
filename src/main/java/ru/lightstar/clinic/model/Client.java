@@ -240,6 +240,82 @@ public class Client extends Base {
     }
 
     /**
+     * Not real client, just place holder for some future client.
+     */
+    public static final class PlaceHolder extends Client {
+
+        /**
+         * Constructs <code>Holder</code> object.
+         */
+        public PlaceHolder(final int position) {
+            super("", Pet.NONE, position);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setId(final int id) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setName(final String name) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setPosition(final int id) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setPet(final Pet pet) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setEmail(final String email) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setPhone(final String phone) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setRole(final Role role) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setMessages(final Set<Message> messages) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setPassword(final String password) {
+        }
+    }
+
+    /**
      * 'None' client used instead of null object. It indicates that there is really no client at all.
      * Overridden methods make this object immutable.
      */

@@ -4,11 +4,12 @@ import org.junit.Test;
 import ru.lightstar.clinic.exception.ActionException;
 import ru.lightstar.clinic.exception.NameException;
 import ru.lightstar.clinic.exception.ServiceException;
+import ru.lightstar.clinic.model.Client;
 
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -62,7 +63,7 @@ public class DeleteClientTest extends ActionTest {
                 "Client's name:",
                 "Client deleted."
         })));
-        assertThat(this.clinic.getClients()[1], nullValue());
+        assertThat(this.clinic.getClients()[1], instanceOf(Client.PlaceHolder.class));
     }
 
     /**

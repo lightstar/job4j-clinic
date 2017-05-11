@@ -126,6 +126,33 @@ public class ClientTest {
     }
 
     /**
+     * Test correctness of <code>Client.PlaceHolder</code> object.
+     */
+    @Test
+    public void whenClientPlaceHolderThenItIsImmutableAndHasEmptyFields() {
+        Client clientPlaceHolder = new Client.PlaceHolder(1);
+        clientPlaceHolder.setId(10);
+        clientPlaceHolder.setPosition(10);
+        clientPlaceHolder.setName("Test");
+        clientPlaceHolder.setEmail("Test");
+        clientPlaceHolder.setPhone("Test");
+        clientPlaceHolder.setPet(new Cat());
+        clientPlaceHolder.setRole(new Role("admin"));
+        clientPlaceHolder.setMessages(Collections.singleton(new Message(Client.NONE, "Test message")));
+        clientPlaceHolder.setPassword("Test");
+
+        assertThat(clientPlaceHolder.getId(), is(-1));
+        assertThat(clientPlaceHolder.getName(), is(""));
+        assertThat(clientPlaceHolder.getPosition(), is(1));
+        assertThat(clientPlaceHolder.getPet(), is(Pet.NONE));
+        assertThat(clientPlaceHolder.getEmail(), is(""));
+        assertThat(clientPlaceHolder.getPhone(), is(""));
+        assertThat(clientPlaceHolder.getRole().getName(), is(""));
+        assertThat(clientPlaceHolder.getMessages().size(), is(0));
+        assertThat(clientPlaceHolder.getPassword(), is(""));
+    }
+
+    /**
      * Test correctness of <code>Client.NONE</code> object.
      */
     @Test

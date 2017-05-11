@@ -31,7 +31,7 @@ public class ShowAllClients extends ClinicAction {
 
         for (int i = 0; i < allClients.length; i++) {
             final Client client = allClients[i];
-            if (client == null) {
+            if (client instanceof Client.PlaceHolder) {
                 this.getOutput().println(String.format("%d. VACANT.", i + 1));
             } else {
                 this.getOutput().println(String.format("%s.", client));

@@ -54,7 +54,7 @@ public class ClinicTest {
         final Client client = new Client("Vasya", new Cat("Murka", new DummyOutput()), 0);
         this.clinic.addClient(1, client);
         this.clinic.deleteClient(1);
-        assertThat(this.clinic.getClients()[1], is(nullValue()));
+        assertThat(this.clinic.getClients()[1], instanceOf(Client.PlaceHolder.class));
     }
 
     /**

@@ -58,7 +58,7 @@ public class ClinicService {
     }
 
     /**
-     * Get array of all clients in clinic. Unoccupied positions will contain null.
+     * Get array of all clients in clinic. Unoccupied positions will contain {@link Client.PlaceHolder} objects.
      *
      * @return array of all clients in clinic.
      */
@@ -131,7 +131,7 @@ public class ClinicService {
         int count = 0;
 
         for (final Client client : this.clinic.getClients()) {
-            if (client != null && client.getPet() != Pet.NONE && client.getPet().getName().equals(name)) {
+            if (client.getPet() != Pet.NONE && client.getPet().getName().equals(name)) {
                 count++;
             }
         }
@@ -150,7 +150,7 @@ public class ClinicService {
         int resultIndex = 0;
 
         for (final Client client : this.clinic.getClients()) {
-            if (client != null && client.getPet() != Pet.NONE && client.getPet().getName().equals(name)) {
+            if (client.getPet() != Pet.NONE && client.getPet().getName().equals(name)) {
                 resultClients[resultIndex++] = client;
             }
         }
@@ -166,17 +166,17 @@ public class ClinicService {
      * @throws ServiceException thrown if client can't be found.
      */
     public synchronized int findClientPositionByName(final String name) throws ServiceException {
-        final Client[] allClients = this.clinic.getClients();
+        final Client[] clients = this.clinic.getClients();
         int resultPosition = -1;
 
-        for (int position = 0; position < allClients.length; position++) {
-            if (allClients[position] != null && allClients[position].getName().equals(name)) {
+        for (int position = 0; position < clients.length; position++) {
+            if (clients[position].getName().equals(name)) {
                 resultPosition = position;
                 break;
             }
         }
 
-        if (resultPosition == -1) {
+        if (resultPosition == -1 || clients[resultPosition] instanceof Client.PlaceHolder) {
             throw new ServiceException("Client not found");
         }
 
@@ -195,7 +195,7 @@ public class ClinicService {
 
         final Client client = this.clinic.getClientByPosition(position);
 
-        if (client == null) {
+        if (client instanceof Client.PlaceHolder) {
             throw new ServiceException("Client not found");
         }
 
@@ -280,9 +280,9 @@ public class ClinicService {
         this.checkClientPhone(client.getPhone());
         this.checkClientPassword(client.getPassword());
 
-        final Client[] allClients = this.clinic.getClients();
+        final Client[] clients = this.clinic.getClients();
 
-        if (allClients[position] != null) {
+        if (!(clients[position] instanceof Client.PlaceHolder)) {
             throw new ServiceException("Position is busy");
         }
 
@@ -538,7 +538,7 @@ public class ClinicService {
         }
 
         for (final Client curClient : this.clinic.getClients()) {
-            if (curClient != null && curClient != client && curClient.getName().equals(name)) {
+            if (curClient != client && curClient.getName().equals(name)) {
                 throw new NameException("Client's name is not unique");
             }
         }
